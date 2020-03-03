@@ -3,3 +3,6 @@ __pycache__
 *.swp
 .vscode
 *.npy
+*.egg-info/
+build/
+dist/
