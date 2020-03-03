@@ -1,4 +1,5 @@
-from data import Dataset
+import numpy as np
+from dfncluster.Dataset import Dataset
 
 
 class GaussianDataset(Dataset):
