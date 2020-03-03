@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from dfncluster.CsvDataset import CsvDataset
+from dfncluster.Dataset import CsvDataset
 
 
 class FileFeatureDataset(CsvDataset):

@@ -3,7 +3,7 @@ import pandas as pd
 from dfncluster.Dataset import Dataset
 
 
-class CsvDatset(Dataset):
+class CsvDataset(Dataset):
     """Abstract class for reading CSVs"""
 
     def __init__(self, filename=None, feature_columns=[], label_columns=[]):

@@ -1,8 +1,18 @@
 from .Dataset import Dataset
+from .CsvDataset import CsvDataset
+from .FileFeatureDataset import FileFeatureDataset
 from .GaussianDataset import GaussianDataset
-from .ImageDataset import ImageDataset
 from .NiftiDataset import NiftiDataset
-from .SklearnDataset import SklearnDataset
+# from .ImageDataset import ImageDataset
 
-__all__ = ["Dataset", "CsvDataset", "GaussianDataset",
-           "ImageDataset", "NiftiDataset", "SklearnDataset"]
+# from .SklearnDataset import SklearnDataset
+
+__all__ = [
+    "Dataset",
+    "CsvDataset",
+    "GaussianDataset",
+    "ImageDataset",
+    "NiftiDataset",
+    "FileFeatureDataset",
+    # "SklearnDataset"
+]

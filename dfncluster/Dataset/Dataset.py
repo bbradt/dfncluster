@@ -20,7 +20,7 @@ class Dataset(object):
         x, y = self.generate(**kwargs)
         self.features = x
         self.labels = y
-        self.num_instances = x.shape[0]
+        self.num_instances = np.shape(x)[0]
         self.idx = np.arange(self.num_instances)
         self.unique_labels = np.unique(self.labels)
         if shuffle:
@@ -31,8 +31,8 @@ class Dataset(object):
     def split(self, test_size, **kwargs):
         """wraps sklearn.train_test_split"""
         X_train, X_test, y_train, y_test = skms.train_test_split(
-            self.x, self.y, test_size=test_size, **kwargs)
-        return Dataset(X_train, y_train), Dataset(X_test, y_test)
+            self.features, self.labels, test_size=test_size, **kwargs)
+        return X_train, y_train, X_test, y_test
 
     def generate(self, **kwargs):
         """abstract static method overridden by subclasses"""
