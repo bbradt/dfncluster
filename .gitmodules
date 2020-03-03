@@ -1,6 +1,0 @@
-[submodule "ica"]
-	path = ICA/infomax
-	url = git@github.com:MRN-Code/ica.git
-[submodule "Classifiers/polyssifier"]
-	path = Classifiers/polyssifier
-	url = git@github.com:bbradt/polyssifier.git
