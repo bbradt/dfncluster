@@ -5,7 +5,13 @@ actively compares the performance of classification under different clustering a
 
 # Prerequisites
 
-Python 3.6+
+First, install git submodules
+
+```
+git submodule update --init --recursive
+```
+
+This project has been tested in Python 3.6+
 
 It is recommended you use a conda virtual environment.
 
