@@ -16,10 +16,10 @@ This project has been tested in Python 3.6+
 It is recommended you use a conda virtual environment.
 
 ```
-conda env create --file dfncluster.yml
+conda env create -y --name dfncluster
 ```
 
-and if using pip, install requirements via pip
+and install requirements via pip
 
 ```
 pip install -r requirements.txt
