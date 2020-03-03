@@ -6,7 +6,7 @@ from dfncluster.Dataset import Dataset
 class CsvDataset(Dataset):
     """Abstract class for reading CSVs"""
 
-    def __init__(self, filename=None, feature_columns=[], label_columns=[]):
+    def __init__(self, filename=None, feature_columns=['filename'], label_columns=['label']):
         """
              args:
                 filename	string	name of the CSV to load
