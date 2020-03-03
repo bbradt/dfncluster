@@ -1,7 +1,6 @@
 import sklearn.model_selection as skms
 import pandas as pd
 import numpy as np
-import json
 
 
 class Dataset(object):
@@ -21,6 +20,7 @@ class Dataset(object):
         x, y = self.generate(**kwargs)
         self.features = x
         self.labels = y
+        print("Feature Shape %s\nLabel Shape %s" % (str(x.shape), str(y.shape)))
         self.num_instances = np.shape(x)[0]
         self.idx = np.arange(self.num_instances)
         self.unique_labels = np.unique(self.labels)
@@ -49,5 +49,4 @@ class Dataset(object):
 
     def save(self, prefix="dataset"):
         np.save(prefix, self, allow_pickle=True)
-        json.dump(self.__dict__, open(prefix+'.json', 'wb'))
 

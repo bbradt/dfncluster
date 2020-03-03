@@ -15,7 +15,7 @@ conda env create --file dfncluster.yml
 
 and if using pip, install requirements via pip
 
-## Pip
 ```
 pip install -r requirements.txt
 ```
+
