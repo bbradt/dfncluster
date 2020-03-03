@@ -1,6 +1,7 @@
 import sklearn.model_selection as skms
 import pandas as pd
 import numpy as np
+import json
 
 
 class Dataset(object):
@@ -45,3 +46,8 @@ class Dataset(object):
         self.features = self.features[self.idx, ...]
         self.labels = self.labels[self.idx, ...]
         return self.idx
+
+    def save(self, prefix="dataset"):
+        np.save(prefix, self, allow_pickle=True)
+        json.dump(self.__dict__, open(prefix+'.json', 'wb'))
+
