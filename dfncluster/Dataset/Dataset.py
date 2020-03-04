@@ -47,6 +47,14 @@ class Dataset(object):
         self.features = self.features[self.idx, ...]
         self.labels = self.labels[self.idx, ...]
         return self.idx
-
+    
     def save(self, prefix="dataset"):
         np.save(prefix, self, allow_pickle=True)
+
+    @classmethod
+    def load(cls, filename):
+        """Load a dataset and typecast to own class
+        """
+        loaded = np.load(filename, allow_pickle=True).item()
+        loaded.__class__ = cls
+        return loaded

@@ -25,3 +25,12 @@ and install requirements via pip
 pip install -r requirements.txt
 ```
 
+# Examples
+
+To run with the pre-computed ICA Timecourses, run the following
+
+```
+python main.py
+```
+
+which will run dFNC with KMeans clustering and classification with Polyssifier

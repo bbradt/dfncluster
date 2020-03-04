@@ -22,4 +22,4 @@ class FileFeatureDataset(CsvDataset):
         x = []
         for instance in features:
             x.append(loader(instance[0])[np.newaxis, ...])
-        return np.squeeze(np.stack(x), 0), labels
+        return np.squeeze(np.stack(x, 0)), labels
