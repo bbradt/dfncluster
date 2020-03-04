@@ -36,6 +36,7 @@ if __name__=='__main__':
 
     poly = Polyssifier(assignments,
                        subject_labels,
+                       n_folds=10,
                        path='results/polyssifier',
                        project_name='KMeans',
                        concurrency=1)
@@ -44,6 +45,7 @@ if __name__=='__main__':
 
     poly = Polyssifier(subject_data.reshape(subject_data.shape[0],np.prod(subject_data.shape[1:])),
                        subject_labels,
+                       n_folds=10,
                        path='results/polyssifier',
                        project_name='FNCOnly',
                        concurrency=1)
