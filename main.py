@@ -3,6 +3,7 @@ from dfncluster.Clusterer import KMeansClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
 
+import os
 import numpy as np
 
 if __name__=='__main__':
@@ -30,6 +31,8 @@ if __name__=='__main__':
     # Print results
     print(results)
     print(assignments, assignments.shape, fbirn_data.labels.shape)
+
+    os.makedirs('results/polyssifier', exist_ok=True)
 
     poly = Polyssifier(assignments,
                        subject_labels,

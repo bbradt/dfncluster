@@ -23,7 +23,7 @@ class dFNC:
     def reassign_to_subjects(self, cluster_assigments, subjects):
         reassigned = []
         for i in range(max(subjects)+1):
-            reassigned[i] = cluster_assigments[subjects==i]
+            reassigned.append(cluster_assigments[subjects==i])
         return np.array(reassigned)
 
     def line_search(self, line_params=dict(param1=[]), **kwargs):
