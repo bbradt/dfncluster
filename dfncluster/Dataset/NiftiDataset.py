@@ -1,8 +1,10 @@
 import nibabel as nib
 from dfncluster.Dataset import FileFeatureDataset
 
+
 def load_wrapper(filename):
     return nib.load(filename).dataobj
+
 
 class NiftiDataset(FileFeatureDataset):
 
