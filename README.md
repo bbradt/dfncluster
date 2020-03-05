@@ -29,8 +29,21 @@ pip install -r requirements.txt
 
 To run with the pre-computed ICA Timecourses, run the following
 
+first, untar the simulated data
+```
+cd data/FNCDatasets/OmegaSim
+tar -xzf subjects.tar.gz
+```
+
+back in the dfncluster directory, build the data set
+
+```
+PYTHONPATH=. python data/FNCDatasets/OmegaSim/make.py
+```
+
+And run the main function, which performs dFNC analysis, and classification
+using cluster assignments, and raw states for comparison
 ```
 python main.py
 ```
 
-which will run dFNC with KMeans clustering and classification with Polyssifier
