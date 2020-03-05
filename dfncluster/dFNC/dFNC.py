@@ -10,7 +10,7 @@ class dFNC:
         self.clusterer = clusterer
         self.results = []
     
-    def run(self, **kwargs):
+    def run(self, evaluate=False, **kwargs):
         print("Performing exemplar clustering")
         exemplar_clusterer = self.clusterer(X=self.dataset.exemplars['x'], Y=self.dataset.exemplars['y'], **kwargs)
         exemplar_clusterer.fit()        
@@ -18,8 +18,9 @@ class dFNC:
         kwargs['n_init'] = 1
         cluster_instance = self.clusterer(X=self.dataset.features, Y=self.dataset.labels, centroids=exemplar_clusterer.centroids, **kwargs)
         cluster_instance.fit()
-        print("Evaluating clustering")
-        cluster_instance.evaluate()
+        if evaluate:
+            print("Evaluating clustering")
+            cluster_instance.evaluate()
         print("Reassigning states to subjects")
         assignments = self.reassign_to_subjects(cluster_instance.assignments, 
                                                 self.dataset.subjects)
