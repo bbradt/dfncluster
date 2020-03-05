@@ -35,7 +35,8 @@ cd data/FNCDatasets/OmegaSim
 tar -xzf subjects.tar.gz
 ```
 
-back in the dfncluster directory, build the data set
+back in the dfncluster directory, build the simulations data set, which serializes
+the data set object as a pickled npy file
 
 ```
 PYTHONPATH=. python data/FNCDatasets/OmegaSim/make.py
@@ -47,3 +48,15 @@ using cluster assignments, and raw states for comparison
 python main.py
 ```
 
+## Running on Subsets
+
+To run on a subset of the simulated data set, you can either edit data.csv in the OmegaSim directory, and rebuild,
+or copy that directory under a new name, edit, rebuild and point main.py to the new data set.
+
+## Other Examples
+
+TODO (Brad): Make example run files, and writeups for other data sets, such as OpenNeuro
+
+# Repostory Organization
+
+TODO (Brad): Add a writeup explaining the repository organization
