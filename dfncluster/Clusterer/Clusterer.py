@@ -89,6 +89,7 @@ class Clusterer:
         """
         results = dict()
         for metric in self.metrics:
+            print('Evaluating clustering with metric %s' % metric)
             if metric in CENTROID_METRICS.keys():
                 results[metric] = CENTROID_METRICS[metric](self.X, self.centroids)
             elif metric in LABEL_METRICS.keys():

@@ -22,6 +22,7 @@ class FNCDataset(MatDataset):
         window_size = kwargs['window_size']
         time_index = kwargs['time_index']
         x, y = super(FNCDataset, self).generate(**kwargs)
+        #input(np.sum(np.isnan(x)))
         self.subject_data = x
         self.subject_labels = y
         exm_x = []
@@ -38,6 +39,7 @@ class FNCDataset(MatDataset):
             for ti in range(xi.shape[0]-window_size):
                 window = xi[ti:(ti+window_size)]
                 fnc = metric(window.T)
+                #input(str((np.sum(np.isnan(fnc)), fnc, window)))
                 fnc = fnc[np.triu_indices_from(fnc)].flatten()
                 variance_windows.append(np.var(fnc))
                 sub_x.append(fnc)
