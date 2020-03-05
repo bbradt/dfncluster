@@ -3,7 +3,7 @@
 dFNCluster implements Dynamic Functional Network Connectivity (dFNC) with several clustering algorithms, and
 actively compares the performance of classification under different clustering algorithms and hyper-parameters.
 
-# Prerequisites
+## Prerequisites
 
 First, install git submodules
 
@@ -25,7 +25,7 @@ and install requirements via pip
 pip install -r requirements.txt
 ```
 
-# Examples
+## Examples
 
 To run with the pre-computed ICA Timecourses, run the following
 
@@ -48,7 +48,7 @@ using cluster assignments, and raw states for comparison
 python main.py
 ```
 
-## Running on Subsets
+### Running on Subsets
 
 To run on a subset of the simulated data set, you can either edit data.csv in the OmegaSim directory, and rebuild,
 or copy that directory under a new name, edit, rebuild and point main.py to the new data set.
@@ -57,6 +57,6 @@ or copy that directory under a new name, edit, rebuild and point main.py to the 
 
 TODO (Brad): Make example run files, and writeups for other data sets, such as OpenNeuro
 
-# Repostory Organization
+## Repostory Organization
 
 TODO (Brad): Add a writeup explaining the repository organization
