@@ -11,8 +11,8 @@ if __name__=='__main__':
     # Parameters for KMeans
     kmeans_params = dict(
         init='k-means++',
-        n_init=10,
-        tol=1e-4,
+        n_init=100,
+        tol=1e-6,
         n_clusters=5,
         metrics=['silhouette'],
         verbose=0
@@ -32,7 +32,7 @@ if __name__=='__main__':
     print(results)
     print(assignments, assignments.shape, fbirn_data.labels.shape)
 
-    os.makedirs('results/polyssifier', exist_ok=True)
+    os.makedirs('results/polyssifier/KMeans', exist_ok=True)
 
     poly = Polyssifier(assignments,
                        subject_labels,
@@ -43,6 +43,8 @@ if __name__=='__main__':
     poly.build()
     poly.run()
 
+    os.makedirs('results/polyssifier/FNCOnly', exist_ok=True)
+  
     poly = Polyssifier(subject_data.reshape(subject_data.shape[0],np.prod(subject_data.shape[1:])),
                        subject_labels,
                        n_folds=10,
