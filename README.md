@@ -27,6 +27,29 @@ pip install -r requirements.txt
 
 ## Examples
 
+## Sklearn Datasets
+
+To generate a data set from SKlearn for testing purposes, you can generate one of the datasets in `data/SklearnDatasets`.
+
+For example, the moons data set can be generated as follows:
+
+```
+PYTHONPATH=. python data/SklearnDatasets/Moons/make.py
+```
+
+which will save `moons.npy` in the `data/SklearnDatasets/Moons` directory.
+
+The following datasets have been included as examples:
+
+* Moons
+* Classification (sklearn.datasets.make_classification)
+* Blobs (sklearn.datasets.make_blobs)
+* MNIST (sklearn.datasets.fetch_openml(name='mnist_...)
+* Iris (sklearn.datasets.load_iris)
+
+
+## SIMTB Data
+
 To run with the pre-computed ICA Timecourses, run the following
 
 first, untar the simulated data
