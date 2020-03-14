@@ -6,9 +6,9 @@ from .NiftiDataset import NiftiDataset
 from .OpenNeuroDataset import OpenNeuroDataset
 from .MatDataset import MatDataset
 from .FNCDataset import FNCDataset
+from .SklearnDataset import SklearnDataset
 # from .ImageDataset import ImageDataset
 
-# from .SklearnDataset import SklearnDataset
 
 __all__ = [
     "Dataset",
@@ -17,6 +17,6 @@ __all__ = [
     "ImageDataset",
     "NiftiDataset",
     "FileFeatureDataset",
-    "OpenNeuroDataset"
-    # "SklearnDataset"
+    "OpenNeuroDataset",
+    "SklearnDataset"
 ]
