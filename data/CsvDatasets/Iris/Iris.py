@@ -16,3 +16,7 @@ class Iris:
                              label_columns=['species'])
         dataset.save('data/CsvDatasets/IrisDataset/iris_dataset')
         return dataset
+
+
+if __name__ == '__main__':
+    dataset = Iris.make()

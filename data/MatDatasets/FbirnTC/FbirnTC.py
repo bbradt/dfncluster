@@ -10,3 +10,7 @@ class FbirnTC:
                              label_columns=['diagnosis'])
         dataset.save('data/MatDatasets/FbirnTC/fbirn_tc')
         return dataset
+
+
+if __name__ == '__main__':
+    dataset = FbirnTC.make()

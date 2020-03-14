@@ -12,3 +12,7 @@ class OmegaSim:
                              shuffle=False)
         dataset.save('data/FNCDatasets/OmegaSim/omega_sim')
         return dataset
+
+
+if __name__ == '__main__':
+    dataset = OmegaSim.make()

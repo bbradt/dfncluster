@@ -11,3 +11,7 @@ class FbirnFNC:
                              shuffle=False)
         dataset.save('data/FNCDatasets/FbirnFNC/fbirn_fnc')
         return dataset
+
+
+if __name__ == '__main__':
+    dataset = FbirnFNC.make()
