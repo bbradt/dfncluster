@@ -18,6 +18,14 @@ KWARGS = dict(
     random_state=123
 )
 
+
+class Classification:
+    @staticmethod
+    def make():
+        dataset = SklearnDataset(dataset_name='make_classification', **KWARGS)
+        dataset.save('data/SklearnDatasets/Classification/classification')
+        return dataset
+
+
 if __name__ == '__main__':
-    dataset = SklearnDataset(dataset_name='make_classification', **KWARGS)
-    dataset.save('data/SklearnDatasets/Classification/classification')
+    Classification.make()
