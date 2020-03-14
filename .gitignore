@@ -1,4 +1,6 @@
 __pycache__
+results/
+*.log
 *.pyc
 *.swp
 .vscode
