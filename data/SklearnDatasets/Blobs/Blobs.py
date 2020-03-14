@@ -11,6 +11,14 @@ KWARGS = dict(
     random_state=314159
 )
 
+
+class Blobs:
+    @staticmethod
+    def make():
+        dataset = SklearnDataset(dataset_name='make_blobs', **KWARGS)
+        dataset.save('data/SklearnDatasets/Blobs/blobs')
+        return dataset
+
+
 if __name__ == '__main__':
-    dataset = SklearnDataset(dataset_name='make_blobs', **KWARGS)
-    dataset.save('data/SklearnDatasets/Blobs/blobs')
+    dataset = Blobs.make()
