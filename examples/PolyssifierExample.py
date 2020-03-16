@@ -1,3 +1,4 @@
+import os
 import argparse
 from data.SklearnDatasets import Iris, Classification, MNIST, Moons
 from dfncluster.Classifiers import Polyssifier
