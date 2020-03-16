@@ -29,7 +29,7 @@ class Dataset(object):
                 load            |   Dataset             |   class, filename |   -                   |   classmethod to load a dataset of given type or sub-type of Dataset
     """
 
-    def __init__(self, shuffle=True, **kwargs):
+    def __init__(self, shuffle_instances=True, **kwargs):
         """
             Constructor for Dataset super-class. Generally should not be instantiated.
             Usage:
@@ -45,9 +45,9 @@ class Dataset(object):
         """
         x, y = self.generate(**kwargs)
         if x.ndim == 1:
-            x = np.reshape(np.shape(x)[0], 1)
+            x = x.reshape(np.shape(x)[0], 1)
         if y.ndim == 1:
-            y = np.reshape(np.shape(y)[0], 1)
+            y = y.reshape(np.shape(y)[0], 1)
         self.features = x
         self.labels = y
         print("Feature Shape %s\nLabel Shape %s" %
@@ -58,9 +58,9 @@ class Dataset(object):
         self.idx = np.arange(self.num_instances)
         self.unique_labels = np.unique(self.labels)
         self.num_unique_labels = self.unique_labels.size
-        if shuffle:
+        if shuffle_instances:
             self.shuffle()
-        self.label_indices = {label: self.idx[self.labels == label]
+        self.label_indices = {label: self.idx[np.all(self.labels == label, axis=1)]
                               for label in self.unique_labels}
 
     def split(self, test_size, **kwargs):
@@ -111,8 +111,8 @@ class Dataset(object):
                 -
             #TODO: Make this a class method?
         """
-        x = np.array([[]])
-        y = np.array([[]])
+        x = np.array([[0], [1]])
+        y = np.array([[0], [1]])
         return x, y
 
     def shuffle(self, **kwargs):
