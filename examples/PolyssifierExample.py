@@ -13,6 +13,7 @@ DATASETS = dict(
 
 def main(dataset, n_folds):
     dataset = DATASETS[dataset.lower()]()
+    os.makedirs('results/polyssifier/PolyssifierExample', exist_ok=True)
     poly = Polyssifier(dataset.features,
                        dataset.labels,
                        n_folds=n_folds,
