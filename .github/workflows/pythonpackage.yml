@@ -39,4 +39,4 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        PYTHONPATH=. pytest
+        PYTHONPATH=. pytest --rootdir=/home/runner/work/dfncluster
