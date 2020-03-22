@@ -1,4 +1,4 @@
 from .Clusterer import Clusterer
 from .KMeansClusterer import KMeansClusterer
-
-__all__=['Clusterer', 'KMeansClusterer']
+from .GMMClusterer import GMMClusterer
+__all__=['Clusterer', 'KMeansClusterer','GMMClusterer']
