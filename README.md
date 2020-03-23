@@ -34,7 +34,7 @@ To generate a data set from SKlearn for testing purposes, you can generate one o
 For example, the moons data set can be generated as follows:
 
 ```
-PYTHONPATH=. python data/SklearnDatasets/Moons/make.py
+PYTHONPATH=. python data/SklearnDatasets/Moons/Moons.py
 ```
 
 which will save `moons.npy` in the `data/SklearnDatasets/Moons` directory.
@@ -62,7 +62,7 @@ back in the dfncluster directory, build the simulations data set, which serializ
 the data set object as a pickled npy file
 
 ```
-PYTHONPATH=. python data/FNCDatasets/OmegaSim/make.py
+PYTHONPATH=. python data/FNCDatasets/OmegaSim/OmegaSim.py
 ```
 
 And run the main function, which performs dFNC analysis, and classification

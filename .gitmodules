@@ -1,6 +1,6 @@
 [submodule "dfncluster/ICA/infomax"]
 	path = dfncluster/ICA/infomax
-	url = git@github.com:MRN-Code/ica.git
+	url = https://github.com/MRN-Code/ica.git
 [submodule "dfncluster/Classifiers/polyssifier"]
 	path = dfncluster/Classifiers/polyssifier
-	url = git@github.com:trendscenter/polyssifier.git
+	url = https://github.com/trendscenter/polyssifier.git
