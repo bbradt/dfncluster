@@ -6,7 +6,9 @@ class Ds000030:
     @staticmethod
     def make():
         dataset = OpenNeuroDataset("ds000030",
-                                   directory='data/OpenNeuroDatasets/ds000030')
+                                   directory='data/OpenNeuroDatasets/ds000030',
+                                   feature_columns=['task-rest_bold'],
+                                   label_columns=['diagnosis'])
         return dataset
 
 

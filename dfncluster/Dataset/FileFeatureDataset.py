@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from dfncluster.Dataset import CsvDataset
+from itertools import zip_longest
 
 
 class FileFeatureDataset(CsvDataset):
@@ -16,10 +17,18 @@ class FileFeatureDataset(CsvDataset):
                                                  label_columns=label_columns,
                                                  **kwargs)
 
+    def ragged_pad_stack(self, arrays):
+        ndims = arrays[0].ndim
+
     def generate(self,  **kwargs):
         loader = kwargs['loader']
         features, labels = super(FileFeatureDataset, self).generate(**kwargs)
         x = []
         for instance in features:
-            x.append(loader(instance[0])[np.newaxis, ...])
-        return np.squeeze(np.stack(x, 0)), labels
+            try:
+                x.append(loader(instance[0])[np.newaxis, ...])
+            except TypeError:
+                continue
+            except FileExistsError:
+                continue
+        return np.squeeze(np.stack(zip_longest(*x, fillvalue=0), 0)), labels
