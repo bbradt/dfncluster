@@ -1,6 +1,8 @@
 import sklearn.model_selection as skms
 import pandas as pd
 import numpy as np
+import pickle
+import os
 
 
 class Dataset(object):
@@ -138,7 +140,26 @@ class Dataset(object):
         self.labels = self.labels[self.idx, ...]
         return self.idx
 
-    def save(self, prefix="dataset"):
+    @staticmethod
+    def _save_large(file_path, data):
+        max_bytes = 2**31 - 1
+        bytes_out = pickle.dumps(data,  protocol=4)
+        with open(file_path, 'wb') as f_out:
+            for idx in range(0, len(bytes_out), max_bytes):
+                f_out.write(bytes_out[idx:idx+max_bytes])
+
+    @staticmethod
+    def _load_large(file_path):
+        max_bytes = 2**31 - 1
+        bytes_in = bytearray(0)
+        input_size = os.path.getsize(file_path)
+        with open(file_path, 'rb') as f_in:
+            for _ in range(0, input_size, max_bytes):
+                bytes_in += f_in.read(max_bytes)
+        data = pickle.loads(bytes_in, protocol=4)
+        return data
+
+    def save(self, prefix="dataset", large=False):
         """
            Usage:
                 dataset = Dataset(**kwargs)
@@ -154,10 +175,14 @@ class Dataset(object):
             End-State:
                 the dataset object prefix.npy is saved
         """
-        np.save(prefix, self, allow_pickle=True)
+        if large:
+            fn = prefix + '.pkl'
+            Dataset._save_large(fn, self)
+        else:
+            np.save(prefix, self, allow_pickle=True)
 
     @classmethod
-    def load(cls, filename):
+    def load(cls, filename, large=False):
         """
            Usage:
                 dataset = Dataset(**kwargs)
@@ -176,6 +201,9 @@ class Dataset(object):
             End-State:
                 -
         """
-        loaded = np.load(filename, allow_pickle=True).item()
+        if large:
+            loaded = Dataset._load_large(filename)
+        else:
+            loaded = np.load(filename, allow_pickle=True).item()
         loaded.__class__ = cls
         return loaded
