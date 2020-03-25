@@ -1,11 +1,12 @@
 import numpy as np
-
+import copy
 from dfncluster.Preprocessing import PreprocessingStep
+from multiprocessing import Pool
 
 
 class NiftiPreprocessing(PreprocessingStep):
     def __init__(self):
-        pass
+        super(NiftiPreprocessing, self).__init__()
 
     def apply(self, x):
         """
@@ -14,14 +15,19 @@ class NiftiPreprocessing(PreprocessingStep):
         """
         masks = []
         subjects = []
-        for instance in x:
+        for i, instance in enumerate(x):
+            print("\tflattening, and computing mask for subject %s/%s" % (i, x.shape[0]))
             flattened = NiftiPreprocessing.flatten(instance)
-            demeaned = NiftiPreprocessing.remove_mean(flattened)
-            subjects.append(demeaned)
-            masks.append(NiftiPreprocessing.compute_subject_mask(demeaned))
+            subjects.append(flattened)
+            masks.append(NiftiPreprocessing.compute_subject_mask(flattened))
+        print("\tcomputing global mask")
         global_mask = NiftiPreprocessing.compute_group_mask(masks)
+        self.global_mask = global_mask
+        self.local_masks = np.stack(masks, 0)
         for i, subject in enumerate(subjects):
-            subjects[i] = NiftiPreprocessing.apply_mask(subject, global_mask)
+            print("\tmasking and demeaning subject %s/%s" % (i, len(subjects)))
+            masked = NiftiPreprocessing.apply_mask(subject, global_mask)
+            subjects[i] = NiftiPreprocessing.remove_mean(masked)
         return np.stack(subjects, 0)
 
     @staticmethod
@@ -46,7 +52,7 @@ class NiftiPreprocessing(PreprocessingStep):
             args:
                 subject_data - (X*Y*Z, T) 2-d array
         """
-        return subject_data - np.mean(subject_data, ax)
+        return subject_data - np.mean(subject_data, ax)[:, np.newaxis]
 
     @staticmethod
     def compute_subject_mask(subject_data):
@@ -58,18 +64,19 @@ class NiftiPreprocessing(PreprocessingStep):
         voxel_mean = np.mean(subject_data, 0)
         mask = np.ones((voxel, 1))
         for t in range(time):
-            mask *= subject_data[:, t] > voxel_mean
+            sub_mask = np.array(subject_data[:, t] > voxel_mean[t], dtype=int)
+            mask *= sub_mask.reshape(voxel, 1)
         return mask
 
     @staticmethod
-    def compute_group_mask(masks):
+    def compute_group_mask(masks, threshold=0.4):
         """
             args:
                 masks
         """
-        global_mask = np.ones_like(masks[0].shape)
-        for mask in masks:
-            global_mask *= mask
+        global_mask = np.mean(np.stack(masks, 0), 0)
+        global_mask[global_mask < threshold] = 0
+        global_mask[global_mask > threshold] = 1
         return global_mask
 
     @staticmethod
@@ -78,4 +85,4 @@ class NiftiPreprocessing(PreprocessingStep):
             args:
                 masks
         """
-        return subject_data[:, mask]
+        return subject_data[np.array(mask, dtype=bool).flatten(), :]

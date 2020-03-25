@@ -31,7 +31,7 @@ class Dataset(object):
                 load            |   Dataset             |   class, filename |   -                   |   classmethod to load a dataset of given type or sub-type of Dataset
     """
 
-    def __init__(self, shuffle_instances=True, **kwargs):
+    def __init__(self, shuffle_instances=True, subset_size=1.0,  **kwargs):
         """
             Constructor for Dataset super-class. Generally should not be instantiated.
             Usage:
@@ -45,6 +45,7 @@ class Dataset(object):
             Return:
                 Instantiated Dataset Object
         """
+        self.subset_size = subset_size
         x, y = self.generate(**kwargs)
         if x.ndim == 1:
             x = x.reshape(np.shape(x)[0], 1)
@@ -53,10 +54,10 @@ class Dataset(object):
         self.features = x
         self.labels = y
         print("Feature Shape %s\nLabel Shape %s" %
-              (str(x.shape), str(y.shape)))
-        self.num_instances = np.shape(x)[0]
-        self.num_features = np.shape(x)[1:]         # can be an N-Tuple if the dataset is multi-dimensional
-        self.num_labels = np.shape(y)[1:]
+              (str(self.features.shape), str(self.labels.shape)))
+        self.num_instances = np.shape(self.features)[0]
+        self.num_features = np.shape(self.features)[1:]         # can be an N-Tuple if the dataset is multi-dimensional
+        self.num_labels = np.shape(self.labels)[1:]
         self.idx = np.arange(self.num_instances)
         self.unique_labels = np.unique(self.labels)
         self.num_unique_labels = self.unique_labels.size
@@ -156,7 +157,7 @@ class Dataset(object):
         with open(file_path, 'rb') as f_in:
             for _ in range(0, input_size, max_bytes):
                 bytes_in += f_in.read(max_bytes)
-        data = pickle.loads(bytes_in, protocol=4)
+        data = pickle.loads(bytes_in)
         return data
 
     def save(self, prefix="dataset", large=False):
