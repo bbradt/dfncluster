@@ -2,11 +2,11 @@ from dfncluster.Dataset import FNCDataset
 from dfncluster.Clusterer import KMeansClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
-
+from data.FNCDatasets.FbirnFNC import FbirnFNC
 import os
 import numpy as np
 
-if __name__=='__main__':
+if __name__ == '__main__':
 
     # Parameters for KMeans
     kmeans_params = dict(
@@ -17,15 +17,21 @@ if __name__=='__main__':
         metrics=['silhouette'],
         verbose=0
     )
+    filename = 'data/FNCDatasets/FbirnFNC/fbirn_fnc.npy'
 
     # Load the Data Set
-    fbirn_data = FNCDataset.load('data/FNCDatasets/OmegaSim/omega_sim.npy')
+    if not os.path.exists(filename):
+        print("Remaking data set on disk")
+        FbirnFNC.make()
+    print("Reloading data set from disk")
+    fbirn_data = FNCDataset.load('data/FNCDatasets/FbirnFNC/fbirn_fnc.npy')
     subject_data, subject_labels = fbirn_data.get_subjects()
 
     # Create the dFNC Runner
     dfnc = dFNC(dataset=fbirn_data, clusterer=KMeansClusterer)
 
     # Run it, passing KMeans Params
+    print("Running dFNC with KMeans clustering")
     results, assignments = dfnc.run(**kmeans_params)
 
     # Print results
@@ -43,6 +49,7 @@ if __name__=='__main__':
     poly.build()
     poly.run()
 
+    """
     os.makedirs('results/polyssifier/FNCOnly', exist_ok=True)
   
     poly = Polyssifier(subject_data.reshape(subject_data.shape[0],np.prod(subject_data.shape[1:])),
@@ -53,3 +60,4 @@ if __name__=='__main__':
                        concurrency=1)
     poly.build()
     poly.run()
+    """
