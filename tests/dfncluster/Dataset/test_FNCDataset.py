@@ -9,10 +9,11 @@ from dfncluster.Dataset import FNCDataset
 from dfncluster.Dataset.MatDataset import load_wrapper
 
 PARAMETERS = dict(
-    shuffle=True,
+    shuffle_instances=True,
     filename='data.csv',
     feature_columns=['feature'],
-    label_columns=['label']
+    label_columns=['label'],
+    pre_shuffle=False
 )
 TEST_CLASS = FNCDataset
 
