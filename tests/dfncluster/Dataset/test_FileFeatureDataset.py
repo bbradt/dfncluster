@@ -6,11 +6,12 @@ from tempfile import TemporaryDirectory, TemporaryFile
 from dfncluster.Dataset import FileFeatureDataset
 
 PARAMETERS = dict(
-    shuffle=True,
+    shuffle_instances=True,
     filename='data.csv',
     feature_columns=['feature'],
     label_columns=['label'],
-    loader=np.load
+    loader=np.load,
+    pre_shuffle=False
 )
 TEST_CLASS = FileFeatureDataset
 
