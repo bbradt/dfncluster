@@ -53,7 +53,7 @@ To run with the pre-computed ICA Timecourses from real data, run the following
 
 first, untar the data
 ```
-cd data/FNCDatasets/FbirnFNC
+cd data/MatDatasets/FbirnTC
 tar -xzf subjects.tar.gz
 ```
 
@@ -61,7 +61,7 @@ back in the dfncluster directory, build the data set, which serializes
 the data set object as a pickled npy file
 
 ```
-PYTHONPATH=. python data/FNCDatasets/FbirnFNC/FbirnFNC.py
+PYTHONPATH=. python data/MatDatasets/FbirnTC/FbirnTC.py
 ```
 
 And run the main function, which performs dFNC analysis, and classification
@@ -77,7 +77,7 @@ To run with the pre-computed ICA Timecourses, run the following
 
 first, untar the simulated data
 ```
-cd data/FNCDatasets/OmegaSim
+cd data/MatDatasets/OmegaSim
 tar -xzf subjects.tar.gz
 ```
 
@@ -85,7 +85,7 @@ back in the dfncluster directory, build the simulations data set, which serializ
 the data set object as a pickled npy file
 
 ```
-PYTHONPATH=. python data/FNCDatasets/OmegaSim/OmegaSim.py
+PYTHONPATH=. python data/MatDatasets/OmegaSim/OmegaSim.py
 ```
 
 ### Running on Subsets
