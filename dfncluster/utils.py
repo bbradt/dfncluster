@@ -29,4 +29,4 @@ def padded_stack(*args):
         for s_b, s_a in zip(max_shape, s):
             diffs.append((0, max(s_b-s_a, 0)))
         ac[i] = np.pad(x, diffs)
-    return np.stack(ac, 0)
+    return np.squeeze(np.stack(ac, 0))
