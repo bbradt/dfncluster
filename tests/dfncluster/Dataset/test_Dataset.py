@@ -7,7 +7,7 @@ from tempfile import TemporaryDirectory
 from dfncluster.Dataset import Dataset
 
 PARAMETERS = dict(
-    shuffle=True
+    shuffle_instances=True
 )
 TEST_CLASS = Dataset
 

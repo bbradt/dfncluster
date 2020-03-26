@@ -1,6 +1,8 @@
 import sklearn.model_selection as skms
 import pandas as pd
 import numpy as np
+import pickle
+import os
 
 
 class Dataset(object):
@@ -29,7 +31,7 @@ class Dataset(object):
                 load            |   Dataset             |   class, filename |   -                   |   classmethod to load a dataset of given type or sub-type of Dataset
     """
 
-    def __init__(self, shuffle_instances=True, **kwargs):
+    def __init__(self, shuffle_instances=True, subset_size=1.0,  **kwargs):
         """
             Constructor for Dataset super-class. Generally should not be instantiated.
             Usage:
@@ -43,6 +45,7 @@ class Dataset(object):
             Return:
                 Instantiated Dataset Object
         """
+        self.subset_size = subset_size
         x, y = self.generate(**kwargs)
         if x.ndim == 1:
             x = x.reshape(np.shape(x)[0], 1)
@@ -51,10 +54,10 @@ class Dataset(object):
         self.features = x
         self.labels = y
         print("Feature Shape %s\nLabel Shape %s" %
-              (str(x.shape), str(y.shape)))
-        self.num_instances = np.shape(x)[0]
-        self.num_features = np.shape(x)[1:]         # can be an N-Tuple if the dataset is multi-dimensional
-        self.num_labels = np.shape(y)[1:]
+              (str(self.features.shape), str(self.labels.shape)))
+        self.num_instances = np.shape(self.features)[0]
+        self.num_features = np.shape(self.features)[1:]         # can be an N-Tuple if the dataset is multi-dimensional
+        self.num_labels = np.shape(self.labels)[1:]
         self.idx = np.arange(self.num_instances)
         self.unique_labels = np.unique(self.labels)
         self.num_unique_labels = self.unique_labels.size
@@ -138,7 +141,26 @@ class Dataset(object):
         self.labels = self.labels[self.idx, ...]
         return self.idx
 
-    def save(self, prefix="dataset"):
+    @staticmethod
+    def _save_large(file_path, data):
+        max_bytes = 2**31 - 1
+        bytes_out = pickle.dumps(data,  protocol=4)
+        with open(file_path, 'wb') as f_out:
+            for idx in range(0, len(bytes_out), max_bytes):
+                f_out.write(bytes_out[idx:idx+max_bytes])
+
+    @staticmethod
+    def _load_large(file_path):
+        max_bytes = 2**31 - 1
+        bytes_in = bytearray(0)
+        input_size = os.path.getsize(file_path)
+        with open(file_path, 'rb') as f_in:
+            for _ in range(0, input_size, max_bytes):
+                bytes_in += f_in.read(max_bytes)
+        data = pickle.loads(bytes_in)
+        return data
+
+    def save(self, prefix="dataset", large=False):
         """
            Usage:
                 dataset = Dataset(**kwargs)
@@ -154,10 +176,14 @@ class Dataset(object):
             End-State:
                 the dataset object prefix.npy is saved
         """
-        np.save(prefix, self, allow_pickle=True)
+        if large:
+            fn = prefix + '.pkl'
+            Dataset._save_large(fn, self)
+        else:
+            np.save(prefix, self, allow_pickle=True)
 
     @classmethod
-    def load(cls, filename):
+    def load(cls, filename, large=False):
         """
            Usage:
                 dataset = Dataset(**kwargs)
@@ -176,6 +202,9 @@ class Dataset(object):
             End-State:
                 -
         """
-        loaded = np.load(filename, allow_pickle=True).item()
+        if large:
+            loaded = Dataset._load_large(filename)
+        else:
+            loaded = np.load(filename, allow_pickle=True).item()
         loaded.__class__ = cls
         return loaded

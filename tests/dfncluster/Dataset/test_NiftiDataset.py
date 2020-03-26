@@ -10,10 +10,11 @@ from dfncluster.Dataset import NiftiDataset
 from dfncluster.Dataset.NiftiDataset import load_wrapper
 
 PARAMETERS = dict(
-    shuffle=True,
+    shuffle_instances=True,
     filename='data.csv',
     feature_columns=['feature'],
-    label_columns=['label']
+    label_columns=['label'],
+    pre_shuffle=False
 )
 TEST_CLASS = NiftiDataset
 
