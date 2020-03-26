@@ -1,8 +1,8 @@
-from dfncluster.Dataset import FNCDataset
+from dfncluster.Dataset import MatDataset
 from dfncluster.Clusterer import KMeansClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
-from data.FNCDatasets.FbirnFNC import FbirnFNC
+from data.MatDatasets.FbirnTC.FbirnTC import FbirnTC
 import os
 import numpy as np
 
@@ -17,26 +17,27 @@ if __name__ == '__main__':
         metrics=['silhouette'],
         verbose=0
     )
-    filename = 'data/FNCDatasets/FbirnFNC/fbirn_fnc.npy'
+    filename = 'data/MatDatasets/FbirnTC/fbirn_tc.npy'
 
     # Load the Data Set
     if not os.path.exists(filename):
         print("Remaking data set on disk")
-        FbirnFNC.make()
+        FbirnTC.make()
     print("Reloading data set from disk")
-    fbirn_data = FNCDataset.load('data/FNCDatasets/FbirnFNC/fbirn_fnc.npy')
-    subject_data, subject_labels = fbirn_data.get_subjects()
+    fbirn_data = MatDataset.load(filename)
 
     # Create the dFNC Runner
-    dfnc = dFNC(dataset=fbirn_data, clusterer=KMeansClusterer)
+    dfnc = dFNC(dataset=fbirn_data, clusterer=KMeansClusterer, window_size=22, time_index=1)
 
     # Run it, passing KMeans Params
     print("Running dFNC with KMeans clustering")
     results, assignments = dfnc.run(**kmeans_params)
 
+    subject_data, subject_labels = dfnc.get_subjects()
+
     # Print results
     print(results)
-    print(assignments, assignments.shape, fbirn_data.labels.shape)
+    #print(assignments, assignments.shape, fbirn_data.labels.shape)
 
     os.makedirs('results/polyssifier/KMeans', exist_ok=True)
 

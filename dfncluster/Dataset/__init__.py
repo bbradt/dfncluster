@@ -5,7 +5,6 @@ from .GaussianDataset import GaussianDataset
 from .NiftiDataset import NiftiDataset
 from .OpenNeuroDataset import OpenNeuroDataset
 from .MatDataset import MatDataset
-from .FNCDataset import FNCDataset
 from .SklearnDataset import SklearnDataset
 # from .ImageDataset import ImageDataset
 
