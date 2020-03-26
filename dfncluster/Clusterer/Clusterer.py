@@ -52,7 +52,7 @@ CENTROID_METRICS = dict(
 )
 
 class Clusterer:
-    def __init__(self, metrics=[],X=[], Y=[], centroids=None, **kwargs):
+    def __init__(self, metrics=[], X=[], Y=[], centroids=None, **kwargs):
         """
             metrics - list<str> - list of metrics to use for evaluation
             X - ndarray<float> - NxD features array

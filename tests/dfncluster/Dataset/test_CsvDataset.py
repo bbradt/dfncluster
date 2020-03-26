@@ -7,10 +7,11 @@ from tests.dfncluster.Dataset.test_Dataset import TestDataset
 from dfncluster.Dataset import CsvDataset
 
 PARAMETERS = dict(
-    shuffle=True,
+    shuffle_instances=True,
     filename='data.csv',
     feature_columns=['feature'],
-    label_columns=['label']
+    label_columns=['label'],
+    pre_shuffle=False
 )
 TEST_CLASS = CsvDataset
 
