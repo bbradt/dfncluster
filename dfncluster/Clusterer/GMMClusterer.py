@@ -63,12 +63,15 @@ class GMMClusterer(Clusterer):
     def __init__(self, **kwargs):
         super(GMMClusterer, self).__init__(**kwargs)
         if self.centroids is not None:
-            kwargs['init'] = self.centroids
+            kwargs['init_params'] = self.centroids
         self.model = sklearn.mixture.GaussianMixture(**{k:v for k,v in kwargs.items() if k in ALLOWED_KWARGS})
 
     def fit(self):
-        uniqueValues, occurCount = np.unique(self.Y, return_counts=True)
-        self.model.fit(self.X, self.X)
+        self.model.fit(self.X, self.Y)
+        self.assignments = self.model.predict(self.X)
+        self.model.predict_ = self.assignments
+        self.pred_proba = self.model.predict_proba(self.X)
+        self.centroids = self.model.means_
         self.weights_ = self.model.weights_
         self.means_ = self.model.means_
         self.covariances_ = self.model.covariances_
