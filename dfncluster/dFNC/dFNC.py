@@ -174,6 +174,12 @@ class dFNC:
         return y
 
     def run(self, evaluate=False, **kwargs):
+        """Run dFNC, including the following steps:
+            1. Window computation
+            2. First stage exemplar clustering
+            3. Second stage full data clustering with exemplar initialization
+            4. reassignment of cluster assignments to subjects
+        """
         print("Computing FNC Windows")
         fnc_features, fnc_labels = self.compute_windows()
         print("Performing exemplar clustering")
@@ -181,7 +187,7 @@ class dFNC:
         exemplar_clusterer.fit()
         print("Performing full clustering")
         kwargs['n_init'] = 1
-        cluster_instance = self.clusterer(X=fnc_features, Y=fnc_labels, centroids=exemplar_clusterer.centroids, **kwargs)
+        cluster_instance = self.clusterer(X=fnc_features, Y=fnc_labels, initialization=exemplar_clusterer.get_results_for_init(), **kwargs)
         cluster_instance.fit()
         if evaluate:
             print("Evaluating clustering")
