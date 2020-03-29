@@ -21,6 +21,7 @@ import sklearn.metrics as skm
 import numpy as np
 import abc
 
+
 def paired_wrapper(metric, agg=np.sum):
     """Wrap paired metrics with a numpy aggregation function
         Args:
@@ -30,9 +31,10 @@ def paired_wrapper(metric, agg=np.sum):
         Returns:
             function handle for the newly wrapped function
     """
-    def wrapped(X,Y):
-        return agg(metric(X,Y))
+    def wrapped(X, Y):
+        return agg(metric(X, Y))
     return wrapped
+
 
 LABEL_METRICS = dict(
     calinksi_harabaz=skm.calinski_harabaz_score,
@@ -51,8 +53,9 @@ CENTROID_METRICS = dict(
     max_city=paired_wrapper(skm.pairwise.paired_manhattan_distances, np.max),
 )
 
+
 class Clusterer:
-    def __init__(self, metrics=[], X=[], Y=[], centroids=None, **kwargs):
+    def __init__(self, metrics=[], X=[], Y=[], centroids=None, initialization={}, **kwargs):
         """
             metrics - list<str> - list of metrics to use for evaluation
             X - ndarray<float> - NxD features array
@@ -68,8 +71,8 @@ class Clusterer:
         self.X = X
         self.Y = Y
         self.params = kwargs
-        self.params['metrics'] = metrics        
-    
+        self.params['metrics'] = metrics
+
     @abc.abstractmethod
     def fit(self):
         """
@@ -79,7 +82,7 @@ class Clusterer:
         """
         self.centroids = []
         self.assignments = []
-    
+
     def evaluate(self):
         """
             Run evaluation metrics and save in self.results
@@ -96,7 +99,7 @@ class Clusterer:
                 results[metric] = LABEL_METRICS[metric](self.X, self.assignments)
         self.results = results
         return results
-    
+
     def save(self, filename):
         """
             Save the clusterer, serializing centroids and assignments.
