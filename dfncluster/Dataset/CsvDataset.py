@@ -18,7 +18,7 @@ class CsvDataset(Dataset):
             generate        |   (ndarray, ndarray)  |   self            |   **kwargs            |   overrides superclass function, generates the dataset (features, labels)
     """
 
-    def __init__(self, filename=None, feature_columns=['feature'], label_columns=['label'], **kwargs):
+    def __init__(self, filename=None, feature_columns=['feature'], pre_shuffle=False, label_columns=['label'], **kwargs):
         """
             Constructor for CsvDataset. Generally should not be instantiated.
             Usage:
@@ -38,6 +38,7 @@ class CsvDataset(Dataset):
         super(CsvDataset, self).__init__(filename=filename,
                                          feature_columns=feature_columns,
                                          label_columns=label_columns,
+                                         pre_shuffle=pre_shuffle,
                                          **kwargs)
 
     def generate(self,  **kwargs):
@@ -62,7 +63,13 @@ class CsvDataset(Dataset):
             End-State:
                 -
         """
+        pre_shuffle = kwargs['pre_shuffle']
         full_data = pd.read_csv(kwargs['filename'])
+        if pre_shuffle:
+            full_data = full_data.sample(frac=1)
+        N = full_data.shape[0]
+        sub_N = int(N*self.subset_size)
+        full_data = full_data.iloc[:sub_N, :]
         features = full_data[kwargs['feature_columns']]
         labels = full_data[kwargs['label_columns']]
         x = features.to_numpy()

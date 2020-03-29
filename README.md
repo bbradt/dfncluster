@@ -47,6 +47,29 @@ The following datasets have been included as examples:
 * MNIST (sklearn.datasets.fetch_openml(name='mnist_...)
 * Iris (sklearn.datasets.load_iris)
 
+## Fbirn Data
+
+To run with the pre-computed ICA Timecourses from real data, run the following
+
+first, untar the data
+```
+cd data/MatDatasets/FbirnTC
+tar -xzf subjects.tar.gz
+```
+
+back in the dfncluster directory, build the data set, which serializes
+the data set object as a pickled npy file
+
+```
+PYTHONPATH=. python data/MatDatasets/FbirnTC/FbirnTC.py
+```
+
+And run the main function, which performs dFNC analysis, and classification
+using cluster assignments, and raw states for comparison
+```
+PYTHONPATH=. python main.py
+```
+
 
 ## SIMTB Data
 
@@ -54,7 +77,7 @@ To run with the pre-computed ICA Timecourses, run the following
 
 first, untar the simulated data
 ```
-cd data/FNCDatasets/OmegaSim
+cd data/MatDatasets/OmegaSim
 tar -xzf subjects.tar.gz
 ```
 
@@ -62,18 +85,12 @@ back in the dfncluster directory, build the simulations data set, which serializ
 the data set object as a pickled npy file
 
 ```
-PYTHONPATH=. python data/FNCDatasets/OmegaSim/OmegaSim.py
-```
-
-And run the main function, which performs dFNC analysis, and classification
-using cluster assignments, and raw states for comparison
-```
-python main.py
+PYTHONPATH=. python data/MatDatasets/OmegaSim/OmegaSim.py
 ```
 
 ### Running on Subsets
 
-To run on a subset of the simulated data set, you can either edit data.csv in the OmegaSim directory, and rebuild,
+To run on a subset of the simulated data set, you can either edit data.csv in the data directory, and rebuild,
 or copy that directory under a new name, edit, rebuild and point main.py to the new data set.
 
 ## Other Examples
