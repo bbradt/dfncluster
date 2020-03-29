@@ -182,19 +182,23 @@ class dFNC:
         """
         print("Computing FNC Windows")
         fnc_features, fnc_labels = self.compute_windows()
+
         print("Performing exemplar clustering")
         exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
         exemplar_clusterer.fit()
+
         print("Performing full clustering")
-        kwargs['n_init'] = 1
+        kwargs['n_init'] = 1 # reset since we used exempalrt to produce initial centers
         cluster_instance = self.clusterer(X=fnc_features, Y=fnc_labels, initialization=exemplar_clusterer.get_results_for_init(), **kwargs)
         cluster_instance.fit()
+
         if evaluate:
             print("Evaluating clustering")
             cluster_instance.evaluate()
+
         print("Reassigning states to subjects")
-        assignments = self.reassign_to_subjects(cluster_instance.assignments,
-                                                self.subjects)
+        assignments = self.reassign_to_subjects(
+            cluster_instance.assignments, self.subjects)
         return cluster_instance.results, assignments
 
     def reassign_to_subjects(self, cluster_assigments, subjects):

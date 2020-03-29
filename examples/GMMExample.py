@@ -1,7 +1,7 @@
 import argparse
 from data.SklearnDatasets import Iris, Classification, MNIST, Moons, Blobs
 from dfncluster.Clusterer import GMMClusterer, Clusterer
-import numpy as np
+
 
 DATASETS = dict(
     iris=Iris.make,
@@ -14,14 +14,13 @@ DATASETS = dict(
 METRICS = [
     'calinksi_harabaz',
     'davies_bouldin',
-    'silhouette',
+    'silhouette'
 ]
 
 
 def main(dataset, metrics):
     dataset = DATASETS[dataset.lower()]()
-    unique_val, occur_cnt = np.unique(dataset.labels, return_counts=True)
-    clusterer = GMMClusterer(X=dataset.features, Y=dataset.labels, metrics=metrics, n_components=len(unique_val))
+    clusterer = GMMClusterer(X=dataset.features, Y=dataset.labels, metrics=metrics, n_components=5)
     clusterer.fit()
     results = clusterer.evaluate()
     print(results)

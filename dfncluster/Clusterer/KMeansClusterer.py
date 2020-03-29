@@ -17,6 +17,17 @@ ALLOWED_KWARGS = [
 
 
 class KMeansClusterer(Clusterer):
+    @staticmethod
+    def default_params():
+        return dict(
+            init='k-means++',
+            n_init=100,
+            tol=1e-6,
+            n_clusters=5,
+            metrics=['silhouette'],
+            verbose=0
+        )
+
     def __init__(self, initialization={}, **kwargs):
         super(KMeansClusterer, self).__init__(**kwargs)
         for k, v in initialization.items():
