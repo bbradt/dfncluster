@@ -62,8 +62,8 @@ CENTROID_METRICS = dict(
 class GMMClusterer(Clusterer):
     def __init__(self, **kwargs):
         super(GMMClusterer, self).__init__(**kwargs)
-        if self.centroids is not None:
-            kwargs['init_params'] = self.centroids
+        # if self.centroids is not None:
+            # kwargs['init_params'] = self.centroids
         self.model = sklearn.mixture.GaussianMixture(**{k:v for k,v in kwargs.items() if k in ALLOWED_KWARGS})
 
     def fit(self):

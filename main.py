@@ -1,5 +1,5 @@
 from dfncluster.Dataset import MatDataset
-from dfncluster.Clusterer import KMeansClusterer
+from dfncluster.Clusterer import KMeansClusterer, GMMClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
 from data.MatDatasets.FbirnTC.FbirnTC import FbirnTC
@@ -8,12 +8,21 @@ import numpy as np
 
 if __name__ == '__main__':
 
-    # Parameters for KMeans
-    kmeans_params = dict(
-        init='k-means++',
-        n_init=100,
-        tol=1e-6,
-        n_clusters=5,
+    # Parameters for GMM
+    gmm_params = dict(
+        n_components=2,
+        covariance_type='diag',
+        tol=1e-3,
+        reg_covar=1e-6,
+        max_iter=100,
+        n_init=1,
+        init_params='kmeans',
+        weights_init=None,
+        means_init=None,
+        precisions_init=None,
+        random_state=None,
+        warm_start=False,
+        verbose_interval=10,
         metrics=['silhouette'],
         verbose=0
     )
@@ -27,11 +36,11 @@ if __name__ == '__main__':
     fbirn_data = MatDataset.load(filename)
 
     # Create the dFNC Runner
-    dfnc = dFNC(dataset=fbirn_data, clusterer=KMeansClusterer, window_size=22, time_index=1)
+    dfnc = dFNC(dataset=fbirn_data, clusterer=GMMClusterer, window_size=22, time_index=1)
 
     # Run it, passing KMeans Params
-    print("Running dFNC with KMeans clustering")
-    results, assignments = dfnc.run(**kmeans_params)
+    print("Running dFNC with GMM clustering")
+    results, assignments = dfnc.run(**gmm_params)
 
     subject_data, subject_labels = dfnc.get_subjects()
 
@@ -39,13 +48,13 @@ if __name__ == '__main__':
     print(results)
     #print(assignments, assignments.shape, fbirn_data.labels.shape)
 
-    os.makedirs('results/polyssifier/KMeans', exist_ok=True)
+    os.makedirs('results/polyssifier/GMM', exist_ok=True)
 
     poly = Polyssifier(assignments,
                        subject_labels,
                        n_folds=10,
                        path='results/polyssifier',
-                       project_name='KMeans',
+                       project_name='GMM',
                        concurrency=1)
     poly.build()
     poly.run()
