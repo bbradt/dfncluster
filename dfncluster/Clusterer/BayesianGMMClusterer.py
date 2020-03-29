@@ -1,3 +1,4 @@
+import numpy as np
 import sklearn.mixture as skm
 from dfncluster.Clusterer import Clusterer
 
@@ -23,8 +24,6 @@ ALLOWED_KWARGS = [
 class BayesianGMMClusterer(Clusterer):
     def __init__(self, **kwargs):
         super(BayesianGMMClusterer, self).__init__(**kwargs)
-        if self.centroids is not None:
-            kwargs['init_params'] = self.centroids
         self.model = skm.BayesianGaussianMixture(
             **{k: v for k, v in kwargs.items() if k in ALLOWED_KWARGS})
 
