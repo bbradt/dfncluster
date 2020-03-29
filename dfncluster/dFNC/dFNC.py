@@ -188,7 +188,7 @@ class dFNC:
         exemplar_clusterer.fit()
 
         print("Performing full clustering")
-        kwargs['n_init'] = 1 # reset since we used exempalrt to produce initial centers
+        kwargs['n_init'] = 1 # reset since we used exempalr to produce initial centers
         cluster_instance = self.clusterer(X=fnc_features, Y=fnc_labels, initialization=exemplar_clusterer.get_results_for_init(), **kwargs)
         cluster_instance.fit()
 
