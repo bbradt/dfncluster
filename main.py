@@ -1,5 +1,5 @@
 from dfncluster.Dataset import MatDataset
-from dfncluster.Clusterer import KMeansClusterer
+from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
 from data.MatDatasets.FbirnTC.FbirnTC import FbirnTC
@@ -9,13 +9,14 @@ import numpy as np
 if __name__ == '__main__':
 
     # Parameters for KMeans
-    kmeans_params = dict(
-        init='k-means++',
-        n_init=100,
-        tol=1e-6,
-        n_clusters=5,
-        metrics=['silhouette'],
-        verbose=0
+    params = dict(
+        n_components=5,         # give a high number and allow alpha to reduce
+        init_params='kmeans',   # use kmeans to set initial centers
+        covariance_type='diag', # assume features are not independent
+        n_init=1,               # number of initializations to perform
+        weight_concentration_prior_type='dirichlet_process', # stick breaking cluster generation
+        weight_concentration_prior=1. / 5, # default alpha weight
+        metrics=['silhouette']
     )
     filename = 'data/MatDatasets/FbirnTC/fbirn_tc.npy'
 
@@ -27,11 +28,11 @@ if __name__ == '__main__':
     fbirn_data = MatDataset.load(filename)
 
     # Create the dFNC Runner
-    dfnc = dFNC(dataset=fbirn_data, clusterer=KMeansClusterer, window_size=22, time_index=1)
+    dfnc = dFNC(dataset=fbirn_data, clusterer=BayesianGMMClusterer, window_size=22, time_index=1)
 
     # Run it, passing KMeans Params
     print("Running dFNC with KMeans clustering")
-    results, assignments = dfnc.run(**kmeans_params)
+    results, assignments = dfnc.run(**params)
 
     subject_data, subject_labels = dfnc.get_subjects()
 

@@ -31,4 +31,3 @@ class BayesianGMMClusterer(Clusterer):
     def fit(self):
         self.assignments = self.model.fit_predict(self.X, self.Y)
         self.centroids = self.model.means_
-        pass
