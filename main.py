@@ -42,6 +42,8 @@ if __name__=='__main__':
     print("Running dFNC with DBSCAN clustering")
     results, assignments = dfnc.run(**params)
 
+    pdb.set_trace()
+
     subject_data, subject_labels = dfnc.get_subjects()
 
     # Print results

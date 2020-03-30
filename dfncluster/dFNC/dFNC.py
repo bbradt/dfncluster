@@ -1,5 +1,5 @@
 import numpy as np
-
+import pdb
 
 def corr_wrapper(x):
     return np.corrcoef(x)
@@ -190,15 +190,19 @@ class dFNC:
         print("Performing full clustering")
         kwargs['n_init'] = 1 # reset since we used exempalr to produce initial centers
         cluster_instance = self.clusterer(X=fnc_features, Y=fnc_labels, initialization=exemplar_clusterer.get_results_for_init(), **kwargs)
+        pdb.set_trace() 
         cluster_instance.fit()
 
         if evaluate:
             print("Evaluating clustering")
+            pdb.set_trace()
             cluster_instance.evaluate()
 
         print("Reassigning states to subjects")
         assignments = self.reassign_to_subjects(
             cluster_instance.assignments, self.subjects)
+
+        pdb.set_trace()
         return cluster_instance.results, assignments
 
     def reassign_to_subjects(self, cluster_assigments, subjects):

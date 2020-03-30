@@ -12,7 +12,7 @@ DATASETS = dict(
 )
 
 METRICS = [
-    'calinksi_harabaz',
+    # 'calinksi_harabaz',
     'davies_bouldin',
     'silhouette',
     # 'mean_euclid',

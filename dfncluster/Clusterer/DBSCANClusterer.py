@@ -14,6 +14,7 @@ ALLOWED_KWARGS = [
     'leaf_size',
     'p',
     'n_jobs',
+    'evaluate'
 ]
 
 SCORE_METRICS = dict(
@@ -32,8 +33,9 @@ class DBSCANClusterer(Clusterer):
     def default_params():
         return dict(
             eps=5,
-            min_samples=10,
-            metrics=['silhouette']
+            min_samples=1,
+            metrics=['silhouette'],
+            evaluate=True
         )
 
     def __init__(self, **kwargs):

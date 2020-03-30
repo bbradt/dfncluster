@@ -43,7 +43,7 @@ SCORE_METRICS = dict(
 )
 
 LABEL_METRICS = dict(
-    calinksi_harabaz=skm.calinski_harabasz_score,
+    # calinksi_harabaz=skm.calinski_harabasz_score,
     davies_bouldin=skm.davies_bouldin_score,
     silhouette=skm.silhouette_score,
 )
