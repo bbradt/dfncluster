@@ -4,7 +4,7 @@ from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
 from data.MatDatasets.FbirnTC.FbirnTC import FbirnTC
 import os
-import numpy as np
+
 
 if __name__ == '__main__':
 
@@ -13,7 +13,7 @@ if __name__ == '__main__':
     to test mutiple clustering algorithms and corresponding
     hyperparamters, need to study grid search API.
     """
-    params = GMMClusterer.default_params()
+    params = KMeansClusterer.default_params()
     filename = 'data/MatDatasets/FbirnTC/fbirn_tc.npy'
 
     # Load the Data Set
