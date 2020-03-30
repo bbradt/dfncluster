@@ -13,7 +13,7 @@ if __name__ == '__main__':
     to test mutiple clustering algorithms and corresponding
     hyperparamters, need to study grid search API.
     """
-    params = KMeansClusterer.default_params()
+    params = DBSCANClusterer.default_params()
     filename = 'data/MatDatasets/FbirnTC/fbirn_tc.npy'
 
     # Load the Data Set
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     # Create the dFNC Runner
     dfnc = dFNC(
         dataset=fbirn_data,
-        clusterer=KMeansClusterer,
+        clusterer=DBSCANClusterer,
         window_size=22, time_index=1)
 
     # Run it, passing [KMeans, BayesGMM] params

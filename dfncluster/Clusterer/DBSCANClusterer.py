@@ -32,7 +32,7 @@ class DBSCANClusterer(Clusterer):
     @staticmethod
     def default_params():
         return dict(
-            eps=5,
+            eps=1,
             min_samples=1,
             metrics=['silhouette'],
             evaluate=True
@@ -49,6 +49,10 @@ class DBSCANClusterer(Clusterer):
     def get_results_for_init(self):
         """Return own results in a dictionary, that maps to initialization for running
             a second time.
+
+            NOTE: This method doesn't appear necessary for DBSCAN, since it is a 
+            hard clustering approach that doesn't require any initialization. Still
+            implemented in order to smoothly run the dFNC pipeline.
         """
         return dict()
 
