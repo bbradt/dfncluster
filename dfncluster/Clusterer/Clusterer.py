@@ -73,6 +73,16 @@ class Clusterer:
         self.params = kwargs
         self.params['metrics'] = metrics
 
+    @staticmethod
+    @abc.abstractmethod
+    def default_params():
+        """
+            Abstact run time parameter generation method. Helps
+            encapsulates clustering algorithm withing each clustering
+            class to ease integration testing.
+        """
+        pass
+
     @abc.abstractmethod
     def fit(self):
         """

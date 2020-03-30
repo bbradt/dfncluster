@@ -1,22 +1,19 @@
 from dfncluster.Dataset import MatDataset
-from dfncluster.Clusterer import KMeansClusterer
+from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
 from data.MatDatasets.FbirnTC.FbirnTC import FbirnTC
 import os
-import numpy as np
+
 
 if __name__ == '__main__':
 
-    # Parameters for KMeans
-    kmeans_params = dict(
-        init='k-means++',
-        n_init=100,
-        tol=1e-6,
-        n_clusters=5,
-        metrics=['silhouette'],
-        verbose=0
-    )
+    """
+    TODO: make param generation an iterable data structure
+    to test mutiple clustering algorithms and corresponding
+    hyperparamters, need to study grid search API.
+    """
+    params = KMeansClusterer.default_params()
     filename = 'data/MatDatasets/FbirnTC/fbirn_tc.npy'
 
     # Load the Data Set
@@ -27,25 +24,28 @@ if __name__ == '__main__':
     fbirn_data = MatDataset.load(filename)
 
     # Create the dFNC Runner
-    dfnc = dFNC(dataset=fbirn_data, clusterer=KMeansClusterer, window_size=22, time_index=1)
+    dfnc = dFNC(
+        dataset=fbirn_data,
+        clusterer=KMeansClusterer,
+        window_size=22, time_index=1)
 
-    # Run it, passing KMeans Params
+    # Run it, passing [KMeans, BayesGMM] params
     print("Running dFNC with KMeans clustering")
-    results, assignments = dfnc.run(**kmeans_params)
+    results, assignments = dfnc.run(**params)
 
     subject_data, subject_labels = dfnc.get_subjects()
 
     # Print results
     print(results)
-    #print(assignments, assignments.shape, fbirn_data.labels.shape)
+    print(assignments, assignments.shape, fbirn_data.labels.shape)
 
-    os.makedirs('results/polyssifier/KMeans', exist_ok=True)
+    os.makedirs('results/polyssifier/FNCOnly', exist_ok=True)
 
     poly = Polyssifier(assignments,
                        subject_labels,
                        n_folds=10,
                        path='results/polyssifier',
-                       project_name='KMeans',
+                       project_name='FNCOnly',
                        concurrency=1)
     poly.build()
     poly.run()
