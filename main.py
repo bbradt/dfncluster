@@ -29,7 +29,7 @@ if __name__ == '__main__':
         clusterer=KMeansClusterer,
         window_size=22, time_index=1)
 
-    # Run it, passing [KMeans, BayesGMM] params
+    # Run it, passing [KMeans, BayesGMM, GMM] params
     print("Running dFNC with KMeans clustering")
     results, assignments = dfnc.run(**params)
 

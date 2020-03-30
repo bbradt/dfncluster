@@ -124,4 +124,4 @@ class GMMClusterer(Clusterer):
         """Return own results in a dictionary, that maps to initialization for running
             a second time.
         """
-        return dict(init=self.centroids)
+        return dict(means_init=self.centroids)
