@@ -1,5 +1,5 @@
 from dfncluster.Dataset import MatDataset
-from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer
+from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, DBSCANClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
 from data.MatDatasets.FbirnTC.FbirnTC import FbirnTC
