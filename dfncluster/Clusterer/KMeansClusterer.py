@@ -15,14 +15,32 @@ ALLOWED_KWARGS = [
     'algorithm'
 ]
 
+
 class KMeansClusterer(Clusterer):
-    def __init__(self, **kwargs):
+    @staticmethod
+    def default_params():
+        return dict(
+            init='k-means++',
+            n_init=100,
+            tol=1e-6,
+            n_clusters=5,
+            metrics=['silhouette'],
+            verbose=0
+        )
+
+    def __init__(self, initialization={}, **kwargs):
         super(KMeansClusterer, self).__init__(**kwargs)
-        if self.centroids is not None:
-            kwargs['init'] = self.centroids
-        self.model = skc.KMeans(**{k:v for k,v in kwargs.items() if k in ALLOWED_KWARGS})
+        for k, v in initialization.items():
+            kwargs[k] = v
+        self.model = skc.KMeans(**{k: v for k, v in kwargs.items() if k in ALLOWED_KWARGS})
 
     def fit(self):
         self.model.fit(self.X, self.Y)
         self.centroids = self.model.cluster_centers_
         self.assignments = self.model.labels_
+
+    def get_results_for_init(self):
+        """Return own results in a dictionary, that maps to initialization for running
+            a second time.
+        """
+        return dict(init=self.centroids)
