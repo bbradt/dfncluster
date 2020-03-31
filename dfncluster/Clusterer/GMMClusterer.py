@@ -60,15 +60,36 @@ CENTROID_METRICS = dict(
 )
 
 class GMMClusterer(Clusterer):
+    @staticmethod
+    def default_params():
+        return dict(
+            n_components=5,
+            covariance_type='full',
+            tol=1e-3,
+            reg_covar=1e-6,
+            max_iter=100,
+            n_init=1,
+            init_params='kmeans',
+            weights_init=None,
+            means_init=None,
+            precisions_init=None,
+            random_state=None,
+            warm_start=False,
+            verbose_interval=10,
+            metrics=['silhouette'],
+            verbose=0
+        )
+
     def __init__(self, **kwargs):
         super(GMMClusterer, self).__init__(**kwargs)
-        if self.centroids is not None:
-            kwargs['init'] = self.centroids
         self.model = sklearn.mixture.GaussianMixture(**{k:v for k,v in kwargs.items() if k in ALLOWED_KWARGS})
 
     def fit(self):
-        uniqueValues, occurCount = np.unique(self.Y, return_counts=True)
-        self.model.fit(self.X, self.X)
+        self.model.fit(self.X, self.Y)
+        self.assignments = self.model.predict(self.X)
+        self.model.predict_ = self.assignments
+        self.pred_proba = self.model.predict_proba(self.X)
+        self.centroids = self.model.means_
         self.weights_ = self.model.weights_
         self.means_ = self.model.means_
         self.covariances_ = self.model.covariances_
@@ -80,7 +101,6 @@ class GMMClusterer(Clusterer):
 
     def predict(self):
         self.model.predict_ = self.model.predict(self.X)
-
 
     def evaluate(self):
         """
@@ -100,3 +120,8 @@ class GMMClusterer(Clusterer):
         self.results = results
         return results
 
+    def get_results_for_init(self):
+        """Return own results in a dictionary, that maps to initialization for running
+            a second time.
+        """
+        return dict(means_init=self.centroids)
