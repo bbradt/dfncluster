@@ -13,7 +13,7 @@ class GaussianConnectivityDataset(Dataset):
     """
 
     def __init__(self,
-                 num_ics=10,
+                 num_ics=20,
                  num_subjects=314,
                  num_classes=2,
                  num_features=150,
