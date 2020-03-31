@@ -1,6 +1,6 @@
 #  Internal Modules
-from dfncluster.Dataset import MatDataset, SklearnDataset
-from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, GMMClusterer
+from dfncluster.Dataset import MatDataset
+from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, GMMClusterer, DBSCANClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
 #  Internal Dataset Imports
