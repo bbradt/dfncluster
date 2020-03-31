@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 #  Internal Modules
->>>>>>> aed6181ea72b09e5387b1f437e2a82898964d76f
 from dfncluster.Dataset import MatDataset
 from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, GMMClusterer, DBSCANClusterer
 from dfncluster.dFNC import dFNC
