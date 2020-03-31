@@ -14,6 +14,10 @@ from data.SklearnDatasets.Classification import Classification
 import os
 import argparse
 import json
+# Warning suppression
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 
 # Constants
 DATA_ROOT = 'data'
@@ -24,6 +28,14 @@ DATASETS = dict(
     blobs=Blobs,
     classification=Classification,
     simtb=OmegaSim
+)
+DATASET_FILE = dict(
+    iris=os.path.join('data', 'SklearnDatasets', 'Iris', 'Iris.npy'),
+    moons=os.path.join('data', 'SklearnDatasets', 'Mons', 'moons.npy'),
+    fbirn=os.path.join('data', 'SklearnDatasets', 'FbirnTC', 'fbirn_tc.npy'),
+    blobs=os.path.join('data', 'SklearnDatasets', 'Blobs', 'blobs.npy'),
+    classification=os.path.join('data', 'SklearnDatasets', 'Classification', 'classification.npy'),
+    simtb=os.path.join('data', 'MatDatasets', 'OmegaSim', 'omega_sim.npy'),
 )
 CLUSTERERS = dict(
     kmeans=KMeansClusterer,
@@ -37,17 +49,20 @@ CLUSTERERS = dict(
 
 def parse_main_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", default="fbirn", type=str, help="<str> the data set to use. Options are fbirn, simtb, iris, moons, blobs, classification")
-    parser.add_argument("--dataset_file", default=None, type=str, help="<str> the .npy file used by a data set to load so that it is not remade each time")
-    parser.add_argument("--clusterer", default="kmeans", type=str, help="<str> the clusterer to use. Options are kmeans, bgmm, gmm, dbscan")
-    parser.add_argument("--window_size", default=22, type=int, help="<int> the size of the dFNC window")
-    parser.add_argument("--time_index", default=1, type=int, help="<int> the dimension in which dFNC windows will be computed")
-    parser.add_argument("--clusterer_params", default="{}", type=str, help="<str(dict)> dict to be loaded for classifier params(JSON)")
-    parser.add_argument("--classifier_params", default="{}", type=str, help="<str(dict)> dict to be loaded for classifier params (JSON)")
-    parser.add_argument("--outdir", default="FNCOnly", type=str, help="<str> Name of the results directory. Saving hierarchy is: results/<outdir>")
-    parser.add_argument("--dfnc", default=True, type=bool, help="<bool> Do or do not run dFNC")
-    parser.add_argument("--classify", default=True, type=bool, help="<bool> Do or do not do classification")
-    parser.add_argument("-N", default=314, type=int, help="<int> Number of subjects (instances) to test")
+    parser.add_argument("--dataset", default="fbirn", type=str,
+                        help="<str> the data set to use. Options are fbirn, simtb, iris, moons, blobs, classification; DEFAULT=%s" % "fbirn")
+    parser.add_argument("--remake_data", default=False, type=bool, help="<bool> whether or not to remake the data set; DEFAULT=%s" % False)
+    parser.add_argument("--clusterer", default="kmeans", type=str,
+                        help="<str> the clusterer to use. Options are kmeans, bgmm, gmm, dbscan; DEFAULT=%s" % "kmeans")
+    parser.add_argument("--window_size", default=22, type=int, help="<int> the size of the dFNC window; DEFAULT=%s" % 22)
+    parser.add_argument("--time_index", default=1, type=int, help="<int> the dimension in which dFNC windows will be computed; DEFAULT=%s" % 1)
+    parser.add_argument("--clusterer_params", default="{}", type=str, help="<str(dict)> dict to be loaded for classifier params(JSON); DEFAULT=%s" % "\"{}\"")
+    parser.add_argument("--classifier_params", default="{}", type=str, help="<str(dict)> dict to be loaded for classifier params (JSON); DEFAULT=%s" % "\"{}\"")
+    parser.add_argument("--outdir", default="FNCOnly", type=str,
+                        help="<str> Name of the results directory. Saving hierarchy is: results/<outdir>; DEFAULT=%s" % "FNCOnly")
+    parser.add_argument("--dfnc", default=True, type=bool, help="<bool> Do or do not run dFNC; DEFAULT=%s" % True)
+    parser.add_argument("--classify", default=True, type=bool, help="<bool> Do or do not do classification; DEFAULT=%s" % True)
+    parser.add_argument("--subset_size", default=1.0, type=float, help="<float [0,1]> percentage of data to use; DEFAULT=1.0 (all data)")
     return parser.parse_args()
 
 
@@ -78,12 +93,15 @@ if __name__ == '__main__':
     InputDataset = DATASETS[args.dataset]
 
     print("Loading data set")
-    if args.dataset_file is not None and os.path.exists(args.dataset_file):
-        dataset = InputDataset.load(args.dataset_file)
-    else:
+    if not os.path.exists(DATASET_FILE[args.dataset]) or args.remake_data:
         dataset = InputDataset.make()
-    features = dataset.features
-    labels = dataset.labels
+        dataset.save(DATASET_FILE[args.dataset])
+    else:
+        dataset = InputDataset.load(DATASET_FILE[args.dataset])
+    sub_N = int(dataset.num_instances*args.subset_size)
+
+    features = dataset.features[:sub_N, ...]
+    labels = dataset.labels[:sub_N, ...]
 
     # Create the dFNC Runner
     if args.dfnc:
