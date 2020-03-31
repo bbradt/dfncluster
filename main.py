@@ -38,7 +38,7 @@ CLUSTERERS = dict(
     kmeans=KMeansClusterer,
     bgmm=BayesianGMMClusterer,
     gmm=GMMClusterer,
-    dbscan=None,
+    dbscan=DBSCANClusterer,
     hierarchical=None,
     vae=None
 )
@@ -118,7 +118,7 @@ if __name__ == '__main__':
             window_size=args.window_size, time_index=args.time_index)
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
-        print("Running dFNC with KMeans clustering")
+        print("Running dFNC with %s clustering" % args.clusterer)
         results, assignments = dfnc.run(**params)
 
         subject_data, subject_labels = dfnc.get_subjects()
