@@ -186,11 +186,13 @@ class dFNC:
         print("Performing exemplar clustering")
         exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
         exemplar_clusterer.fit()
+        self.exemplar_clusterer = exemplar_clusterer
 
         print("Performing full clustering")
-        kwargs['n_init'] = 1 # reset since we used exempalr to produce initial centers
+        kwargs['n_init'] = 1  # reset since we used exempalr to produce initial centers
         cluster_instance = self.clusterer(X=fnc_features, Y=fnc_labels, initialization=exemplar_clusterer.get_results_for_init(), **kwargs)
         cluster_instance.fit()
+        self.second_stage_clusterer = cluster_instance
 
         if evaluate:
             print("Evaluating clustering")
@@ -219,3 +221,11 @@ class dFNC:
                 kwargs[param_name] = param_val
                 results[param_name][param_val], assignments[param_name][param_val] = self.run(**kwargs)
         return results, assignments
+
+    def save(self, filename):
+        package = dict()
+        package['first_stage_clusterer'] = self.exemplar_clusterer
+        package['second_stage_clusterer'] = self.second_stage_clusterer
+        package['exemplars'] = self.exemplars
+        package['subjects'] = self.subjects
+        np.save(filename, package, allow_pickle=True)
