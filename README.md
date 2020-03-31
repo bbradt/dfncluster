@@ -25,6 +25,55 @@ and install requirements via pip
 pip install -r requirements.txt
 ```
 
+## Running the Code
+
+You can run `main.py` with the arguments given below, or look at them by running `python main.py --help`
+
+```
+usage: main.py [-h] [--dataset DATASET] [--remake_data REMAKE_DATA]
+               [--clusterer CLUSTERER] [--window_size WINDOW_SIZE]
+               [--time_index TIME_INDEX] [--clusterer_params CLUSTERER_PARAMS]
+               [--classifier_params CLASSIFIER_PARAMS] [--outdir OUTDIR]
+               [--dfnc DFNC] [--classify CLASSIFY] [--subset_size SUBSET_SIZE]
+               [--dfnc_outfile DFNC_OUTFILE] [--seed SEED] [--k K]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --dataset DATASET     <str> the data set to use. Options are fbirn, simtb,
+                        gaussian; DEFAULT=fbirn
+  --remake_data REMAKE_DATA
+                        <bool> whether or not to remake the data set;
+                        DEFAULT=False
+  --clusterer CLUSTERER
+                        <str> the clusterer to use. Options are kmeans, bgmm,
+                        gmm, dbscan; DEFAULT=kmeans
+  --window_size WINDOW_SIZE
+                        <int> the size of the dFNC window; DEFAULT=22
+  --time_index TIME_INDEX
+                        <int> the dimension in which dFNC windows will be
+                        computed; DEFAULT=1
+  --clusterer_params CLUSTERER_PARAMS
+                        <str(dict)> dict to be loaded for classifier
+                        params(JSON); DEFAULT="{}"
+  --classifier_params CLASSIFIER_PARAMS
+                        <str(dict)> dict to be loaded for classifier params
+                        (JSON); DEFAULT="{}"
+  --outdir OUTDIR       <str> Name of the results directory. Saving hierarchy
+                        is: results/<outdir>; DEFAULT=FNCOnly
+  --dfnc DFNC           <bool> Do or do not run dFNC; DEFAULT=True
+  --classify CLASSIFY   <bool> Do or do not do classification; DEFAULT=True
+  --subset_size SUBSET_SIZE
+                        <float [0,1]> percentage of data to use; DEFAULT=1.0
+                        (all data)
+  --dfnc_outfile DFNC_OUTFILE
+                        <str> The filename for saving dFNC results;
+                        DEFAULT=dfnc.npy
+  --seed SEED           <int> Seed for numpy RNG. Used for random generation
+                        of the data set, or for controlling randomness in
+                        Clusterings.; DEFAULT=None (do not use seed)
+  --k K                 <int> number of folds for k-fold cross-validation
+```
+
 ## Examples
 
 ## Sklearn Datasets

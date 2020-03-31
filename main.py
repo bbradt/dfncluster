@@ -1,5 +1,5 @@
 #  Internal Modules
-from dfncluster.Dataset import MatDataset
+from dfncluster.Dataset import MatDataset, SklearnDataset
 from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, GMMClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
@@ -10,10 +10,12 @@ from data.SklearnDatasets.Blobs import Blobs
 from data.SklearnDatasets.Iris import Iris
 from data.SklearnDatasets.Moons import Moons
 from data.SklearnDatasets.Classification import Classification
+
 # External Modules
 import os
 import argparse
 import json
+import numpy as np
 # Warning suppression
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -22,19 +24,15 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 # Constants
 DATA_ROOT = 'data'
 DATASETS = dict(
-    iris=Iris,
-    moons=Moons,
     fbirn=FbirnTC,
-    blobs=Blobs,
-    classification=Classification,
-    simtb=OmegaSim
+    simtb=OmegaSim,
+)
+DATASET_TYPES = dict(
+    fbirn=MatDataset,
+    simtb=MatDataset,
 )
 DATASET_FILE = dict(
-    iris=os.path.join('data', 'SklearnDatasets', 'Iris', 'Iris.npy'),
-    moons=os.path.join('data', 'SklearnDatasets', 'Mons', 'moons.npy'),
-    fbirn=os.path.join('data', 'SklearnDatasets', 'FbirnTC', 'fbirn_tc.npy'),
-    blobs=os.path.join('data', 'SklearnDatasets', 'Blobs', 'blobs.npy'),
-    classification=os.path.join('data', 'SklearnDatasets', 'Classification', 'classification.npy'),
+    fbirn=os.path.join('data', 'MatDatasets', 'FbirnTC', 'fbirn_tc.npy'),
     simtb=os.path.join('data', 'MatDatasets', 'OmegaSim', 'omega_sim.npy'),
 )
 CLUSTERERS = dict(
@@ -50,7 +48,7 @@ CLUSTERERS = dict(
 def parse_main_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", default="fbirn", type=str,
-                        help="<str> the data set to use. Options are fbirn, simtb, iris, moons, blobs, classification; DEFAULT=%s" % "fbirn")
+                        help="<str> the data set to use. Options are fbirn, simtb, gaussian; DEFAULT=%s" % "fbirn")
     parser.add_argument("--remake_data", default=False, type=bool, help="<bool> whether or not to remake the data set; DEFAULT=%s" % False)
     parser.add_argument("--clusterer", default="kmeans", type=str,
                         help="<str> the clusterer to use. Options are kmeans, bgmm, gmm, dbscan; DEFAULT=%s" % "kmeans")
@@ -63,6 +61,10 @@ def parse_main_args():
     parser.add_argument("--dfnc", default=True, type=bool, help="<bool> Do or do not run dFNC; DEFAULT=%s" % True)
     parser.add_argument("--classify", default=True, type=bool, help="<bool> Do or do not do classification; DEFAULT=%s" % True)
     parser.add_argument("--subset_size", default=1.0, type=float, help="<float [0,1]> percentage of data to use; DEFAULT=1.0 (all data)")
+    parser.add_argument("--dfnc_outfile", default="dfnc.npy", type=str, help="<str> The filename for saving dFNC results; DEFAULT=dfnc.npy")
+    parser.add_argument("--seed", default=None,
+                        help="<int> Seed for numpy RNG. Used for random generation of the data set, or for controlling randomness in Clusterings.; DEFAULT=None (do not use seed)",)
+    parser.add_argument("--k", default=5, help="<int> number of folds for k-fold cross-validation")
     return parser.parse_args()
 
 
@@ -75,6 +77,8 @@ if __name__ == '__main__':
     """
 
     args = parse_main_args()
+    print("ARGS")
+    print(args.__dict__)
     if args.clusterer not in CLUSTERERS.keys():
         raise(ValueError("The clusterer %s has not been added to main.py" % args.clusterer))
     result_dir = os.path.join('results', args.outdir)
@@ -85,7 +89,7 @@ if __name__ == '__main__':
     # Add input params to params
     params = InputClusterer.default_params()
     input_params = json.loads(args.clusterer_params)
-    for k, v in input_params:
+    for k, v in input_params.items():
         params[k] = v
 
     if args.dataset not in DATASETS.keys():
@@ -94,10 +98,12 @@ if __name__ == '__main__':
 
     print("Loading data set")
     if not os.path.exists(DATASET_FILE[args.dataset]) or args.remake_data:
+        if args.seed is not None:
+            np.random.seed(args.seed)
         dataset = InputDataset.make()
         dataset.save(DATASET_FILE[args.dataset])
     else:
-        dataset = InputDataset.load(DATASET_FILE[args.dataset])
+        dataset = DATASET_TYPES[args.dataset].load(DATASET_FILE[args.dataset])
     sub_N = int(dataset.num_instances*args.subset_size)
 
     features = dataset.features[:sub_N, ...]
@@ -105,6 +111,8 @@ if __name__ == '__main__':
 
     # Create the dFNC Runner
     if args.dfnc:
+        if args.seed is not None:
+            np.random.seed(args.seed)
         dfnc = dFNC(
             dataset=dataset,
             clusterer=InputClusterer,
@@ -118,15 +126,19 @@ if __name__ == '__main__':
         # Print results
 
         print("dFNC Clustering Results")
-        print(results)
+        print(results, assignments)
+        print("Saving dFNC Results")
+        dfnc.save(os.path.join('results', args.outdir, args.dfnc_outfile))
 
     if args.classify:
         if args.dfnc:
-            features = subject_data
+            features = assignments
             labels = subject_labels
+        if args.seed is not None:
+            np.random.seed(args.seed)
         poly = Polyssifier(features,
                            labels,
-                           n_folds=10,
+                           n_folds=5,
                            path='results',
                            project_name=args.outdir,
                            concurrency=1)
