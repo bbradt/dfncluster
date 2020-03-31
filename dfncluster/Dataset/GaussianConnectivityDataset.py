@@ -13,13 +13,13 @@ class GaussianConnectivityDataset(Dataset):
     """
 
     def __init__(self,
-                 num_ics=20,
-                 num_subjects=314,
+                 num_ics=50,
+                 num_subjects=300,
                  num_classes=2,
-                 num_features=150,
-                 sigma_ics=0.01,
-                 sigma_ext=0.01,
-                 epsilon=0.05):
+                 num_features=159,
+                 sigma_ics=0.1,
+                 sigma_ext=0.001,
+                 epsilon=1):
         """
             Constructor for GaussianConnectivityDataset.
             Usage:
@@ -73,16 +73,17 @@ class GaussianConnectivityDataset(Dataset):
         features = []
         labels = []
         connected_per_class = int(num_ics/num_classes)
-        class_signals = []
-        for c in range(num_classes):
-            class_signals.append(np.random.normal(loc=0, scale=sigma_ics, size=(1, num_features)))
+        #class_signals = []
+        # for c in range(num_classes):
+        #    class_signals.append(np.random.normal(loc=0, scale=sigma_ics, size=(1, num_features)))
         while num_created < num_subjects:
+            source_signal = np.random.normal(loc=0, scale=sigma_ics, size=(1, num_features))
             label = np.random.randint(0, num_classes)
             connected_start = label*connected_per_class
             connected_end = connected_start + connected_per_class
             signal = np.random.normal(loc=0, scale=sigma_ext, size=(num_ics, num_features))
             for ic in range(connected_start, connected_end):
-                signal[ic, ...] = class_signals[label] + np.random.normal(loc=0, scale=epsilon, size=class_signals[label].shape)
+                signal[ic, ...] = source_signal + np.random.normal(loc=0, scale=epsilon, size=source_signal.shape)
             labels.append(label)
             features.append(signal)
             num_created += 1
