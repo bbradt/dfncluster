@@ -1,5 +1,5 @@
 #  Internal Modules
-from dfncluster.Dataset import MatDataset
+from dfncluster.Dataset import MatDataset, SklearnDataset, GaussianConnectivityDataset
 from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, GMMClusterer, DBSCANClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
@@ -10,7 +10,7 @@ from data.SklearnDatasets.Blobs import Blobs
 from data.SklearnDatasets.Iris import Iris
 from data.SklearnDatasets.Moons import Moons
 from data.SklearnDatasets.Classification import Classification
-
+from data.GaussianConnectivityDatasets.TestGCDataset import TestGCDataset
 # External Modules
 import os
 import argparse
@@ -26,14 +26,17 @@ DATA_ROOT = 'data'
 DATASETS = dict(
     fbirn=FbirnTC,
     simtb=OmegaSim,
+    gauss=TestGCDataset
 )
 DATASET_TYPES = dict(
     fbirn=MatDataset,
     simtb=MatDataset,
+    gauss=GaussianConnectivityDataset
 )
 DATASET_FILE = dict(
     fbirn=os.path.join('data', 'MatDatasets', 'FbirnTC', 'fbirn_tc.npy'),
     simtb=os.path.join('data', 'MatDatasets', 'OmegaSim', 'omega_sim.npy'),
+    gauss=os.path.join('data', 'GaussianConnectivityDatasets', 'TestGCDataset', 'test_gc.npy')
 )
 CLUSTERERS = dict(
     kmeans=KMeansClusterer,
