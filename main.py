@@ -6,11 +6,11 @@ from dfncluster.Classifiers import Polyssifier
 #  Internal Dataset Imports
 from data.MatDatasets.FbirnTC.FbirnTC import FbirnTC
 from data.MatDatasets.OmegaSim.OmegaSim import OmegaSim
-from data.SklearnDatasets.Blobs import Blobs
-from data.SklearnDatasets.Iris import Iris
-from data.SklearnDatasets.Moons import Moons
-from data.SklearnDatasets.Classification import Classification
-from data.GaussianConnectivityDatasets.TestGCDataset import TestGCDataset
+from data.SklearnDatasets.Blobs.Blobs import Blobs
+from data.SklearnDatasets.Iris.Iris import Iris
+from data.SklearnDatasets.Moons.Moons import Moons
+from data.SklearnDatasets.Classification.Classification import Classification
+from data.GaussianConnectivityDatasets.TestGCDataset.TestGCDataset import TestGCDataset
 # External Modules
 import os
 import argparse
