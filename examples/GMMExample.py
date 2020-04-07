@@ -14,17 +14,14 @@ DATASETS = dict(
 METRICS = [
     'calinksi_harabaz',
     'davies_bouldin',
-    'silhouette',
-    # 'mean_euclid',
-    # 'mean_city',
+    'silhouette'
 ]
 
 
 def main(dataset, metrics):
     dataset = DATASETS[dataset.lower()]()
-    clusterer = GMMClusterer(X=dataset.features, Y=dataset.labels, metrics=metrics, n_components=3)
+    clusterer = GMMClusterer(X=dataset.features, Y=dataset.labels, metrics=metrics, n_components=5)
     clusterer.fit()
-    clusterer.predict()
     results = clusterer.evaluate()
     print(results)
 

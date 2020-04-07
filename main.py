@@ -1,5 +1,5 @@
 from dfncluster.Dataset import MatDataset
-from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, DBSCANClusterer
+from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, GMMClusterer, DBSCANClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
 from data.MatDatasets.FbirnTC.FbirnTC import FbirnTC
@@ -29,7 +29,7 @@ if __name__ == '__main__':
         clusterer=KMeansClusterer,
         window_size=22, time_index=1)
 
-    # Run it, passing [KMeans, BayesGMM] params
+    # Run it, passing [KMeans, BayesGMM, GMM] params
     print("Running dFNC with KMeans clustering")
     results, assignments = dfnc.run(**params)
 
