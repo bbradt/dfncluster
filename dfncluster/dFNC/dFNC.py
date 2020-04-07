@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def corr_wrapper(x):
     return np.corrcoef(x)
 
