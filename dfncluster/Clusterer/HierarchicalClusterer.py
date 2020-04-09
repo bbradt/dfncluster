@@ -59,8 +59,6 @@ class HierarchicalClusterer(Clusterer):
     def fit(self):
         self.labels_ = self.model.fit_predict(self.X) #fit
         self.assignments = self.labels_
-        print((self.assignments).shape)
-        print(np.unique(self.assignments))
         self.n_clusters_ = self.model.n_clusters_
         self.n_leaves_ = self.model.n_leaves_
         self.n_connected_components_ = self.model.n_connected_components_
