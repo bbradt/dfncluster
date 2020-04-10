@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from dfncluster.Clusterer.Visualisation.Plots import plot_curve, plot_curve_compare
 
@@ -8,6 +9,7 @@ def test_plot_curve():
     with open(target_file) as f:
         assert(not f.closed)
     assert(f.closed)
+    os.remove(target_file)
 
 
 def test_multiple_2d_plot():
@@ -18,3 +20,4 @@ def test_multiple_2d_plot():
     with open(target_file) as f:
         assert(not f.closed)
     assert(f.closed)
+    os.remove(target_file)
