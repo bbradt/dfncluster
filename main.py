@@ -19,12 +19,10 @@ import json
 import numpy as np
 # Warning suppression
 import warnings
-
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
 # Constants
-
 DATA_ROOT = 'data'
 DATASETS = dict(
     fbirn=FbirnTC,
@@ -130,7 +128,6 @@ if __name__ == '__main__':
         results, assignments = dfnc.run(**params)
     
         subject_data, subject_labels = dfnc.get_subjects()
-
         print("dFNC Clustering Results")
         print(results, assignments)
         print("Saving dFNC Results")
