@@ -65,17 +65,21 @@ def parse_main_args():
                         help="<str> the clusterer to use. Options are kmeans, bgmm, gmm, dbscan; DEFAULT=%s" % "kmeans")
     parser.add_argument("--window_size", default=22, type=int, help="<int> the size of the dFNC window; DEFAULT=%s" % 22)
     parser.add_argument("--time_index", default=0, type=int, help="<int> the dimension in which dFNC windows will be computed; DEFAULT=%s" % 1)
-    parser.add_argument("--clusterer_params", default="{}", type=str, help="<str(dict)> dict to be loaded for classifier params(JSON); DEFAULT=%s" % "\"{}\"")
+    parser.add_argument("--clusterer_params", default="{}", type=str, help="<str(dict)> dict to be loaded for classifier params (JSON); DEFAULT=%s" % "\"{}\"")
     parser.add_argument("--classifier_params", default="{}", type=str, help="<str(dict)> dict to be loaded for classifier params (JSON); DEFAULT=%s" % "\"{}\"")
-    parser.add_argument("--outdir", default="FNCOnly", type=str,
+    parser.add_argument("--outdir", default=None, type=str,
                         help="<str> Name of the results directory. Saving hierarchy is: results/<outdir>; DEFAULT=%s" % "FNCOnly")
     parser.add_argument("--skip_dfnc", default=False, help="<bool> Do or do not run dFNC; DEFAULT=%s" % True, action='store_true')
+    parser.add_argument("--skip_clustering", default=False, help="<bool> Do or do not do clustering in dFNC;", action="store_true")
+    parser.add_argument("--skip_exemplar_clustering", default=False, help="<bool> Do or do not do exemplar clustering in dFNC;", action="store_true")
     parser.add_argument("--skip_classify", default=False, help="<bool> Do or do not do classification; DEFAULT=%s" % True, action='store_true')
     parser.add_argument("--subset_size", default=1.0, type=float, help="<float [0,1]> percentage of data to use; DEFAULT=1.0 (all data)")
     parser.add_argument("--dfnc_outfile", default="dfnc.npy", type=str, help="<str> The filename for saving dFNC results; DEFAULT=dfnc.npy")
     parser.add_argument("--seed", default=None,
                         help="<int> Seed for numpy RNG. Used for random generation of the data set, or for controlling randomness in Clusterings.; DEFAULT=None (do not use seed)",)
     parser.add_argument("--k", default=10, help="<int> number of folds for k-fold cross-validation")
+    parser.add_argument("--class_grid", default=None, help="<str> Saved GridSearch for classification (JSON file or npy file)")
+    parser.add_argument("--cluster_grid", default=None, help="<str> Saved GridSearch for clustering (JSON file or npy file)")
     return parser.parse_args()
 
 
@@ -88,6 +92,8 @@ if __name__ == '__main__':
     """
 
     args = parse_main_args()
+    if args.outdir is None:
+        args.outdir = "%s_%s" % (args.clusterer, args.dataset)
     print("ARGS")
     print(args.__dict__)
     if args.clusterer not in CLUSTERERS.keys():
@@ -124,15 +130,19 @@ if __name__ == '__main__':
     if not args.skip_dfnc:
         if args.seed is not None:
             np.random.seed(args.seed)
+        grid_params = None
+        if args.cluster_grid is not None:
+            grid_params = json.load(open(args.cluster_grid, 'r'))
         dfnc = dFNC(
             dataset=dataset,
             clusterer=InputClusterer,
-            window_size=args.window_size, time_index=args.time_index)
+            window_size=args.window_size,
+            time_index=args.time_index)
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
-        results, assignments = dfnc.run(**params)
-        dfnc.visualize_states(assignments, filename="results/%s_%s_states.png" % (args.clusterer, args.dataset))
+        results, assignments = dfnc.run(grid_params=grid_params, **params)
+        dfnc.visualize_states(assignments, filename="results/%s_%s/%s_%s_states.png" % (args.clusterer, args.dataset, args.clusterer, args.dataset))
 
         subject_data, subject_labels = dfnc.get_subjects()
         # Print results
@@ -154,7 +164,10 @@ if __name__ == '__main__':
                            path='results',
                            project_name=args.outdir,
                            concurrency=1)
-        poly.build()
+        grid_params = None
+        if args.class_grid is not None:
+            grid_params = json.load(open(args.class_grid, 'r'))
+        poly.build(params=grid_params)
         poly.run()
 
     """

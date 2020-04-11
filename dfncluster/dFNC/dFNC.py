@@ -177,7 +177,7 @@ class dFNC:
         y = np.convolve(w/w.sum(), s, mode='valid')
         return y
 
-    def run(self, evaluate=False, **kwargs):
+    def run(self, evaluate=False, grid_params=None, **kwargs):
         """Run dFNC, including the following steps:
             1. Window computation
             2. First stage exemplar clustering
@@ -188,7 +188,8 @@ class dFNC:
         fnc_features, fnc_labels = self.compute_windows()
 
         print("Performing exemplar clustering")
-        exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
+        exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], param_grid=grid_params, **kwargs)
+        exemplar_clusterer.model = exemplar_clusterer.fit_grid()
         exemplar_clusterer.fit()
         self.exemplar_clusterer = exemplar_clusterer
 
@@ -232,7 +233,8 @@ class dFNC:
         num_states = len(states)
         if classes is None:
             num_classes = 1
-            fig, ax = plt.subplots(num_classes, num_states, figsize=(30, 30))
+            sb.set()
+            fig, ax = plt.subplots(num_classes, num_states, figsize=(30, 10))
             for k in states:
                 centroid_k = self.second_stage_clusterer.centroids[int(k)]
                 Z = np.zeros((nc, nc))
@@ -243,7 +245,7 @@ class dFNC:
                 ax[k].set_title("State %d" % k)
                 ax[k].set_xticks(())
                 ax[k].set_yticks(())
-            plt.savefig(filename)
+            plt.savefig(filename, bbox_inches='tight')
         return fig
 
     def save(self, filename):
