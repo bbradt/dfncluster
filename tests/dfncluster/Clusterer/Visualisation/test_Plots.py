@@ -28,11 +28,11 @@ def test_multiple_2d_plot():
 
 def test_plot_multiple_ptest_results():
     # stage prepared assignments and label data representative of dFNC results
-    assignments = np.loadtxt('assignments.csv')
-    subject_labels = np.loadtxt('subject_labels.csv')
+    assignments = np.random.randint(low=0, high=5, size=(2048, 2048))
+    subject_labels = np.random.randint(low=0, high=1, size=(2048, 1))
 
     # can change significance levels of test via p_level
-    sig_levels = t_test(assignments, subject_labels, p_level=0.05)
+    sig_levels = t_test(assignments, subject_labels, p_level=0.1)
 
     df = pd.DataFrame({
 
