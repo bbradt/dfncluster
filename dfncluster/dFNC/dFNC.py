@@ -1,4 +1,6 @@
 import numpy as np
+import seaborn as sb
+import matplotlib.pyplot as plt
 
 
 def corr_wrapper(x):
@@ -13,6 +15,7 @@ class dFNC:
         """
         self.dataset = dataset
         self.subject_data = self.dataset.features
+        # input(str(self.subject_data.shape))
         self.subject_labels = self.dataset.labels
         self.clusterer = clusterer
         self.results = []
@@ -57,6 +60,7 @@ class dFNC:
             for ti in range(xi.shape[0]-window_size):
                 window = xi[ti:(ti+window_size)]
                 fnc = metric(window.T)
+                # input(fnc.shape)
                 fnc = fnc[np.triu_indices_from(fnc)].flatten()
                 variance_windows.append(np.var(fnc))
                 sub_x.append(fnc)
@@ -221,6 +225,26 @@ class dFNC:
                 kwargs[param_name] = param_val
                 results[param_name][param_val], assignments[param_name][param_val] = self.run(**kwargs)
         return results, assignments
+
+    def visualize_states(self, assignments, filename="results/states.png", classes=None):
+        nc = self.subject_data.shape[2]
+        states = np.unique(assignments)
+        num_states = len(states)
+        if classes is None:
+            num_classes = 1
+            fig, ax = plt.subplots(num_classes, num_states, figsize=(30, 30))
+            for k in states:
+                centroid_k = self.second_stage_clusterer.centroids[int(k)]
+                Z = np.zeros((nc, nc))
+                Z[np.triu_indices(nc)] = centroid_k
+                Z = Z.T
+                Z[np.triu_indices(nc)] = centroid_k
+                ax[k].imshow(Z, cmap='jet')
+                ax[k].set_title("State %d" % k)
+                ax[k].set_xticks(())
+                ax[k].set_yticks(())
+            plt.savefig(filename)
+        return fig
 
     def save(self, filename):
         package = dict()

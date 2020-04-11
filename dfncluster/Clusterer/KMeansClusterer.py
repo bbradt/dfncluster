@@ -25,7 +25,8 @@ class KMeansClusterer(Clusterer):
             tol=1e-6,
             n_clusters=5,
             metrics=['silhouette'],
-            verbose=0
+            verbose=0,
+            n_jobs=16
         )
 
     def __init__(self, initialization={}, **kwargs):
