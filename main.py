@@ -20,12 +20,6 @@ import numpy as np
 # Warning suppression
 import warnings
 
-
-logging.basicConfig()
-
-logger = logging.getLogger('BBProposalGenerator')
-logger.setLevel(logging.WARNING)
-
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
