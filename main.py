@@ -1,6 +1,7 @@
 #  Internal Modules
 from dfncluster.Dataset import MatDataset, SklearnDataset, GaussianConnectivityDataset
 from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, GMMClusterer, DBSCANClusterer
+from dfncluster.Clusterer.HierarchicalClusterer import HierarchicalClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
 #  Internal Dataset Imports
@@ -55,7 +56,7 @@ CLUSTERERS = dict(
     bgmm=BayesianGMMClusterer,
     gmm=GMMClusterer,
     dbscan=DBSCANClusterer,
-    hierarchical=None,
+    hierarchical=HierarchicalClusterer,
     vae=None
 )
 
