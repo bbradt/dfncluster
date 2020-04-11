@@ -1,5 +1,4 @@
 import numpy as np
-import pdb
 import matplotlib.pyplot as plt
 
 
@@ -224,8 +223,6 @@ class dFNC:
         print("Performing exemplar clustering")
         exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
         exemplar_clusterer.fit()
-        print('parameters', kwargs)
-        print('TRIAL EXEMPLAR, NUM CLUSTERS', len(set(exemplar_clusterer.model.labels_)))
         self.exemplar_clusterer = exemplar_clusterer
 
         print("Performing full clustering")
@@ -263,8 +260,6 @@ class dFNC:
             for param_val in line_params[param_name]:
                 kwargs[param_name] = param_val
                 results[param_name][param_val], assignments[param_name][param_val] = self.run(**kwargs)
-                print('parameters', kwargs)
-                print('TRIAL FULL CLUSTER, NUM CLUSTERS', len(set(self.second_stage_clusterer.model.labels_)))
         return results, assignments
 
     def save(self, filename):

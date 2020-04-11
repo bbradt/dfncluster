@@ -19,9 +19,6 @@ import json
 import numpy as np
 # Warning suppression
 import warnings
-import pdb
-import logging 
-from scipy import linalg as LA
 
 
 logging.basicConfig()
@@ -34,7 +31,6 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 # Constants
 
-# optimal parameters -> 0.7 eps, 3 min_samples9
 DATA_ROOT = 'data'
 DATASETS = dict(
     fbirn=FbirnTC,
@@ -115,7 +111,6 @@ if __name__ == '__main__':
 
     print("Loading data set")
     if not os.path.exists(DATASET_FILE[args.dataset]) or args.remake_data:
-        pdb.set_trace()
         if args.seed is not None:
             np.random.seed(args.seed)
         dataset = InputDataset.make()
@@ -134,59 +129,33 @@ if __name__ == '__main__':
         dfnc = dFNC(
             dataset=dataset,
             clusterer=InputClusterer,
-            window_size= args.window_size, time_index=args.time_index)
+            window_size=args.window_size, time_index=args.time_index)
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
-        # parameters ff
         results, assignments = dfnc.run(**params)
-        # line_params = {
-        #                 'min_samples': [2,3,4,5,6,7,8,9,10]
-        #                }
-
-        # results, assignments = dfnc.line_search(line_params=line_params, **params)
-
+    
         subject_data, subject_labels = dfnc.get_subjects()
-
-        # subject_data_centered -= np.mean(subject_data, axis = 0)  
-
-        # cov = np.cov(subject_data_centered, rowvar = False)
-        # evals , evecs = LA.eigh(cov)
-
-        # idx = np.argsort(evals)[::-1]
-        # evecs = evecs[:,idx]
-        # evals = evals[idx]
-
-        # a = np.dot(x, evecs) 
-
-        # Print results
 
         print("dFNC Clustering Results")
         print(results, assignments)
         print("Saving dFNC Results")
         dfnc.save(os.path.join('results', args.outdir, args.dfnc_outfile))
 
-    log_file = open('logs.txt', 'w')
     if args.classify:
         if args.dfnc:
-            # for param_name in assignments.keys():
-                # for param_val in assignments[param_name]:
-            # print('------------------------------------------')
-            # print('Polyssifier TRIAL', param_name, param_val)
-            # print('------------------------------------------')
-            # assignment = assignments[param_name][param_val]
             features = assignments
             labels = subject_labels
-            if args.seed is not None:
-                np.random.seed(args.seed)
-            poly = Polyssifier(features,
-                               labels,
-                               n_folds=5,
-                               path='results',
-                               project_name=args.outdir,
-                               concurrency=1)
-            poly.build()
-            poly.run()
+        if args.seed is not None:
+            np.random.seed(args.seed)
+        poly = Polyssifier(features,
+                           labels,
+                           n_folds=5,
+                           path='results',
+                           project_name=args.outdir,
+                           concurrency=1)
+        poly.build()
+        poly.run()
 
     """
     os.makedirs('results/polyssifier/FNCOnly', exist_ok=True)
