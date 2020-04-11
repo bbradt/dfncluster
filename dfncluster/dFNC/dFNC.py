@@ -1,4 +1,7 @@
 import numpy as np
+import pdb
+import matplotlib.pyplot as plt
+
 
 def corr_wrapper(x):
     return np.corrcoef(x)
@@ -172,6 +175,42 @@ class dFNC:
         y = np.convolve(w/w.sum(), s, mode='valid')
         return y
 
+
+    def visualize_clusters(self, fnc_features, assignments, clusterer_name, centroids=None):
+
+        fnc_features_centered = fnc_features - np.mean(fnc_features, axis = 0)  
+
+        U, S, Vt = np.linalg.svd(fnc_features_centered, full_matrices=False)
+
+        S = np.diag(S)
+          
+        dim_reduced_X = fnc_features.dot(Vt.T) 
+        
+        dim_reduced_X = dim_reduced_X[:, 0:2] # take first 2 dimensions
+
+        plt.figure(2, figsize=(8, 6))
+        plt.clf()
+    
+        COLOR_LABELS = np.reshape(assignments, (-1))
+
+        plt.scatter(dim_reduced_X[:, 0], dim_reduced_X[:, 1], c=COLOR_LABELS, marker='o')
+
+        if centroids is not None:
+
+            centroids_centered = centroids - np.mean(centroids, axis = 0)  
+              
+            centroids_reduced_X = centroids.dot(Vt.T) 
+            
+            centroids_reduced_X = centroids_reduced_X[:, 0:2] # take first 2 dimensions
+
+            plt.scatter(centroids_reduced_X[:, 0], centroids_reduced_X[:, 1], c='b', s=10**3, marker='x')
+
+        plt.xlabel('PCA Dim 1')
+        plt.ylabel('PCA Dim 2')
+
+        print('Created cluster visualization on full dataset.')
+        plt.savefig('visualizations/cluster_visualization_{}.png'.format(clusterer_name))
+ 
     def run(self, evaluate=False, **kwargs):
         """Run dFNC, including the following steps:
             1. Window computation
@@ -185,6 +224,8 @@ class dFNC:
         print("Performing exemplar clustering")
         exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
         exemplar_clusterer.fit()
+        print('parameters', kwargs)
+        print('TRIAL EXEMPLAR, NUM CLUSTERS', len(set(exemplar_clusterer.model.labels_)))
         self.exemplar_clusterer = exemplar_clusterer
 
         print("Performing full clustering")
@@ -200,6 +241,9 @@ class dFNC:
         print("Reassigning states to subjects")
         assignments = self.reassign_to_subjects(
             cluster_instance.assignments, self.subjects)
+
+        self.visualize_clusters(fnc_features, assignments, kwargs['name'], cluster_instance.centroids)
+
         return cluster_instance.results, assignments
 
     def reassign_to_subjects(self, cluster_assigments, subjects):
@@ -208,7 +252,7 @@ class dFNC:
             reassigned.append(cluster_assigments[subjects == i])
         return np.array(reassigned)
 
-    def line_search(self, line_params=dict(param1=[]), **kwargs):
+    def line_search(self, line_params, **kwargs):
         """ Vary a particular parameter, and get clustering results when checking that parameter.
         """
         results = dict()
@@ -219,6 +263,8 @@ class dFNC:
             for param_val in line_params[param_name]:
                 kwargs[param_name] = param_val
                 results[param_name][param_val], assignments[param_name][param_val] = self.run(**kwargs)
+                print('parameters', kwargs)
+                print('TRIAL FULL CLUSTER, NUM CLUSTERS', len(set(self.second_stage_clusterer.model.labels_)))
         return results, assignments
 
     def save(self, filename):

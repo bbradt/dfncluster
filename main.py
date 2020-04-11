@@ -6,11 +6,11 @@ from dfncluster.Classifiers import Polyssifier
 #  Internal Dataset Imports
 from data.MatDatasets.FbirnTC.FbirnTC import FbirnTC
 from data.MatDatasets.OmegaSim.OmegaSim import OmegaSim
-from data.SklearnDatasets.Blobs import Blobs
-from data.SklearnDatasets.Iris import Iris
-from data.SklearnDatasets.Moons import Moons
-from data.SklearnDatasets.Classification import Classification
-from data.GaussianConnectivityDatasets.TestGCDataset import TestGCDataset
+from data.SklearnDatasets.Blobs.Blobs import Blobs
+from data.SklearnDatasets.Iris.Iris import Iris
+from data.SklearnDatasets.Moons.Moons import Moons
+from data.SklearnDatasets.Classification.Classification import Classification
+from data.GaussianConnectivityDatasets.TestGCDataset.TestGCDataset import TestGCDataset
 # External Modules
 import os
 import argparse
@@ -18,10 +18,22 @@ import json
 import numpy as np
 # Warning suppression
 import warnings
+import pdb
+import logging 
+from scipy import linalg as LA
+
+
+logging.basicConfig()
+
+logger = logging.getLogger('BBProposalGenerator')
+logger.setLevel(logging.WARNING)
+
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
 # Constants
+
+# optimal parameters -> 0.7 eps, 3 min_samples9
 DATA_ROOT = 'data'
 DATASETS = dict(
     fbirn=FbirnTC,
@@ -91,6 +103,7 @@ if __name__ == '__main__':
 
     # Add input params to params
     params = InputClusterer.default_params()
+    params['name'] = args.clusterer
     input_params = json.loads(args.clusterer_params)
     for k, v in input_params.items():
         params[k] = v
@@ -101,6 +114,7 @@ if __name__ == '__main__':
 
     print("Loading data set")
     if not os.path.exists(DATASET_FILE[args.dataset]) or args.remake_data:
+        pdb.set_trace()
         if args.seed is not None:
             np.random.seed(args.seed)
         dataset = InputDataset.make()
@@ -119,13 +133,31 @@ if __name__ == '__main__':
         dfnc = dFNC(
             dataset=dataset,
             clusterer=InputClusterer,
-            window_size=args.window_size, time_index=args.time_index)
+            window_size= args.window_size, time_index=args.time_index)
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
+        # parameters ff
         results, assignments = dfnc.run(**params)
+        # line_params = {
+        #                 'min_samples': [2,3,4,5,6,7,8,9,10]
+        #                }
+
+        # results, assignments = dfnc.line_search(line_params=line_params, **params)
 
         subject_data, subject_labels = dfnc.get_subjects()
+
+        # subject_data_centered -= np.mean(subject_data, axis = 0)  
+
+        # cov = np.cov(subject_data_centered, rowvar = False)
+        # evals , evecs = LA.eigh(cov)
+
+        # idx = np.argsort(evals)[::-1]
+        # evecs = evecs[:,idx]
+        # evals = evals[idx]
+
+        # a = np.dot(x, evecs) 
+
         # Print results
 
         print("dFNC Clustering Results")
@@ -133,20 +165,27 @@ if __name__ == '__main__':
         print("Saving dFNC Results")
         dfnc.save(os.path.join('results', args.outdir, args.dfnc_outfile))
 
+    log_file = open('logs.txt', 'w')
     if args.classify:
         if args.dfnc:
+            # for param_name in assignments.keys():
+                # for param_val in assignments[param_name]:
+            # print('------------------------------------------')
+            # print('Polyssifier TRIAL', param_name, param_val)
+            # print('------------------------------------------')
+            # assignment = assignments[param_name][param_val]
             features = assignments
             labels = subject_labels
-        if args.seed is not None:
-            np.random.seed(args.seed)
-        poly = Polyssifier(features,
-                           labels,
-                           n_folds=5,
-                           path='results',
-                           project_name=args.outdir,
-                           concurrency=1)
-        poly.build()
-        poly.run()
+            if args.seed is not None:
+                np.random.seed(args.seed)
+            poly = Polyssifier(features,
+                               labels,
+                               n_folds=5,
+                               path='results',
+                               project_name=args.outdir,
+                               concurrency=1)
+            poly.build()
+            poly.run()
 
     """
     os.makedirs('results/polyssifier/FNCOnly', exist_ok=True)
