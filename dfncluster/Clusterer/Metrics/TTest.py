@@ -16,18 +16,23 @@ def t_test(features, labels, p_level=None):
     Args:
         features: NxD matrix where N is number of subjects and D is
                   their corresponding cluster assignment over time
-        labels: 1-D matrix of labels for healthy control and schizophrenia
-        p_level: if set, return boolean array where true represent a significant
-                 difference between classes i.e where p_value[i] < p_level
+        labels:   N-dim, 1-N, N-1 matrix of labels for healthy control and schizophrenia
+        p_level:  if set, return boolean array where true represent a significant
+                  difference between classes i.e where p_value[i] < p_level
     Returns:
         pvalues: 1-D matrix of corresponding p-values between healthy control and
                   schizophrenia
     """
-    pvalues = np.zeros(features.shape[1])
-    for dim in range(features.shape[1]):
-        pvalues[dim] = ttest_ind(
-            features[labels == 0, dim], features[labels == 1, dim],
-            equal_var=True)[1] # ignore t-statistic
+    N, D = features.shape
+    labels = labels.reshape(-1)
+    if N != labels.shape[0]:
+        raise ValueError("Subject labels do not align with subject cluster assignments")
+
+    pvalues = np.zeros(D)
+    for d in range(D):
+        pvalues[d] = ttest_ind(
+            features[labels == 0, d], features[labels == 1, d],
+            equal_var=True)[1]
     if p_level is None:
         return pvalues
     return abs(pvalues) < p_level
