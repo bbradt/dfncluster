@@ -94,8 +94,8 @@ if __name__ == '__main__':
 
     """
     TODO: make param generation an iterable data structure
-    to test mutiple clustering algorithms and corresponding
-    hyperparamters, need to study grid search API.
+    to test multiple clustering algorithms and corresponding
+    hyper-parameters, need to study grid search API.
     """
 
     args = parse_main_args()
@@ -112,6 +112,7 @@ if __name__ == '__main__':
 
     # Add input params to params
     params = InputClusterer.default_params()
+    params['name'] = args.clusterer
     input_params = json.loads(args.clusterer_params)
     for k, v in input_params.items():
         params[k] = v
@@ -160,9 +161,8 @@ if __name__ == '__main__':
         results, assignments = dfnc.run(grid_params=grid_params, **params)
         dfnc.visualize_states(assignments, filename="results/%s_%s/%s_%s_states.png" % (args.clusterer, args.dataset, args.clusterer, args.dataset))
 
+        
         subject_data, subject_labels = dfnc.get_subjects()
-        # Print results
-
         print("dFNC Clustering Results")
         print(results, assignments)
         print("Saving dFNC Results")

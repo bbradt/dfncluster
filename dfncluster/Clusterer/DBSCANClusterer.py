@@ -32,8 +32,8 @@ class DBSCANClusterer(Clusterer):
     @staticmethod
     def default_params():
         return dict(
-            eps=1,
-            min_samples=1,
+            eps=0.7,
+            min_samples=3,
             metrics=['silhouette'],
             evaluate=True
         )
@@ -45,6 +45,7 @@ class DBSCANClusterer(Clusterer):
     def fit(self):
         self.model.fit(self.X, self.Y)
         self.assignments = self.model.labels_
+        self.centroids = None
 
     def get_results_for_init(self):
         """Return own results in a dictionary, that maps to initialization for running

@@ -27,7 +27,7 @@ class BayesianGMMClusterer(Clusterer):
     @staticmethod
     def default_params():
         return dict(
-            n_components=4,         # give a high number and allow alpha to reduce
+            n_components=5,         # give a high number and allow alpha to reduce
             init_params='kmeans',   # use kmeans to set initial centers
             covariance_type='full',  # assume features are not independent, makes this a memeory hog :(
             n_init=1,               # number of initializations to perform

@@ -66,7 +66,7 @@ class GMMClusterer(Clusterer):
     @staticmethod
     def default_params():
         return dict(
-            n_components=4,
+            n_components=5,
             covariance_type='full',
             tol=1e-3,
             reg_covar=1e-6,

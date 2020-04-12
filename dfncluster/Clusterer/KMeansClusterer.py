@@ -28,7 +28,7 @@ class KMeansClusterer(Clusterer):
             init='k-means++',
             n_init=100,
             tol=1e-6,
-            n_clusters=4,
+            n_clusters=5,
             metrics=['silhouette'],
             verbose=0,
             n_jobs=16

@@ -1,6 +1,6 @@
 {
     "n_clusters": [
-        4
+        6
     ],
     "init": [
         "k-means++",
