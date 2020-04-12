@@ -11,8 +11,7 @@ ALLOWED_KWARGS = [
     'connectivity',
     'compute_full_tree',
     'linkage',
-    'distance_threshold',
-    'random_state'
+    'distance_threshold'
 ]
 
 def paired_wrapper(metric, agg=np.sum):
@@ -39,31 +38,32 @@ LABEL_METRICS = dict(
     silhouette=skm.silhouette_score,
 )
 
-CENTROID_METRICS = dict(
-    # euclidean, manhattan, 
-    sum_euclid=paired_wrapper(skm.pairwise.paired_euclidean_distances, np.sum),
-    mean_euclid=paired_wrapper(skm.pairwise.paired_euclidean_distances, np.mean),
-    min_euclid=paired_wrapper(skm.pairwise.paired_euclidean_distances, np.min),
-    max_euclid=paired_wrapper(skm.pairwise.paired_euclidean_distances, np.max),
-    sum_city=paired_wrapper(skm.pairwise.paired_manhattan_distances, np.sum),
-    mean_city=paired_wrapper(skm.pairwise.paired_manhattan_distances, np.mean),
-    min_city=paired_wrapper(skm.pairwise.paired_manhattan_distances, np.min),
-    max_city=paired_wrapper(skm.pairwise.paired_manhattan_distances, np.max),
-)
-
-
 
 class HierarchicalClusterer(Clusterer):
+    @staticmethod
+    def default_params():
+        return dict(
+            n_clusters = 5,
+            affinity = 'euclidean',
+            memory = None,
+            #compute_full_tree,
+            linkage = 'ward'
+            #distance_threshold
+        )
+
     def __init__(self, **kwargs):
         super(HierarchicalClusterer, self).__init__(**kwargs)
         self.model = skc.AgglomerativeClustering(**{k:v for k,v in kwargs.items() if k in ALLOWED_KWARGS})
         
+
     def fit(self):
         self.labels_ = self.model.fit_predict(self.X) #fit
+        self.assignments = self.labels_
         self.n_clusters_ = self.model.n_clusters_
         self.n_leaves_ = self.model.n_leaves_
         self.n_connected_components_ = self.model.n_connected_components_
         self.children_ = self.model.children_
+        
 
     def evaluate(self):
         """
@@ -75,10 +75,20 @@ class HierarchicalClusterer(Clusterer):
         results = dict()
         for metric in self.metrics:
             print('Evaluating clustering with metric %s' % metric)
-            if metric in CENTROID_METRICS.keys():
-                results[metric] = CENTROID_METRICS[metric](self.X, self.centroids)
-            elif metric in LABEL_METRICS.keys():
+            if metric in LABEL_METRICS.keys():
                 results[metric] = LABEL_METRICS[metric](self.X, self.labels_)
         results['adjusted_rand_score'] = SCORE_METRICS['adjusted_rand_score'](self.Y[:,0], self.labels_)
         self.results = results
         return results
+
+    def get_results_for_init(self):
+        """
+        Return own results in a dictionary, that maps to initialization for running
+            a second time.
+
+            This method also seems not necessary for hierarchical clustering, since it is a 
+            hard clustering approach that doesn't require any initialization. Still
+            implemented in order to smoothly run the dFNC pipeline.
+        """
+        
+        return dict()
