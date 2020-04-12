@@ -65,7 +65,6 @@ class HierarchicalClusterer(Clusterer):
         self.n_connected_components_ = self.model.n_connected_components_
         self.children_ = self.model.children_
 
-
     def evaluate(self):
         """
             Run evaluation metrics and save in self.results

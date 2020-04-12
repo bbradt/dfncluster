@@ -21,6 +21,8 @@ import sklearn.metrics as skm
 import sklearn.model_selection as skms
 import numpy as np
 import abc
+from yellowbrick.cluster import KElbowVisualizer
+import matplotlib.pyplot as plt
 
 
 def paired_wrapper(metric, agg=np.sum):
@@ -99,7 +101,7 @@ class Clusterer:
         if self.param_grid is not None:
             clf = skms.GridSearchCV(self.model, self.param_grid)
             clf.fit(self.X, self.Y)
-            return clf
+            return clf.best_estimator_
         else:
             return self.model
 

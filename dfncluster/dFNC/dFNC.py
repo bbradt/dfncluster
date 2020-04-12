@@ -177,6 +177,12 @@ class dFNC:
         y = np.convolve(w/w.sum(), s, mode='valid')
         return y
 
+    def eval_k_clusters(self, k, filename, **kwargs):
+        fnc_features, fnc_labels = self.compute_windows()
+        exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
+        exemplar_clusterer.evaluate_k(k, filename)
+        
+
     def run(self, evaluate=False, grid_params=None, **kwargs):
         """Run dFNC, including the following steps:
             1. Window computation

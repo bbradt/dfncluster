@@ -54,6 +54,11 @@ CLUSTERERS = dict(
     hierarchical=None,
     vae=None
 )
+ELBOW_METRICS = [
+    "calinski_harabasz",
+    "distortion",
+    "silhouette"
+]
 
 
 def parse_main_args():
@@ -80,6 +85,7 @@ def parse_main_args():
     parser.add_argument("--k", default=10, help="<int> number of folds for k-fold cross-validation")
     parser.add_argument("--class_grid", default=None, help="<str> Saved GridSearch for classification (JSON file or npy file)")
     parser.add_argument("--cluster_grid", default=None, help="<str> Saved GridSearch for clustering (JSON file or npy file)")
+    parser.add_argument("--elbow", default=None)
     return parser.parse_args()
 
 
@@ -130,6 +136,7 @@ if __name__ == '__main__':
     if not args.skip_dfnc:
         if args.seed is not None:
             np.random.seed(args.seed)
+            
         grid_params = None
         if args.cluster_grid is not None:
             grid_params = json.load(open(args.cluster_grid, 'r'))
@@ -138,6 +145,14 @@ if __name__ == '__main__':
             clusterer=InputClusterer,
             window_size=args.window_size,
             time_index=args.time_index)
+        print("Running dFNC elbow criterion with %s clustering" % args.clusterer)
+        if args.elbow is not None:
+            elbow_k = args.elbow.split(",")
+            if len(elbow_k) > 0:
+                elbow_k = [int(s) for s in elbow_k]
+                dfnc.eval_k_clusters(elbow_k, "results/%s_%s/%s_%s_elbow.png" % (args.clusterer, args.dataset, 
+                                                                                args.clusterer, args.dataset))
+                exit(0)
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
