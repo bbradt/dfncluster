@@ -92,6 +92,7 @@ if __name__ == '__main__':
 
     # Add input params to params
     params = InputClusterer.default_params()
+    params['name'] = args.clusterer
     input_params = json.loads(args.clusterer_params)
     for k, v in input_params.items():
         params[k] = v
@@ -125,10 +126,8 @@ if __name__ == '__main__':
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
         results, assignments = dfnc.run(**params)
-
+    
         subject_data, subject_labels = dfnc.get_subjects()
-        # Print results
-
         print("dFNC Clustering Results")
         print(results, assignments)
         print("Saving dFNC Results")
