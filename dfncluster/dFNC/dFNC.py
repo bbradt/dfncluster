@@ -182,7 +182,7 @@ class dFNC:
         exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
         exemplar_clusterer.evaluate_k(k, filename)
 
-    def visualize_clusters(self, fnc_features, assignments, clusterer_name, centroids=None):
+    def visualize_clusters(self, fnc_features, assignments, clusterer_name, filename, centroids=None):
 
         fnc_features_centered = fnc_features - np.mean(fnc_features, axis = 0)  
 
@@ -215,9 +215,10 @@ class dFNC:
         plt.ylabel('PCA Dim 2')
 
         print('Created cluster visualization on full dataset.')
-        plt.savefig('results/cluster_visualization_{}.png'.format(clusterer_name))
+        sb.set()
+        plt.savefig(filename, bbox_inches="tight")
  
-    def run(self, evaluate=False, grid_params={}, **kwargs):
+    def run(self, evaluate=False, grid_params={}, vis_filename="results/cluster_vis.png", **kwargs):
         """Run dFNC, including the following steps:
             1. Window computation
             2. First stage exemplar clustering
@@ -249,7 +250,7 @@ class dFNC:
         assignments = self.reassign_to_subjects(
             cluster_instance.assignments, self.subjects)
 
-        self.visualize_clusters(fnc_features, assignments, kwargs['name'], cluster_instance.centroids)
+        self.visualize_clusters(fnc_features, assignments, kwargs['name'], vis_filename, cluster_instance.centroids)
 
         return cluster_instance.results, assignments
 
@@ -270,10 +271,12 @@ class dFNC:
             for param_val in line_params[param_name]:
                 kwargs[param_name] = param_val
                 results[param_name][param_val], assignments[param_name][param_val] = self.run(**kwargs)
-        return results, assignments
+        return results, assignment
 
-    def visualize_states(self, assignments, filename="results/states.png", classes=None):
-        nc = self.subject_data.shape[2]
+    def visualize_states(self, assignments, filename="results/states.png", classes=None, time_index=1):
+        if time_index == 0:
+            time_index = 2
+        nc = self.subject_data.shape[time_index]
         states = np.unique(assignments)
         num_states = len(states)
         if classes is None:

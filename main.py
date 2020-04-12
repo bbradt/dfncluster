@@ -158,8 +158,8 @@ if __name__ == '__main__':
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
-        results, assignments = dfnc.run(grid_params=grid_params, **params)
-        dfnc.visualize_states(assignments, filename="results/%s_%s/%s_%s_states.png" % (args.clusterer, args.dataset, args.clusterer, args.dataset))
+        results, assignments = dfnc.run(grid_params=grid_params, viz_filename="results/%s_%s/%s_%s_visualization.png" % (args.clusterer, args.dataset, args.clusterer, args.dataset),**params)
+        dfnc.visualize_states(assignments, filename="results/%s_%s/%s_%s_states.png" % (args.clusterer, args.dataset, args.clusterer, args.dataset), time_index=args.time_index)
 
         
         subject_data, subject_labels = dfnc.get_subjects()
