@@ -5,13 +5,13 @@ import seaborn as sb
 import pandas as pd
 import numpy as np
 plt.close()
-seed = 12345
 ROOT_DIR = 'results'
+DATASET = "fbirn"
 CFOLDERS = dict(
-    kmeans='GaussKmeans-%s' % seed,
-    gmm='GaussGMM-%s' % seed,
-    bgmm='GaussBGMM-%s' % seed,
-    dbscan='GaussDBSCAN-%s' % seed
+    kmeans='kmeans_%s' % DATASET,
+    gmm='gmm_%s' % DATASET,
+    bgmm='bgmm_%s' % DATASET,
+    #dbscan='%s_dbscan' % seed
 )
 CLUSTERERS = list(CFOLDERS.keys())
 rows = []
@@ -30,7 +30,7 @@ df = pd.DataFrame(rows)
 num_columns = len(test_cols)
 num_rows = len(CLUSTERERS)
 sb.set()
-fig, ax = plt.subplots(1, num_rows+1)
+fig, ax = plt.subplots(1, num_rows+1, figsize=(24,12))
 for i in range(num_rows):
     dfc = df[df['clusterer'] == CLUSTERERS[i]]
     # if i == num_rows - 1:
@@ -40,8 +40,9 @@ for i in range(num_rows):
     sb.boxplot(data=dfc, x='classifier',  y='AUC', ax=ax[i])
     ax[i].set_title(CLUSTERERS[i])
     ax[i].set_ylim([0.3, 1.0])
+    ax[i].set_xticks(())
 #sb.boxplot(data=dfc, x='classifier', y='auc', hue='classifier', ax=ax[-1])
 sb.boxplot(data=dfc, x='classifier', y='AUC', hue='classifier', ax=ax[-1])
 ax[-1].set_axis_off()
 plt.legend(framealpha=1.0, prop={'size': 18})  # , bbox_to_anchor=(0, 0), loc=2, borderaxespad=0.)
-plt.show()
+plt.savefig('results/%s_accuracy.png' % DATASET)

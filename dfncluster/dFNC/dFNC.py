@@ -271,7 +271,7 @@ class dFNC:
             for param_val in line_params[param_name]:
                 kwargs[param_name] = param_val
                 results[param_name][param_val], assignments[param_name][param_val] = self.run(**kwargs)
-        return results, assignment
+        return results, assignments
 
     def visualize_states(self, assignments, filename="results/states.png", classes=None, time_index=1):
         if time_index == 0:
