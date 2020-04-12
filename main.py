@@ -76,8 +76,8 @@ if __name__ == '__main__':
 
     """
     TODO: make param generation an iterable data structure
-    to test mutiple clustering algorithms and corresponding
-    hyperparamters, need to study grid search API.
+    to test multiple clustering algorithms and corresponding
+    hyper-parameters, need to study grid search API.
     """
 
     args = parse_main_args()
