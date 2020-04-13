@@ -13,4 +13,4 @@ class Ds000030:
 
 
 if __name__ == '__main__':
-    dataset = FbirnTC.make()
+    dataset = Ds000030.make()
