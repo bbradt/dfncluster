@@ -63,6 +63,12 @@ class HierarchicalClusterer(Clusterer):
         self.n_leaves_ = self.model.n_leaves_
         self.n_connected_components_ = self.model.n_connected_components_
         self.children_ = self.model.children_
+        centroids = []
+        for k in np.unique(self.assignments):
+            samples = self.X[self.assignments == k, :]
+            centroids.append(np.mean(samples, 0))
+        self.centroids = np.vstack(centroids)
+
         
 
     def evaluate(self):

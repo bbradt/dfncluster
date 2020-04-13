@@ -8,3 +8,5 @@ scikit_learn
 theano
 awscli
 joblib
+yellowbrick
+seaborn

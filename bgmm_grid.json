@@ -1,0 +1,30 @@
+{
+    "n_components": [
+        4
+    ],
+    "covariance_type": [
+        "full"
+    ],
+    "reg_covar": [
+        1e-6,
+        1e-5,
+        1e-4,
+        1e-3
+    ],
+    "max_iter": [
+        100
+    ],
+    "n_init": [
+        1
+    ],
+    "init_params": [
+        "kmeans",
+        "random"
+    ],
+    "tol": [
+        1e-6
+    ],
+    "weight_concentration_prior_type": [
+        "dirichlet_process"
+    ]
+}

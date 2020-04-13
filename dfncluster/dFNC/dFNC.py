@@ -1,4 +1,5 @@
 import numpy as np
+import seaborn as sb
 import matplotlib.pyplot as plt
 
 
@@ -14,6 +15,7 @@ class dFNC:
         """
         self.dataset = dataset
         self.subject_data = self.dataset.features
+        # input(str(self.subject_data.shape))
         self.subject_labels = self.dataset.labels
         self.clusterer = clusterer
         self.results = []
@@ -58,6 +60,7 @@ class dFNC:
             for ti in range(xi.shape[0]-window_size):
                 window = xi[ti:(ti+window_size)]
                 fnc = metric(window.T)
+                # input(fnc.shape)
                 fnc = fnc[np.triu_indices_from(fnc)].flatten()
                 variance_windows.append(np.var(fnc))
                 sub_x.append(fnc)
@@ -174,8 +177,12 @@ class dFNC:
         y = np.convolve(w/w.sum(), s, mode='valid')
         return y
 
+    def eval_k_clusters(self, k, filename, **kwargs):
+        fnc_features, fnc_labels = self.compute_windows()
+        exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
+        exemplar_clusterer.evaluate_k(k, filename)
 
-    def visualize_clusters(self, fnc_features, assignments, clusterer_name, centroids=None):
+    def visualize_clusters(self, fnc_features, assignments, clusterer_name, filename, centroids=None):
 
         fnc_features_centered = fnc_features - np.mean(fnc_features, axis = 0)  
 
@@ -208,9 +215,10 @@ class dFNC:
         plt.ylabel('PCA Dim 2')
 
         print('Created cluster visualization on full dataset.')
-        plt.savefig('visualizations/cluster_visualization_{}.png'.format(clusterer_name))
+        sb.set()
+        plt.savefig(filename, bbox_inches="tight")
  
-    def run(self, evaluate=False, **kwargs):
+    def run(self, evaluate=False, grid_params={}, vis_filename="results/cluster_vis.png", **kwargs):
         """Run dFNC, including the following steps:
             1. Window computation
             2. First stage exemplar clustering
@@ -221,7 +229,8 @@ class dFNC:
         fnc_features, fnc_labels = self.compute_windows()
 
         print("Performing exemplar clustering")
-        exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
+        exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], param_grid=grid_params, **kwargs)
+        exemplar_clusterer.model = exemplar_clusterer.fit_grid()
         exemplar_clusterer.fit()
         self.exemplar_clusterer = exemplar_clusterer
 
@@ -241,7 +250,7 @@ class dFNC:
         assignments = self.reassign_to_subjects(
             cluster_instance.assignments, self.subjects)
 
-        self.visualize_clusters(fnc_features, assignments, kwargs['name'], cluster_instance.centroids)
+        self.visualize_clusters(fnc_features, assignments, kwargs['name'], vis_filename, cluster_instance.centroids)
 
         return cluster_instance.results, assignments
 
@@ -263,6 +272,29 @@ class dFNC:
                 kwargs[param_name] = param_val
                 results[param_name][param_val], assignments[param_name][param_val] = self.run(**kwargs)
         return results, assignments
+
+    def visualize_states(self, assignments, filename="results/states.png", classes=None, time_index=1):
+        if time_index == 0:
+            time_index = 2
+        nc = self.subject_data.shape[time_index]
+        states = np.unique(assignments)
+        num_states = len(states)
+        if classes is None:
+            num_classes = 1
+            sb.set()
+            fig, ax = plt.subplots(num_classes, num_states, figsize=(30, 10))
+            for k in states:
+                centroid_k = self.second_stage_clusterer.centroids[int(k)]
+                Z = np.zeros((nc, nc))
+                Z[np.triu_indices(nc)] = centroid_k
+                Z = Z.T
+                Z[np.triu_indices(nc)] = centroid_k
+                ax[k].imshow(Z, cmap='jet')
+                ax[k].set_title("State %d" % k)
+                ax[k].set_xticks(())
+                ax[k].set_yticks(())
+            plt.savefig(filename, bbox_inches='tight')
+        return fig
 
     def save(self, filename):
         package = dict()

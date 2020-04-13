@@ -18,8 +18,11 @@
 """
 
 import sklearn.metrics as skm
+import sklearn.model_selection as skms
 import numpy as np
 import abc
+from yellowbrick.cluster import KElbowVisualizer
+import matplotlib.pyplot as plt
 
 
 def paired_wrapper(metric, agg=np.sum):
@@ -55,7 +58,7 @@ CENTROID_METRICS = dict(
 
 
 class Clusterer:
-    def __init__(self, metrics=[], X=[], Y=[], centroids=None, initialization={}, **kwargs):
+    def __init__(self, metrics=[], X=[], Y=[], centroids=None, initialization={}, param_grid=None, **kwargs):
         """
             metrics - list<str> - list of metrics to use for evaluation
             X - ndarray<float> - NxD features array
@@ -72,6 +75,7 @@ class Clusterer:
         self.Y = Y
         self.params = kwargs
         self.params['metrics'] = metrics
+        self.param_grid = param_grid
 
     @staticmethod
     @abc.abstractmethod
@@ -92,6 +96,14 @@ class Clusterer:
         """
         self.centroids = []
         self.assignments = []
+
+    def fit_grid(self):
+        if self.param_grid is not None:
+            clf = skms.GridSearchCV(self.model, self.param_grid)
+            clf.fit(self.X, self.Y)
+            return clf.best_estimator_
+        else:
+            return self.model
 
     def evaluate(self):
         """

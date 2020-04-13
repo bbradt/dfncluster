@@ -1,8 +1,12 @@
+import abc
+import sklearn.metrics as skm
 import sklearn.cluster as skc
 from dfncluster.Clusterer import Clusterer
 import sklearn.mixture
 from sklearn.mixture import GaussianMixture
 import numpy as np
+import seaborn as sb
+import matplotlib.pyplot as plt
 
 ALLOWED_KWARGS = [
     'n_components',
@@ -21,9 +25,6 @@ ALLOWED_KWARGS = [
     'verbose_interval'
 ]
 
-import sklearn.metrics as skm
-import numpy as np
-import abc
 
 def paired_wrapper(metric, agg=np.sum):
     """Wrap paired metrics with a numpy aggregation function
@@ -34,12 +35,13 @@ def paired_wrapper(metric, agg=np.sum):
         Returns:
             function handle for the newly wrapped function
     """
-    def wrapped(X,Y):
-        return agg(metric(X,Y))
+    def wrapped(X, Y):
+        return agg(metric(X, Y))
     return wrapped
 
+
 SCORE_METRICS = dict(
-        adjusted_rand_score=skm.cluster.adjusted_rand_score
+    adjusted_rand_score=skm.cluster.adjusted_rand_score
 )
 
 LABEL_METRICS = dict(
@@ -58,6 +60,7 @@ CENTROID_METRICS = dict(
     min_city=paired_wrapper(skm.pairwise.paired_manhattan_distances, np.min),
     max_city=paired_wrapper(skm.pairwise.paired_manhattan_distances, np.max),
 )
+
 
 class GMMClusterer(Clusterer):
     @staticmethod
@@ -82,7 +85,7 @@ class GMMClusterer(Clusterer):
 
     def __init__(self, **kwargs):
         super(GMMClusterer, self).__init__(**kwargs)
-        self.model = sklearn.mixture.GaussianMixture(**{k:v for k,v in kwargs.items() if k in ALLOWED_KWARGS})
+        self.model = sklearn.mixture.GaussianMixture(**{k: v for k, v in kwargs.items() if k in ALLOWED_KWARGS})
 
     def fit(self):
         self.model.fit(self.X, self.Y)
@@ -116,12 +119,27 @@ class GMMClusterer(Clusterer):
                 results[metric] = CENTROID_METRICS[metric](self.X, self.centroids)
             elif metric in LABEL_METRICS.keys():
                 results[metric] = LABEL_METRICS[metric](self.X, self.model.predict_)
-        results['adjusted_rand_score'] = SCORE_METRICS['adjusted_rand_score'](self.Y[:,0], self.model.predict_)
+        results['adjusted_rand_score'] = SCORE_METRICS['adjusted_rand_score'](self.Y[:, 0], self.model.predict_)
         self.results = results
         return results
+
+    def evaluate_k(self, ks, filename):
+        distortions = []
+        for k in ks:
+            print("Evaluating KMeans with %d clusters" % k)
+            clf = sklearn.mixture.GaussianMixture(n_components=k, random_state=0)
+            clf.fit(self.X, self.Y)
+            distortions.append(clf.score(self.X))
+        sb.set()
+        fig, ax = plt.subplots()
+        ax.plot(ks, distortions)
+        plt.savefig(filename, bbox_inches="tight")
+        plt.close()
+
 
     def get_results_for_init(self):
         """Return own results in a dictionary, that maps to initialization for running
             a second time.
         """
+        n_components = self.centroids.shape[0]
         return dict(means_init=self.centroids)

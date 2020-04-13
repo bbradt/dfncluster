@@ -32,10 +32,11 @@ class DBSCANClusterer(Clusterer):
     @staticmethod
     def default_params():
         return dict(
-            eps=0.7,
+            eps=0.01,
             min_samples=3,
-            metrics=['silhouette'],
-            evaluate=True
+            metrics=[],
+            evaluate=True,
+            metric="correlation"
         )
 
     def __init__(self, **kwargs):
@@ -45,7 +46,12 @@ class DBSCANClusterer(Clusterer):
     def fit(self):
         self.model.fit(self.X, self.Y)
         self.assignments = self.model.labels_
-        self.centroids = None
+        centroids = []
+        for k in np.unique(self.assignments):
+            samples = self.X[self.assignments == k, :]
+            centroids.append(np.mean(samples,0))
+        self.centroids = np.vstack(centroids)
+        print(self.centroids.shape)
 
     def get_results_for_init(self):
         """Return own results in a dictionary, that maps to initialization for running

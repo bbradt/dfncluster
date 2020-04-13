@@ -9,8 +9,8 @@ class Ds000030:
                                    directory='data/OpenNeuroDatasets/ds000030',
                                    feature_columns=['task-rest_bold'],
                                    label_columns=['diagnosis'],
-                                   subset_size=0.01)
-        dataset.save('data/OpenNeuroDatasets/ds000030/ds000030_subset', large=False)
+                                   subset_size=1)
+        dataset.save('data/OpenNeuroDatasets/ds000030/ds000030', large=True)
         return dataset
 
 
