@@ -13,6 +13,7 @@ from data.SklearnDatasets.Iris.Iris import Iris
 from data.SklearnDatasets.Moons.Moons import Moons
 from data.SklearnDatasets.Classification.Classification import Classification
 from data.GaussianConnectivityDatasets.TestGCDataset.TestGCDataset import TestGCDataset
+from data.MatDatasets.Ds000030.Ds000030 import Ds000030
 # External Modules
 import os
 import argparse
@@ -34,18 +35,21 @@ DATASETS = dict(
     simtb=OmegaSim,
     gauss=TestGCDataset,
     iris=Iris,
+    ds000030=Ds000030
 )
 DATASET_TYPES = dict(
     fbirn=MatDataset,
     simtb=MatDataset,
     gauss=GaussianConnectivityDataset,
     iris=SklearnDataset,
+    ds000030=MatDataset,
 )
 DATASET_FILE = dict(
     fbirn=os.path.join('data', 'MatDatasets', 'FbirnTC', 'fbirn_tc.npy'),
     simtb=os.path.join('data', 'MatDatasets', 'OmegaSim', 'omega_sim.npy'),
     gauss=os.path.join('data', 'GaussianConnectivityDatasets', 'TestGCDataset', 'test_gc.npy'),
     iris=os.path.join('data', 'SklearnDatasets', 'Iris', 'iris.npy'),
+    ds000030=os.path.join('data', 'MatDatasets', 'Ds000030', 'ds000030.npy')
 )
 CLUSTERERS = dict(
     kmeans=KMeansClusterer,
@@ -83,7 +87,7 @@ def parse_main_args():
     parser.add_argument("--dfnc_outfile", default="dfnc.npy", type=str, help="<str> The filename for saving dFNC results; DEFAULT=dfnc.npy")
     parser.add_argument("--seed", default=None,
                         help="<int> Seed for numpy RNG. Used for random generation of the data set, or for controlling randomness in Clusterings.; DEFAULT=None (do not use seed)",)
-    parser.add_argument("--k", default=10, help="<int> number of folds for k-fold cross-validation")
+    parser.add_argument("--k", default=10, type=int, help="<int> number of folds for k-fold cross-validation")
     parser.add_argument("--class_grid", default=None, help="<str> Saved GridSearch for classification (JSON file or npy file)")
     parser.add_argument("--cluster_grid", default=None, help="<str> Saved GridSearch for clustering (JSON file or npy file)")
     parser.add_argument("--elbow", default=None)
@@ -176,7 +180,7 @@ if __name__ == '__main__':
             np.random.seed(args.seed)
         poly = Polyssifier(features,
                            labels,
-                           n_folds=5,
+                           n_folds=args.k,
                            path='results',
                            project_name=args.outdir,
                            concurrency=1)

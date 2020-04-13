@@ -4,14 +4,19 @@ import matplotlib.pyplot as plt
 import seaborn as sb
 import pandas as pd
 import numpy as np
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--dataset", default="fbirn", type=str)
+args = parser.parse_args()
 plt.close()
 ROOT_DIR = 'results'
-DATASET = "fbirn"
+DATASET = args.dataset.lower()
 CFOLDERS = dict(
     kmeans='kmeans_%s' % DATASET,
     gmm='gmm_%s' % DATASET,
     bgmm='bgmm_%s' % DATASET,
-    #dbscan='%s_dbscan' % seed
+    dbscan='dbscan_%s' % DATASET,
+    hierarchical='hierarchical_%s' % DATASET
 )
 CLUSTERERS = list(CFOLDERS.keys())
 rows = []
@@ -30,7 +35,7 @@ df = pd.DataFrame(rows)
 num_columns = len(test_cols)
 num_rows = len(CLUSTERERS)
 sb.set()
-fig, ax = plt.subplots(1, num_rows+1, figsize=(24,12))
+fig, ax = plt.subplots(1, num_rows, figsize=(24, 12))
 for i in range(num_rows):
     dfc = df[df['clusterer'] == CLUSTERERS[i]]
     # if i == num_rows - 1:
@@ -39,10 +44,16 @@ for i in range(num_rows):
     # else:
     sb.boxplot(data=dfc, x='classifier',  y='AUC', ax=ax[i])
     ax[i].set_title(CLUSTERERS[i])
-    ax[i].set_ylim([0.3, 1.0])
+    ax[i].set_ylim([0.0, 1.0])
     ax[i].set_xticks(())
-#sb.boxplot(data=dfc, x='classifier', y='auc', hue='classifier', ax=ax[-1])
+plt.savefig('results/%s_accuracy.png' % DATASET, bbox_inches='tight')
 sb.boxplot(data=dfc, x='classifier', y='AUC', hue='classifier', ax=ax[-1])
-ax[-1].set_axis_off()
-plt.legend(framealpha=1.0, prop={'size': 18})  # , bbox_to_anchor=(0, 0), loc=2, borderaxespad=0.)
-plt.savefig('results/%s_accuracy.png' % DATASET)
+axc = plt.gca()
+figLegend = plt.figure()
+plt.figlegend(*axc.get_legend_handles_labels(), loc='upper left')
+figLegend.savefig('results/accuracy_legend.png', bbox_inches='tight')
+
+#pp=sb.boxplot(data=dfc, x='classifier', y='AUC', hue='classifier')
+# ax[-1].set_axis_off()
+# pp.set_visible(False)
+# plt.legend(framealpha=1.0, prop={'size': 24}, bbox_to_anchor=(1.5, 1))  # , loc=2, borderaxespad=0.)
