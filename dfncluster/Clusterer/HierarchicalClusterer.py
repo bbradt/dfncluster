@@ -3,6 +3,7 @@ import scipy.cluster.hierarchy as sch
 from dfncluster.Clusterer import Clusterer
 import sklearn.metrics as skm
 import numpy as np
+from matplotlib import pyplot as plt
 
 ALLOWED_KWARGS = [
     'n_clusters',
@@ -28,6 +29,26 @@ def paired_wrapper(metric, agg=np.sum):
     return wrapped
 
 
+def plot_dendrogram(heir_instance, **kwargs):
+
+    # create the counts of samples under each node to create linkage matrix
+    counts = np.zeros(heir_instance.children_.shape[0])
+    n_samples = len(heir_instance.labels_)
+    for i, merge in enumerate(heir_instance.children_):
+        current_count = 0
+        for child_idx in merge:
+            if child_idx < n_samples:
+                current_count += 1 
+            else:
+                current_count += counts[child_idx - n_samples]
+        counts[i] = current_count
+    distances = sch.linkage(heir_instance.X, method=heir_instance.model.linkage)
+
+    linkage_matrix = np.column_stack([heir_instance.children_, distances[:,2], counts[:, np.newaxis]]).astype(float)
+    sch.dendrogram(linkage_matrix, **kwargs)
+    plt.savefig("heirarchical_cluster_dendrogram.png")
+
+
 SCORE_METRICS = dict(
         adjusted_rand_score=skm.cluster.adjusted_rand_score
 )
@@ -38,7 +59,6 @@ LABEL_METRICS = dict(
     silhouette=skm.silhouette_score,
 )
 
-
 class HierarchicalClusterer(Clusterer):
     @staticmethod
     def default_params():
@@ -46,9 +66,9 @@ class HierarchicalClusterer(Clusterer):
             n_clusters = 5,
             affinity = 'euclidean',
             memory = None,
-            #compute_full_tree,
-            linkage = 'ward'
-            #distance_threshold
+            compute_full_tree = 'auto',
+            linkage = 'ward',
+            distance_threshold = None
         )
 
     def __init__(self, **kwargs):
@@ -63,6 +83,7 @@ class HierarchicalClusterer(Clusterer):
         self.n_leaves_ = self.model.n_leaves_
         self.n_connected_components_ = self.model.n_connected_components_
         self.children_ = self.model.children_
+<<<<<<< Updated upstream
         centroids = []
         for k in np.unique(self.assignments):
             samples = self.X[self.assignments == k, :]
@@ -70,6 +91,10 @@ class HierarchicalClusterer(Clusterer):
         self.centroids = np.vstack(centroids)
 
         
+=======
+        plot_dendrogram(self, truncate_mode='level', p=self.n_clusters_)
+       
+>>>>>>> Stashed changes
 
     def evaluate(self):
         """
@@ -87,6 +112,7 @@ class HierarchicalClusterer(Clusterer):
         self.results = results
         return results
 
+
     def get_results_for_init(self):
         """
         Return own results in a dictionary, that maps to initialization for running
@@ -98,3 +124,5 @@ class HierarchicalClusterer(Clusterer):
         """
         
         return dict()
+    
+
