@@ -70,6 +70,7 @@ def parse_main_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", default="fbirn", type=str,
                         help="<str> the data set to use. Options are fbirn, simtb, gaussian; DEFAULT=%s" % "fbirn")
+    parser.add_argument("--betas", default=False, action="store_true", help="<bool> whether or not to use beta coefficients as classification features")
     parser.add_argument("--remake_data", default=False, help="<bool> whether or not to remake the data set; DEFAULT=%s" % False, action='store_true')
     parser.add_argument("--clusterer", default="kmeans", type=str,
                         help="<str> the clusterer to use. Options are kmeans, bgmm, gmm, dbscan; DEFAULT=%s" % "kmeans")
@@ -105,6 +106,8 @@ if __name__ == '__main__':
     args = parse_main_args()
     if args.outdir is None:
         args.outdir = "%s_%s" % (args.clusterer, args.dataset)
+    if args.betas:
+        args.outdir += "_betas"
     print("ARGS")
     print(args.__dict__)
     if args.clusterer not in CLUSTERERS.keys():
@@ -162,11 +165,11 @@ if __name__ == '__main__':
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
-        results, assignments = dfnc.run(grid_params=grid_params, vis_filename="results/%s_%s/%s_%s_visualization.png" %
-                                        (args.clusterer, args.dataset, args.clusterer, args.dataset),
-                                        state_filename="results/%s_%s/%s_%s_states.png" %
-                                        (args.clusterer, args.dataset, args.clusterer, args.dataset),
-                                        **params)
+        results, assignments, betas = dfnc.run(grid_params=grid_params, vis_filename="results/%s_%s/%s_%s_visualization.png" %
+                                               (args.clusterer, args.dataset, args.clusterer, args.dataset),
+                                               state_filename="results/%s_%s/%s_%s_states.png" %
+                                               (args.clusterer, args.dataset, args.clusterer, args.dataset),
+                                               **params)
 
         subject_data, subject_labels = dfnc.get_subjects()
         print("dFNC Clustering Results")
@@ -178,6 +181,8 @@ if __name__ == '__main__':
         if not args.skip_dfnc:
             features = assignments
             labels = subject_labels
+        if args.betas:
+            features = betas
         if args.seed is not None:
             np.random.seed(args.seed)
         poly = Polyssifier(features,

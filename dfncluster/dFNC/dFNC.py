@@ -5,6 +5,7 @@ from mpl_toolkits.mplot3d import axes3d
 import os
 from scipy.stats import ttest_ind
 from itertools import combinations
+from sklearn.linear_model import LinearRegression
 
 
 def corr_wrapper(x):
@@ -292,8 +293,8 @@ class dFNC:
 
         self.visualize_clusters(fnc_features, cluster_instance.assignments, kwargs['name'], vis_filename, cluster_instance.centroids)
         self.visualize_states(assignments, filename=state_filename, classes=self.dataset.labels, subject_data=subject_windows, time_index=self.time_index)
-
-        return cluster_instance.results, assignments
+        class_centroids, beta_features = self.collect_states(assignments, classes=self.dataset.labels, subject_data=subject_windows, time_index=self.time_index)
+        return cluster_instance.results, assignments, beta_features
 
     def reassign_to_subjects(self, cluster_assigments, subjects):
         reassigned = []
@@ -316,8 +317,46 @@ class dFNC:
                 results[param_name][param_val], assignments[param_name][param_val] = self.run(**kwargs)
         return results, assignments
 
-    def collect_states(self, assignments, classes, subject_data):
-        pass
+    def collect_states(self, assignments, filename="results/states.png", classes=None, subject_data=None, networks=None, time_index=1):
+        if time_index == 0:
+            time_index = 2
+        nc = self.subject_data.shape[time_index]
+        try:
+            states = np.unique(np.array(assignments).flatten())
+        except ValueError:
+            states = np.unique(np.concatenate([np.unique(a) for a in assignments]))
+        num_states = len(states)
+        class_labels = np.unique(classes)
+        class_combos = list(combinations(class_labels, 2))
+        num_classes = len(class_labels)
+        class_centroids = dict()
+        beta_features = np.zeros((subject_data.shape[0], num_classes*num_states))
+
+        for j, L in enumerate(class_labels):
+            relevant_indices = [i for i in range(len(assignments)) if classes[i] == L]
+            relevant_windows = np.stack(subject_data[relevant_indices], 0)
+            relevant_windows = relevant_windows.reshape(relevant_windows.shape[0]*relevant_windows.shape[1], relevant_windows.shape[2])
+            relevant_assignments = np.concatenate(assignments[relevant_indices]).flatten()
+            class_centroids[L] = dict()
+            for k in states:
+                matched_windows = [relevant_windows[i, :] for i in range(len(relevant_assignments)) if relevant_assignments[i] == k]
+                centroid_k = np.mean(matched_windows, 0)
+                Z = np.zeros((nc, nc))
+                Z[np.triu_indices(nc)] = centroid_k
+                Z = Z.T
+                Z[np.triu_indices(nc)] = centroid_k
+                class_centroids[L][k] = centroid_k
+        for i, xi in enumerate(subject_data):
+            betas = np.zeros((xi.shape[0], num_classes, num_states))
+            for j, L in enumerate(class_labels):
+                for k in states:
+                    centroid = class_centroids[L][k]
+                    model = LinearRegression()
+                    model.fit(xi.T, centroid)
+                    betas[:, j, k] = model.coef_
+            betas = np.mean(betas, 0)
+            beta_features[i, :] = betas.reshape(num_classes*num_states)
+        return class_centroids, beta_features
 
     def visualize_states(self, assignments, filename="results/states.png", classes=None, subject_data=None, networks=None, time_index=1):
         if time_index == 0:
