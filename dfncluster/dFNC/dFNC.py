@@ -1,7 +1,8 @@
 import numpy as np
 import seaborn as sb
 import matplotlib.pyplot as plt
-
+from mpl_toolkits.mplot3d import axes3d
+import os
 
 def corr_wrapper(x):
     return np.corrcoef(x)
@@ -192,7 +193,7 @@ class dFNC:
           
         dim_reduced_X = fnc_features.dot(Vt.T) 
         
-        dim_reduced_X = dim_reduced_X[:, 0:2] # take first 2 dimensions
+        dim_reduced_X = dim_reduced_X[:, 0:3] # take first 3 dimensions
 
         plt.figure(2, figsize=(8, 6))
         plt.clf()
@@ -213,10 +214,28 @@ class dFNC:
 
         plt.xlabel('PCA Dim 1')
         plt.ylabel('PCA Dim 2')
-
+        plt.title(clusterer_name)
         print('Created cluster visualization on full dataset.')
         sb.set()
         plt.savefig(filename, bbox_inches="tight")
+        
+        plt.close()
+        plt.figure()
+        plt.clf()
+        fig = plt.figure(3,figsize=(8, 6))
+        ax = fig.gca(projection='3d')
+        scatter = ax.scatter(xs=dim_reduced_X[:,0],ys=dim_reduced_X[:,1],zs=dim_reduced_X[:,2],c=COLOR_LABELS,marker='o',cmap='rainbow',s=10,alpha=0.5)
+        legend1 = ax.legend(*scatter.legend_elements(),loc="lower left", title="Classes")
+        ax.add_artist(legend1)
+        plt.tight_layout()
+        ax.set_xlabel('PCA Dim 1')
+        ax.set_ylabel('PCA Dim 2')
+        ax.set_zlabel('PCA Dim 3')
+        plt.title(clusterer_name)
+        file_name, extension = os.path.splitext(filename)
+        filename = file_name + "_3d" + extension
+        plt.savefig(filename, bbox_inches="tight")
+        print('Created 3d cluster visualization on full dataset.')
  
     def run(self, evaluate=False, grid_params={}, vis_filename="results/cluster_vis.png", **kwargs):
         """Run dFNC, including the following steps:
