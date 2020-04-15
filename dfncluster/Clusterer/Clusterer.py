@@ -76,6 +76,7 @@ class Clusterer:
         self.params = kwargs
         self.params['metrics'] = metrics
         self.param_grid = param_grid
+        self.best_cv = None
 
     @staticmethod
     @abc.abstractmethod
@@ -97,10 +98,21 @@ class Clusterer:
         self.centroids = []
         self.assignments = []
 
+    @staticmethod
+    def silhouette_score(estimator, X, labels_true):
+        labels = estimator.fit_predict(X)
+        try:
+            score = skm.silhouette_score(X, labels, metric='euclidean')
+            # score = sklearn.metrics.calinski_harabasz_score(X, labels)
+        except ValueError:
+            score = -1
+        return score
+
     def fit_grid(self):
         if self.param_grid is not None:
-            clf = skms.GridSearchCV(self.model, self.param_grid)
+            clf = skms.GridSearchCV(self.model, self.param_grid, scoring=Clusterer.silhouette_score)
             clf.fit(self.X, self.Y)
+            self.best_cv = clf
             return clf.best_estimator_
         else:
             return self.model
@@ -136,4 +148,5 @@ class Clusterer:
         package['assignments'] = self.assignments
         package['results'] = self.results
         package['model'] = self.model.__name__
+        package['best'] = self.best_cv
         np.save(filename, package, allow_pickle=True)

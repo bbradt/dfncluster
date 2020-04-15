@@ -1,6 +1,13 @@
 {
     "Multilayer Perceptron": {
         "hidden_layer_sizes": [
+	    [
+		128
+	    ],
+	    [
+		128,
+		64,
+  	    ],
             [
                 64
             ],
@@ -27,7 +34,9 @@
             1e-3,
             1e-2,
             1e-1,
-            1e-0
+            1e-0,
+	    1e2,
+	    1e3
         ],
         "batch_size": [
             "auto"
@@ -38,6 +47,9 @@
             "adaptive"
         ],
         "learning_rate_init": [
+	    1e-6,
+            1e-5,
+	    1e-4,
             1e-3,
             1e-2,
             1e-1
@@ -46,7 +58,7 @@
             0.5
         ],
         "max_iter": [
-            100
+            1000
         ],
         "shuffle": [
             true
@@ -238,7 +250,8 @@
     "Random Forest": {
         "n_estimators": [
             250,
-            500
+            500,
+	    1000
         ],
         "criterion": [
             "entropy",
@@ -293,7 +306,8 @@
         ],
         "n_estimators": [
             100,
-            250
+            250,
+	    1000
         ],
         "max_samples": [
             1.0
@@ -305,7 +319,8 @@
     "Extra Trees": {
         "n_estimators": [
             100,
-            250
+            250,
+	   1000
         ],
         "criterion": [
             "gini",
@@ -352,7 +367,8 @@
         ],
         "n_estimators": [
             100,
-            250
+            250,
+	   1000
         ],
         "subsample": [
             1
@@ -377,7 +393,8 @@
             0.001,
             0.01,
             0.1,
-            1
+            1,
+	   10
         ],
         "solver": [
             "newton-cg",
@@ -387,7 +404,7 @@
             "saga"
         ],
         "max_iter": [
-            500
+            1000
         ]
     },
     "Ridge Classification": {
@@ -475,7 +492,7 @@
             "fmin_l_bfgs_b"
         ],
         "max_iter_predict": [
-            500
+            1000
         ]
     },
     "LDA": {

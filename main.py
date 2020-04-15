@@ -13,7 +13,7 @@ from data.SklearnDatasets.Iris.Iris import Iris
 from data.SklearnDatasets.Moons.Moons import Moons
 from data.SklearnDatasets.Classification.Classification import Classification
 from data.GaussianConnectivityDatasets.TestGCDataset.TestGCDataset import TestGCDataset
-from data.MatDatasets.Ds000030.Ds000030 import Ds000030
+from data.MatDatasets.UCLA.UCLA import UCLA
 # External Modules
 import os
 import argparse
@@ -35,21 +35,21 @@ DATASETS = dict(
     simtb=OmegaSim,
     gauss=TestGCDataset,
     iris=Iris,
-    ds000030=Ds000030
+    ucla=UCLA
 )
 DATASET_TYPES = dict(
     fbirn=MatDataset,
     simtb=MatDataset,
     gauss=GaussianConnectivityDataset,
     iris=SklearnDataset,
-    ds000030=MatDataset,
+    ucla=MatDataset,
 )
 DATASET_FILE = dict(
     fbirn=os.path.join('data', 'MatDatasets', 'FbirnTC', 'fbirn_tc.npy'),
     simtb=os.path.join('data', 'MatDatasets', 'OmegaSim', 'omega_sim.npy'),
     gauss=os.path.join('data', 'GaussianConnectivityDatasets', 'TestGCDataset', 'test_gc.npy'),
     iris=os.path.join('data', 'SklearnDatasets', 'Iris', 'iris.npy'),
-    ds000030=os.path.join('data', 'MatDatasets', 'Ds000030', 'ds000030.npy')
+    ucla=os.path.join('data', 'MatDatasets', 'UCLA', 'ucla.npy')
 )
 CLUSTERERS = dict(
     kmeans=KMeansClusterer,
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     if not args.skip_dfnc:
         if args.seed is not None:
             np.random.seed(args.seed)
-            
+
         grid_params = None
         if args.cluster_grid is not None:
             grid_params = json.load(open(args.cluster_grid, 'r'))
@@ -156,16 +156,17 @@ if __name__ == '__main__':
             elbow_k = args.elbow.split(",")
             if len(elbow_k) > 0:
                 elbow_k = [int(s) for s in elbow_k]
-                dfnc.eval_k_clusters(elbow_k, "results/%s_%s/%s_%s_elbow.png" % (args.clusterer, args.dataset, 
-                                                                                args.clusterer, args.dataset))
+                dfnc.eval_k_clusters(elbow_k, "results/%s_%s/%s_%s_elbow.png" % (args.clusterer, args.dataset,
+                                                                                 args.clusterer, args.dataset))
                 exit(0)
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
-        results, assignments = dfnc.run(grid_params=grid_params, viz_filename="results/%s_%s/%s_%s_visualization.png" % (args.clusterer, args.dataset, args.clusterer, args.dataset),**params)
-        dfnc.visualize_states(assignments, filename="results/%s_%s/%s_%s_states.png" % (args.clusterer, args.dataset, args.clusterer, args.dataset), time_index=args.time_index)
+        results, assignments = dfnc.run(grid_params=grid_params, vis_filename="results/%s_%s/%s_%s_visualization.png" %
+                                        (args.clusterer, args.dataset, args.clusterer, args.dataset), **params)
+        dfnc.visualize_states(assignments, filename="results/%s_%s/%s_%s_states.png" %
+                              (args.clusterer, args.dataset, args.clusterer, args.dataset), time_index=args.time_index)
 
-        
         subject_data, subject_labels = dfnc.get_subjects()
         print("dFNC Clustering Results")
         print(results, assignments)

@@ -184,32 +184,32 @@ class dFNC:
 
     def visualize_clusters(self, fnc_features, assignments, clusterer_name, filename, centroids=None):
 
-        fnc_features_centered = fnc_features - np.mean(fnc_features, axis = 0)  
+        fnc_features_centered = fnc_features - np.mean(fnc_features, axis=0)
 
         U, S, Vt = np.linalg.svd(fnc_features_centered, full_matrices=False)
 
         S = np.diag(S)
-          
-        dim_reduced_X = fnc_features.dot(Vt.T) 
-        
-        dim_reduced_X = dim_reduced_X[:, 0:2] # take first 2 dimensions
+
+        dim_reduced_X = fnc_features.dot(Vt.T)
+
+        dim_reduced_X = dim_reduced_X[:, 0:2]  # take first 2 dimensions
 
         plt.figure(2, figsize=(8, 6))
         plt.clf()
-    
+
         COLOR_LABELS = np.reshape(assignments, (-1))
 
-        plt.scatter(dim_reduced_X[:, 0], dim_reduced_X[:, 1], c=COLOR_LABELS, marker='o')
+        plt.scatter(dim_reduced_X[:, 0], dim_reduced_X[:, 1], c=COLOR_LABELS, marker='o', cmap='viridis')
 
         if centroids is not None:
 
-            centroids_centered = centroids - np.mean(centroids, axis = 0)  
-              
-            centroids_reduced_X = centroids.dot(Vt.T) 
-            
-            centroids_reduced_X = centroids_reduced_X[:, 0:2] # take first 2 dimensions
+            centroids_centered = centroids - np.mean(centroids, axis=0)
 
-            plt.scatter(centroids_reduced_X[:, 0], centroids_reduced_X[:, 1], c='b', s=10**3, marker='x')
+            centroids_reduced_X = centroids.dot(Vt.T)
+
+            centroids_reduced_X = centroids_reduced_X[:, 0:2]  # take first 2 dimensions
+
+            plt.scatter(centroids_reduced_X[:, 0], centroids_reduced_X[:, 1], c='r', s=10**3, linewidth=3, marker='x')
 
         plt.xlabel('PCA Dim 1')
         plt.ylabel('PCA Dim 2')
@@ -217,7 +217,7 @@ class dFNC:
         print('Created cluster visualization on full dataset.')
         sb.set()
         plt.savefig(filename, bbox_inches="tight")
- 
+
     def run(self, evaluate=False, grid_params={}, vis_filename="results/cluster_vis.png", **kwargs):
         """Run dFNC, including the following steps:
             1. Window computation
