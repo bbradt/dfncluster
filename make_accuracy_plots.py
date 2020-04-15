@@ -23,6 +23,9 @@ rows = []
 
 for clusterer, folder in CFOLDERS.items():
     directory = os.path.join(ROOT_DIR, folder)
+    if not os.path.exists(directory):
+        print("The directory %s does not exist" % directory)
+        continue
     scores = pkl.load(open(os.path.join(directory, 'scores.pkl'), 'rb'))
     test_cols = [cols for cols in scores.columns if 'test' in cols]
     test_scores = scores[test_cols].to_dict()

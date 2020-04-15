@@ -1,4 +1,4 @@
-DATASETS=("gauss" "fbirn")                                                  
+DATASETS=("gauss" "fbirn" "ucla")                                                  
 CLUSTERER=("kmeans" "dbscan" "gmm" "bgmm" "hierarchical")                              
 TIME=0                  
 eval "$(conda shell.bash hook)"

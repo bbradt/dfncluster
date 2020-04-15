@@ -59,14 +59,21 @@ class dFNC:
             variance_windows = []
             if time_index != 0:
                 xi = xi.T
+            found_nan = np.isnan(xi).any() or np.isinf(xi).any()
             for ti in range(xi.shape[0]-window_size):
                 window = xi[ti:(ti+window_size)]
                 fnc = metric(window.T)
                 # input(fnc.shape)
                 fnc = fnc[np.triu_indices_from(fnc)].flatten()
+                found_nan = found_nan or np.isnan(fnc).any() or np.isinf(fnc).any()
+                if found_nan:
+                    break
                 variance_windows.append(np.var(fnc))
                 sub_x.append(fnc)
                 sub_y.append(self.subject_labels[i])
+            if found_nan:
+                print('Found Nan or Inf in subject %d' % i)
+                continue
             _, indices = self.local_maxima(np.array(variance_windows))
             exm_x += [sub_x[j] for j in indices]
             exm_y += [sub_y[j] for j in indices]
@@ -108,7 +115,7 @@ class dFNC:
         indices = [i for i in range(len(a)) if a[i] in matches]
         if indices:
             return matches, indices
-        return matches
+        return matches, indices
 
     def find_nearest(self, array, value):
         """
