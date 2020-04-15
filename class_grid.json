@@ -1,13 +1,13 @@
 {
     "Multilayer Perceptron": {
         "hidden_layer_sizes": [
-	    [
-		128
-	    ],
-	    [
-		128,
-		64,
-  	    ],
+            [
+                128
+            ],
+            [
+                128,
+                64
+            ],
             [
                 64
             ],
@@ -35,8 +35,8 @@
             1e-2,
             1e-1,
             1e-0,
-	    1e2,
-	    1e3
+            1e2,
+            1e3
         ],
         "batch_size": [
             "auto"
@@ -47,9 +47,9 @@
             "adaptive"
         ],
         "learning_rate_init": [
-	    1e-6,
+            1e-6,
             1e-5,
-	    1e-4,
+            1e-4,
             1e-3,
             1e-2,
             1e-1
@@ -251,7 +251,7 @@
         "n_estimators": [
             250,
             500,
-	    1000
+            1000
         ],
         "criterion": [
             "entropy",
@@ -307,7 +307,7 @@
         "n_estimators": [
             100,
             250,
-	    1000
+            1000
         ],
         "max_samples": [
             1.0
@@ -320,7 +320,7 @@
         "n_estimators": [
             100,
             250,
-	   1000
+            1000
         ],
         "criterion": [
             "gini",
@@ -368,7 +368,7 @@
         "n_estimators": [
             100,
             250,
-	   1000
+            1000
         ],
         "subsample": [
             1
@@ -394,7 +394,7 @@
             0.01,
             0.1,
             1,
-	   10
+            10
         ],
         "solver": [
             "newton-cg",
