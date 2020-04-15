@@ -26,6 +26,7 @@ class dFNC:
         self.metric = metric
         self.time_index = time_index
         self.window_size = window_size
+        self.bad_indices = []
 
     def compute_windows(self, **kwargs):
         """
@@ -53,6 +54,7 @@ class dFNC:
         new_x = []
         new_y = []
         subject_indices = []
+        self.bad_indices = []
         for i, xi in enumerate(self.subject_data):
             sub_x = []
             sub_y = []
@@ -73,6 +75,7 @@ class dFNC:
                 sub_y.append(self.subject_labels[i])
             if found_nan:
                 print('Found Nan or Inf in subject %d' % i)
+                self.bad_indices.append(i)
                 continue
             _, indices = self.local_maxima(np.array(variance_windows))
             exm_x += [sub_x[j] for j in indices]
@@ -205,10 +208,10 @@ class dFNC:
 
         plt.figure(2, figsize=(8, 6))
         plt.clf()
-
         COLOR_LABELS = np.reshape(assignments, (-1))
 
         plt.scatter(dim_reduced_X[:, 0], dim_reduced_X[:, 1], c=COLOR_LABELS, marker='o', cmap='viridis')
+        plt.legend(np.unique(assignments))
 
         if centroids is not None:
 
@@ -246,7 +249,7 @@ class dFNC:
         plt.savefig(filename, bbox_inches="tight")
         print('Created 3d cluster visualization on full dataset.')
 
-    def run(self, evaluate=False, grid_params={}, vis_filename="results/cluster_vis.png", **kwargs):
+    def run(self, evaluate=False, grid_params={}, vis_filename="results/cluster_vis.png", state_filename="results/states_vis.png", **kwargs):
         """Run dFNC, including the following steps:
             1. Window computation
             2. First stage exemplar clustering
@@ -277,8 +280,12 @@ class dFNC:
         print("Reassigning states to subjects")
         assignments = self.reassign_to_subjects(
             cluster_instance.assignments, self.subjects)
+        subject_windows = self.reassign_to_subjects(
+            fnc_features, self.subjects
+        )
 
-        self.visualize_clusters(fnc_features, assignments, kwargs['name'], vis_filename, cluster_instance.centroids)
+        self.visualize_clusters(fnc_features, cluster_instance.assignments, kwargs['name'], vis_filename, cluster_instance.centroids)
+        self.visualize_states(assignments, filename=state_filename, classes=self.dataset.labels, subject_data=subject_windows, time_index=self.time_index)
 
         return cluster_instance.results, assignments
 
@@ -301,13 +308,17 @@ class dFNC:
                 results[param_name][param_val], assignments[param_name][param_val] = self.run(**kwargs)
         return results, assignments
 
-    def visualize_states(self, assignments, filename="results/states.png", classes=None, time_index=1):
+    def collect_states(self, assignments, classes, subject_data):
+        pass
+
+    def visualize_states(self, assignments, filename="results/states.png", classes=None, subject_data=None, networks=None, time_index=1):
         if time_index == 0:
             time_index = 2
         nc = self.subject_data.shape[time_index]
-        states = np.unique(assignments)
+        states = np.unique(np.array(assignments).flatten())
         num_states = len(states)
         if classes is None:
+            assignments = np.flatten(np.array(assignments))
             num_classes = 1
             sb.set()
             fig, ax = plt.subplots(num_classes, num_states, figsize=(30, 10))
@@ -322,6 +333,30 @@ class dFNC:
                 ax[k].set_xticks(())
                 ax[k].set_yticks(())
             plt.savefig(filename, bbox_inches='tight')
+        else:
+            class_labels = np.unique(classes)
+            num_classes = len(class_labels)
+            sb.set()
+            fig, ax = plt.subplots(num_classes, num_states, figsize=(30, 10))
+            for j, L in enumerate(class_labels):
+                relevant_indices = [i for i in range(len(assignments)) if classes[i] == L]
+                relevant_windows = np.stack(subject_data[relevant_indices, :], 0)
+                relevant_windows = relevant_windows.reshape(relevant_windows.shape[0]*relevant_windows.shape[1], relevant_windows.shape[2])
+                relevant_assignments = np.array(assignments[relevant_indices]).flatten()
+                class_centroids = []
+                for k in states:
+                    matched_windows = [relevant_windows[i, :] for i in range(len(relevant_assignments)) if relevant_assignments[i] == k]
+                    centroid_k = np.mean(matched_windows, 0)
+                    Z = np.zeros((nc, nc))
+                    Z[np.triu_indices(nc)] = centroid_k
+                    Z = Z.T
+                    Z[np.triu_indices(nc)] = centroid_k
+                    ax[j, k].imshow(Z, cmap='jet')
+                    ax[j, k].set_title("State %d/ Class %s" % (k, L))
+                    ax[j, k].set_xticks(())
+                    ax[j, k].set_yticks(())
+            plt.savefig(filename, bbox_inches='tight')
+
         return fig
 
     def save(self, filename):

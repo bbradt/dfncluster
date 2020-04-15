@@ -70,7 +70,7 @@ def parse_main_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", default="fbirn", type=str,
                         help="<str> the data set to use. Options are fbirn, simtb, gaussian; DEFAULT=%s" % "fbirn")
-    parser.add_argument("--remake_data", default=False, type=bool, help="<bool> whether or not to remake the data set; DEFAULT=%s" % False)
+    parser.add_argument("--remake_data", default=False, help="<bool> whether or not to remake the data set; DEFAULT=%s" % False, action='store_true')
     parser.add_argument("--clusterer", default="kmeans", type=str,
                         help="<str> the clusterer to use. Options are kmeans, bgmm, gmm, dbscan; DEFAULT=%s" % "kmeans")
     parser.add_argument("--window_size", default=22, type=int, help="<int> the size of the dFNC window; DEFAULT=%s" % 22)
@@ -163,9 +163,10 @@ if __name__ == '__main__':
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
         results, assignments = dfnc.run(grid_params=grid_params, vis_filename="results/%s_%s/%s_%s_visualization.png" %
-                                        (args.clusterer, args.dataset, args.clusterer, args.dataset), **params)
-        dfnc.visualize_states(assignments, filename="results/%s_%s/%s_%s_states.png" %
-                              (args.clusterer, args.dataset, args.clusterer, args.dataset), time_index=args.time_index)
+                                        (args.clusterer, args.dataset, args.clusterer, args.dataset),
+                                        state_filename="results/%s_%s/%s_%s_states.png" %
+                                        (args.clusterer, args.dataset, args.clusterer, args.dataset),
+                                        **params)
 
         subject_data, subject_labels = dfnc.get_subjects()
         print("dFNC Clustering Results")
