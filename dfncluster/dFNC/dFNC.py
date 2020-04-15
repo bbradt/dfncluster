@@ -3,6 +3,8 @@ import seaborn as sb
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import axes3d
 import os
+from scipy.stats import ttest_ind
+from itertools import combinations
 
 
 def corr_wrapper(x):
@@ -55,6 +57,7 @@ class dFNC:
         new_y = []
         subject_indices = []
         self.bad_indices = []
+        mintime = np.min([x.shape[self.time_index] for x in self.subject_data])
         for i, xi in enumerate(self.subject_data):
             sub_x = []
             sub_y = []
@@ -62,13 +65,16 @@ class dFNC:
             if time_index != 0:
                 xi = xi.T
             found_nan = np.isnan(xi).any() or np.isinf(xi).any()
-            for ti in range(xi.shape[0]-window_size):
+            timedim = xi.shape[0]
+            for ti in range(timedim-window_size):
                 window = xi[ti:(ti+window_size)]
                 fnc = metric(window.T)
                 # input(fnc.shape)
                 fnc = fnc[np.triu_indices_from(fnc)].flatten()
                 found_nan = found_nan or np.isnan(fnc).any() or np.isinf(fnc).any()
                 if found_nan:
+                    sub_x = []
+                    sub_y = []
                     break
                 variance_windows.append(np.var(fnc))
                 sub_x.append(fnc)
@@ -211,7 +217,7 @@ class dFNC:
         COLOR_LABELS = np.reshape(assignments, (-1))
 
         plt.scatter(dim_reduced_X[:, 0], dim_reduced_X[:, 1], c=COLOR_LABELS, marker='o', cmap='viridis')
-        plt.legend(np.unique(assignments))
+        plt.legend(np.unique(COLOR_LABELS).tolist())
 
         if centroids is not None:
 
@@ -292,7 +298,9 @@ class dFNC:
     def reassign_to_subjects(self, cluster_assigments, subjects):
         reassigned = []
         for i in range(max(subjects)+1):
-            reassigned.append(cluster_assigments[subjects == i])
+            reassignments = cluster_assigments[subjects == i]
+            if len(reassignments) > 0:
+                reassigned.append(reassignments)
         return np.array(reassigned)
 
     def line_search(self, line_params, **kwargs):
@@ -315,7 +323,10 @@ class dFNC:
         if time_index == 0:
             time_index = 2
         nc = self.subject_data.shape[time_index]
-        states = np.unique(np.array(assignments).flatten())
+        try:
+            states = np.unique(np.array(assignments).flatten())
+        except ValueError:
+            states = np.unique(np.concatenate([np.unique(a) for a in assignments]))
         num_states = len(states)
         if classes is None:
             assignments = np.flatten(np.array(assignments))
@@ -335,15 +346,18 @@ class dFNC:
             plt.savefig(filename, bbox_inches='tight')
         else:
             class_labels = np.unique(classes)
+            class_combos = list(combinations(class_labels, 2))
             num_classes = len(class_labels)
             sb.set()
-            fig, ax = plt.subplots(num_classes, num_states, figsize=(30, 10))
+            fig, ax = plt.subplots(num_classes+len(class_combos), num_states, figsize=(30, 10))
+            class_centroids = dict()
+
             for j, L in enumerate(class_labels):
                 relevant_indices = [i for i in range(len(assignments)) if classes[i] == L]
-                relevant_windows = np.stack(subject_data[relevant_indices, :], 0)
+                relevant_windows = np.stack(subject_data[relevant_indices], 0)
                 relevant_windows = relevant_windows.reshape(relevant_windows.shape[0]*relevant_windows.shape[1], relevant_windows.shape[2])
-                relevant_assignments = np.array(assignments[relevant_indices]).flatten()
-                class_centroids = []
+                relevant_assignments = np.concatenate(assignments[relevant_indices]).flatten()
+                class_centroids[L] = dict()
                 for k in states:
                     matched_windows = [relevant_windows[i, :] for i in range(len(relevant_assignments)) if relevant_assignments[i] == k]
                     centroid_k = np.mean(matched_windows, 0)
@@ -355,6 +369,22 @@ class dFNC:
                     ax[j, k].set_title("State %d/ Class %s" % (k, L))
                     ax[j, k].set_xticks(())
                     ax[j, k].set_yticks(())
+                    class_centroids[L][k] = matched_windows
+            for k in states:
+                for ck, (k1, k2) in enumerate(class_combos):
+                    states_1 = class_centroids[k1][k]
+                    states_2 = class_centroids[k2][k]
+                    ttest = ttest_ind(states_1, states_2, axis=0)
+                    Z = np.zeros((nc, nc))
+                    score = np.log10(ttest.pvalue)*np.sign(ttest.statistic)
+                    Z[np.triu_indices(nc)] = score
+                    Z = Z.T
+                    Z[np.triu_indices(nc)] = score
+                    #print('States %d, TTest %s vs %s - %s' % (k, k1, k2, ck+num_classes))
+                    ax[ck+num_classes, k].imshow(Z, cmap='jet')
+                    ax[ck+num_classes, k].set_title("State %d/ TTest %s - %s" % (k, k1, k2))
+                    ax[ck+num_classes, k].set_xticks(())
+                    ax[ck+num_classes, k].set_yticks(())
             plt.savefig(filename, bbox_inches='tight')
 
         return fig
