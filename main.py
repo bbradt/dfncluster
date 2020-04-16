@@ -159,23 +159,23 @@ if __name__ == '__main__':
             elbow_k = args.elbow.split(",")
             if len(elbow_k) > 0:
                 elbow_k = [int(s) for s in elbow_k]
-                dfnc.eval_k_clusters(elbow_k, "results/%s_%s/%s_%s_elbow.png" % (args.clusterer, args.dataset,
-                                                                                 args.clusterer, args.dataset))
+                dfnc.eval_k_clusters(elbow_k, "%s/%s_%s_elbow.png" % (result_dir,
+                                                                      args.clusterer, args.dataset))
                 exit(0)
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
-        results, assignments, betas = dfnc.run(grid_params=grid_params, vis_filename="results/%s_%s/%s_%s_visualization.png" %
-                                               (args.clusterer, args.dataset, args.clusterer, args.dataset),
-                                               state_filename="results/%s_%s/%s_%s_states.png" %
-                                               (args.clusterer, args.dataset, args.clusterer, args.dataset),
+        results, assignments, betas = dfnc.run(grid_params=grid_params, vis_filename="%s/%s_%s_visualization.png" %
+                                               (result_dir, args.clusterer, args.dataset),
+                                               state_filename="%s/%s_%s_states.png" %
+                                               (result_dir, args.clusterer, args.dataset),
                                                **params)
 
         subject_data, subject_labels = dfnc.get_subjects()
         print("dFNC Clustering Results")
         print(results, assignments)
         print("Saving dFNC Results")
-        dfnc.save(os.path.join('results', args.outdir, args.dfnc_outfile))
+        dfnc.save(os.path.join(result_dir, args.dfnc_outfile))
 
     if not args.skip_classify:
         if not args.skip_dfnc:
