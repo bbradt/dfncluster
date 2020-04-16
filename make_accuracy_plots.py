@@ -7,6 +7,7 @@ import numpy as np
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataset", default="fbirn", type=str)
+parser.add_argument("--betas", default=False, action="store_true")
 args = parser.parse_args()
 plt.close()
 ROOT_DIR = 'results'
@@ -18,15 +19,19 @@ CFOLDERS = dict(
     dbscan='dbscan_%s' % DATASET,
     hierarchical='hierarchical_%s' % DATASET
 )
+if args.betas:
+    for k, v in CFOLDERS.items():
+        CFOLDERS[k] = v+"_betas"
 CLUSTERERS = list(CFOLDERS.keys())
 rows = []
 
 for clusterer, folder in CFOLDERS.items():
     directory = os.path.join(ROOT_DIR, folder)
-    if not os.path.exists(directory):
-        print("The directory %s does not exist" % directory)
+    score_file = os.path.join(directory, 'scores.pkl')
+    if not os.path.exists(score_file):
+        print("The score file %s does not exist" % score_file)
         continue
-    scores = pkl.load(open(os.path.join(directory, 'scores.pkl'), 'rb'))
+    scores = pkl.load(open(score_file, 'rb'))
     test_cols = [cols for cols in scores.columns if 'test' in cols]
     test_scores = scores[test_cols].to_dict()
     for method in test_cols:
@@ -45,11 +50,20 @@ for i in range(num_rows):
     #    sb.boxplot(data=dfc, x='classifier', y='AUC', hue='classifier', ax=ax[i])
     #    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
     # else:
-    sb.boxplot(data=dfc, x='classifier',  y='AUC', ax=ax[i])
+    try:
+        sb.boxplot(data=dfc, x='classifier',  y='AUC', ax=ax[i])
+    except ValueError:
+        continue
     ax[i].set_title(CLUSTERERS[i])
     ax[i].set_ylim([0.0, 1.0])
     ax[i].set_xticks(())
-plt.savefig('results/%s_accuracy.png' % DATASET, bbox_inches='tight')
+if args.betas:
+    plt.suptitle('AUC using Beta-Features')
+    filename = 'results/%s_betas_accuracy.png' % DATASET
+else:
+    plt.suptitle('AUC usign Cluster-Assignments')
+    filename = 'results/%s_assignments_accuracy.png' % DATASET
+plt.savefig(filename, bbox_inches='tight')
 sb.boxplot(data=dfc, x='classifier', y='AUC', hue='classifier', ax=ax[-1])
 axc = plt.gca()
 figLegend = plt.figure()
