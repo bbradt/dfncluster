@@ -46,7 +46,7 @@ def plot_dendrogram(heir_instance, **kwargs):
 
     linkage_matrix = np.column_stack([heir_instance.children_, distances[:,2], counts[:, np.newaxis]]).astype(float)
     sch.dendrogram(linkage_matrix, **kwargs)
-    plt.savefig("heirarchical_cluster_dendrogram.png")
+    plt.savefig(heir_instance.dendrogram_name)
 
 
 SCORE_METRICS = dict(
@@ -75,6 +75,8 @@ class HierarchicalClusterer(Clusterer):
         super(HierarchicalClusterer, self).__init__(**kwargs)
         self.model = skc.AgglomerativeClustering(**{k:v for k,v in kwargs.items() if k in ALLOWED_KWARGS})
         
+        self.dendrogram_name = kwargs['viz_filename'].split('.')[0] + "dendrogram.png"
+        
 
     def fit(self):
         self.labels_ = self.model.fit_predict(self.X) #fit
@@ -83,18 +85,13 @@ class HierarchicalClusterer(Clusterer):
         self.n_leaves_ = self.model.n_leaves_
         self.n_connected_components_ = self.model.n_connected_components_
         self.children_ = self.model.children_
-<<<<<<< Updated upstream
         centroids = []
         for k in np.unique(self.assignments):
             samples = self.X[self.assignments == k, :]
             centroids.append(np.mean(samples, 0))
         self.centroids = np.vstack(centroids)
-
-        
-=======
         plot_dendrogram(self, truncate_mode='level', p=self.n_clusters_)
-       
->>>>>>> Stashed changes
+        
 
     def evaluate(self):
         """
