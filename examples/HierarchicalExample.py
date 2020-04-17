@@ -21,7 +21,7 @@ LINKAGE = ['single', 'complete', 'average', 'ward']
 def main(dataset, metrics):
     dataset = DATASETS[dataset.lower()]()
     for link in LINKAGE:
-        clusterer = HierarchicalClusterer.HierarchicalClusterer(X=dataset.features, Y=dataset.labels, metrics=metrics, linkage=link)
+        clusterer = HierarchicalClusterer(X=dataset.features, Y=dataset.labels, metrics=metrics, linkage=link)
         clusterer.fit()
         results = clusterer.evaluate()
         print("Linkage:", link, results)
