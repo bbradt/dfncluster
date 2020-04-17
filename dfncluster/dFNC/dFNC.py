@@ -15,7 +15,7 @@ def corr_wrapper(x):
 
 class dFNC:
     def __init__(self, dataset=None, first_stage_algorithm=None, second_stage_algorithm=None,
-                 time_index=0, metric=corr_wrapper, window_size=22, save_feautes=True,
+                 time_index=0, metric=corr_wrapper, window_size=22, save_features=True,
                  **kwargs):
         """kwargs:
             dataset     FNCDataset  Some FNC Dataset
