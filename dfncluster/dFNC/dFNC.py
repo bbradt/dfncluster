@@ -13,7 +13,8 @@ def corr_wrapper(x):
 
 
 class dFNC:
-    def __init__(self, dataset=None, clusterer=None, time_index=0, metric=corr_wrapper, window_size=22, **kwargs):
+    def __init__(self, dataset=None, clusterer=None, time_index=0, metric=corr_wrapper, window_size=22,
+                 save_features=True, **kwargs):
         """kwargs:
             dataset     FNCDataset  Some FNC Dataset
             clusterer   Clusterer   KMeansClusterer
@@ -26,10 +27,12 @@ class dFNC:
         self.results = []
         self.subjects = None
         self.exemplars = None
+        self.cluster_assignments_over_time = None
         self.metric = metric
         self.time_index = time_index
         self.window_size = window_size
         self.bad_indices = []
+        self.save_features = save_features
 
     def compute_windows(self, **kwargs):
         """
@@ -287,6 +290,7 @@ class dFNC:
         print("Reassigning states to subjects")
         assignments = self.reassign_to_subjects(
             cluster_instance.assignments, self.subjects)
+        self.cluster_assignments_over_time = assignments
         subject_windows = self.reassign_to_subjects(
             fnc_features, self.subjects
         )
@@ -435,3 +439,7 @@ class dFNC:
         package['exemplars'] = self.exemplars
         package['subjects'] = self.subjects
         np.save(filename, package, allow_pickle=True)
+        if self.save_features:
+            np.savez(filename + "_features",
+                     assignments=self.cluster_assignments_over_time,
+                     subjects=self.subjects)
