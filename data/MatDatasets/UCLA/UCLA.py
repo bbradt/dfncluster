@@ -7,7 +7,8 @@ class UCLA:
     def make():
         dataset = MatDataset(filename="data/MatDatasets/UCLA/data.csv",
                              feature_columns=['task-rest_bold'],
-                             label_columns=['diagnosis'])
+                             label_columns=['diagnosis'],
+                             shuffle_instances=False)
         dataset.save('data/MatDatasets/UCLA/ucla')
         return dataset
 

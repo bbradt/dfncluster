@@ -10,6 +10,16 @@ parser.add_argument("--dataset", default="fbirn", type=str)
 parser.add_argument("--betas", default=False, action="store_true")
 args = parser.parse_args()
 plt.close()
+exclude = [
+    'Nearest Neighbors',
+    'Ada Boost',
+    'Gradient Boost',
+    'Bernoulli Naive Bayes',
+    'Voting',
+    'Gaussian Process',
+    'Decision Tree',
+    'Bagging'
+]
 ROOT_DIR = 'results'
 DATASET = args.dataset.lower()
 CFOLDERS = dict(
@@ -24,6 +34,7 @@ if args.betas:
         CFOLDERS[k] = v+"_betas"
 CLUSTERERS = list(CFOLDERS.keys())
 rows = []
+mean_rows = []
 
 for clusterer, folder in CFOLDERS.items():
     directory = os.path.join(ROOT_DIR, folder)
@@ -34,12 +45,19 @@ for clusterer, folder in CFOLDERS.items():
     scores = pkl.load(open(score_file, 'rb'))
     test_cols = [cols for cols in scores.columns if 'test' in cols]
     test_scores = scores[test_cols].to_dict()
+    mean_row = {"Clustering Algorithm": clusterer}
+
     for method in test_cols:
+        if method.replace('test', '').strip() in exclude:
+            continue
+        mean_row[method.replace('test', '').strip()] = np.mean(list(test_scores[method].values()))
         for k in test_scores[method].values():
             rows.append(dict(AUC=k, classifier=method.replace('test', '').strip(), clusterer=clusterer))
-
+    mean_rows.append(mean_row)
 df = pd.DataFrame(rows)
-
+mean_df = pd.DataFrame(mean_rows)
+mean_df = mean_df.set_index('Clustering Algorithm')
+mean_df = mean_df[mean_df.max().sort_values(ascending=False).index]
 num_columns = len(test_cols)
 num_rows = len(CLUSTERERS)
 sb.set()
@@ -69,6 +87,13 @@ axc = plt.gca()
 figLegend = plt.figure()
 plt.figlegend(*axc.get_legend_handles_labels(), loc='upper left')
 figLegend.savefig('results/accuracy_legend.png', bbox_inches='tight')
+
+print("Mean Results")
+print(mean_df)
+if args.betas:
+    mean_df.to_csv('results/%s_betas_mean_scores.csv' % (DATASET))
+else:
+    mean_df.to_csv('results/%s_mean_scores.csv' % (DATASET))
 
 #pp=sb.boxplot(data=dfc, x='classifier', y='AUC', hue='classifier')
 # ax[-1].set_axis_off()

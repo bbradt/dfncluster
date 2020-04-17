@@ -2,6 +2,7 @@ import numpy as np
 import seaborn as sb
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import axes3d
+import sys
 import os
 from scipy.stats import ttest_ind
 from itertools import combinations
@@ -13,7 +14,7 @@ def corr_wrapper(x):
 
 
 class dFNC:
-    def __init__(self, dataset=None, clusterer=None, time_index=0, metric=corr_wrapper, window_size=22, **kwargs):
+    def __init__(self, dataset=None, first_stage_algorithm=None, second_stage_algorithm=None, time_index=0, metric=corr_wrapper, window_size=22, **kwargs):
         """kwargs:
             dataset     FNCDataset  Some FNC Dataset
             clusterer   Clusterer   KMeansClusterer
@@ -22,7 +23,8 @@ class dFNC:
         self.subject_data = self.dataset.features
         # input(str(self.subject_data.shape))
         self.subject_labels = self.dataset.labels
-        self.clusterer = clusterer
+        self.first_stage_algorithm = first_stage_algorithm
+        self.second_stage_algorithm = second_stage_algorithm
         self.results = []
         self.subjects = None
         self.exemplars = None
@@ -197,9 +199,10 @@ class dFNC:
         return y
 
     def eval_k_clusters(self, k, filename, **kwargs):
-        fnc_features, fnc_labels = self.compute_windows()
-        exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
-        exemplar_clusterer.evaluate_k(k, filename)
+        if self.first_stage_algorithm is not None:
+            fnc_features, fnc_labels = self.compute_windows()
+            exemplar_clusterer = self.first_stage_algorithm(X=self.exemplars['x'], Y=self.exemplars['y'], **kwargs)
+            exemplar_clusterer.evaluate_k(k, filename)
 
     def visualize_clusters(self, fnc_features, assignments, clusterer_name, filename, centroids=None):
 
@@ -256,7 +259,7 @@ class dFNC:
         plt.savefig(filename, bbox_inches="tight")
         print('Created 3d cluster visualization on full dataset.')
 
-    def run(self, evaluate=False, grid_params={}, vis_filename="results/cluster_vis.png", state_filename="results/states_vis.png", **kwargs):
+    def run(self, evaluate=False, grid_params={}, vis_filename="results/cluster_vis.png", state_filename="results/states_vis.png", ttest_fileprefix="results/ttest_", networks=None, **kwargs):
         """Run dFNC, including the following steps:
             1. Window computation
             2. First stage exemplar clustering
@@ -266,35 +269,55 @@ class dFNC:
         print("Computing FNC Windows")
         fnc_features, fnc_labels = self.compute_windows()
 
-        print("Performing exemplar clustering")
-        exemplar_clusterer = self.clusterer(X=self.exemplars['x'], Y=self.exemplars['y'], param_grid=grid_params, **kwargs)
-        exemplar_clusterer.model = exemplar_clusterer.fit_grid()
-        exemplar_clusterer.fit()
-        self.exemplar_clusterer = exemplar_clusterer
-
-        print("Performing full clustering")
-        kwargs['n_init'] = 1  # reset since we used exemplar to produce initial centers
-        cluster_instance = self.clusterer(
-            X=fnc_features, Y=fnc_labels,
-            initialization=exemplar_clusterer.get_results_for_init(), **kwargs)
-        cluster_instance.fit()
-        self.second_stage_clusterer = cluster_instance
+        if self.first_stage_algorithm is not None:
+            print("Performing exemplar clustering")
+            exemplar_clusterer = self.first_stage_algorithm(X=self.exemplars['x'], Y=self.exemplars['y'], param_grid=grid_params, **kwargs)
+            exemplar_clusterer.model = exemplar_clusterer.fit_grid()
+            exemplar_clusterer.fit()
+            self.exemplar_clusterer = exemplar_clusterer
+            if self.second_stage_algorithm is not None:
+                print("Performing full clustering")
+                kwargs['n_init'] = 1  # reset since we used exemplar to produce initial centers
+                cluster_instance = self.second_stage_algorithm(
+                    X=fnc_features, Y=fnc_labels,
+                    initialization=exemplar_clusterer.get_results_for_init(), **kwargs)
+                cluster_instance.fit()
+                self.last_clusterer = cluster_instance
+            else:
+                cluster_instance = self.exemplar_clusterer
+                self.last_clusterer = self.exemplar_clusterer
+        elif self.second_stage_algorithm is not None:
+            cluster_instance = self.second_stage_algorithm(
+                X=fnc_features, Y=fnc_labels,
+                **kwargs)
+            cluster_instance.fit()
+            self.last_clusterer = cluster_instance
+        else:
+            evaluate = False
+            cluster_instance = None
 
         if evaluate:
             print("Evaluating clustering")
             cluster_instance.evaluate()
 
-        print("Reassigning states to subjects")
-        assignments = self.reassign_to_subjects(
-            cluster_instance.assignments, self.subjects)
-        subject_windows = self.reassign_to_subjects(
-            fnc_features, self.subjects
-        )
+        if cluster_instance is not None:
+            print("Reassigning states to subjects")
+            assignments = self.reassign_to_subjects(
+                cluster_instance.assignments, self.subjects)
+            subject_windows = self.reassign_to_subjects(
+                fnc_features, self.subjects
+            )
 
-        self.visualize_clusters(fnc_features, cluster_instance.assignments, kwargs['name'], vis_filename, cluster_instance.centroids)
-        self.visualize_states(assignments, filename=state_filename, classes=self.dataset.labels, subject_data=subject_windows, time_index=self.time_index)
-        class_centroids, beta_features = self.collect_states(assignments, classes=self.dataset.labels, subject_data=subject_windows, time_index=self.time_index)
-        return cluster_instance.results, assignments, beta_features
+            self.visualize_clusters(fnc_features, cluster_instance.assignments, kwargs['name'], vis_filename, cluster_instance.centroids)
+            print("Collecting state statistics")
+            class_centroids, beta_features, class_partitions, nc = self.collect_states(assignments, classes=self.dataset.labels,
+                                                                                       subject_data=subject_windows, time_index=self.time_index)
+            print("Visualizing States")
+            self.visualize_states(assignments, class_centroids, class_partitions, nc, filename=state_filename,
+                                  ttest_fileprefix=ttest_fileprefix, networks=networks)
+            return cluster_instance.results, assignments, beta_features
+        else:
+            return None, fnc_features, None
 
     def reassign_to_subjects(self, cluster_assigments, subjects):
         reassigned = []
@@ -330,6 +353,7 @@ class dFNC:
         class_combos = list(combinations(class_labels, 2))
         num_classes = len(class_labels)
         class_centroids = dict()
+        class_partitions = dict()
         beta_features = np.zeros((subject_data.shape[0], num_classes*num_states))
 
         for j, L in enumerate(class_labels):
@@ -338,6 +362,7 @@ class dFNC:
             relevant_windows = relevant_windows.reshape(relevant_windows.shape[0]*relevant_windows.shape[1], relevant_windows.shape[2])
             relevant_assignments = np.concatenate(assignments[relevant_indices]).flatten()
             class_centroids[L] = dict()
+            class_partitions[L] = dict()
             for k in states:
                 matched_windows = [relevant_windows[i, :] for i in range(len(relevant_assignments)) if relevant_assignments[i] == k]
                 centroid_k = np.mean(matched_windows, 0)
@@ -346,6 +371,7 @@ class dFNC:
                 Z = Z.T
                 Z[np.triu_indices(nc)] = centroid_k
                 class_centroids[L][k] = centroid_k
+                class_partitions[L][k] = matched_windows
         for i, xi in enumerate(subject_data):
             betas = np.zeros((xi.shape[0], num_classes, num_states))
             for j, L in enumerate(class_labels):
@@ -356,82 +382,79 @@ class dFNC:
                     betas[:, j, k] = model.coef_
             betas = np.mean(betas, 0)
             beta_features[i, :] = betas.reshape(num_classes*num_states)
-        return class_centroids, beta_features
+        return class_centroids, beta_features, class_partitions, nc
 
-    def visualize_states(self, assignments, filename="results/states.png", classes=None, subject_data=None, networks=None, time_index=1):
-        if time_index == 0:
-            time_index = 2
-        nc = self.subject_data.shape[time_index]
+    def visualize_states(self, assignments, class_centroids, class_partitions, nc, filename="results/states.png", ttest_fileprefix="results/ttests_", class_names=None, networks=None, time_index=1):
         try:
             states = np.unique(np.array(assignments).flatten())
         except ValueError:
             states = np.unique(np.concatenate([np.unique(a) for a in assignments]))
         num_states = len(states)
-        if classes is None:
-            assignments = np.flatten(np.array(assignments))
-            num_classes = 1
-            sb.set()
-            fig, ax = plt.subplots(num_classes, num_states, figsize=(30, 10))
+        class_labels = list(class_centroids.keys())
+        class_combos = combinations(class_labels, 2)
+        num_classes = len(class_labels)
+        sb.set()
+        fig1, ax = plt.subplots(num_classes, num_states, figsize=(30, 10))
+        state_max = -float("inf")
+        state_min = float("inf")
+        for L in class_labels:
             for k in states:
-                centroid_k = self.second_stage_clusterer.centroids[int(k)]
+                centroid_k = class_centroids[L][k]
+                mmax = np.max(centroid_k)
+                mmin = np.min(centroid_k)
+                if mmax > state_max:
+                    state_max = mmax
+                if mmin < state_min:
+                    state_min = mmin
+        for ck, L in enumerate(class_labels):
+            for k in states:
+                centroid_k = class_centroids[L][k]
                 Z = np.zeros((nc, nc))
                 Z[np.triu_indices(nc)] = centroid_k
                 Z = Z.T
                 Z[np.triu_indices(nc)] = centroid_k
-                ax[k].imshow(Z, cmap='jet')
-                ax[k].set_title("State %d" % k)
+                ax[ck, k].imshow(Z, cmap='jet', vmin=state_min, vmax=state_max)
+                ax[ck, k].set_title("State %d" % k)
+                ax[ck, k].set_xticks(())
+                ax[ck, k].set_yticks(())
+        plt.savefig(filename, bbox_inches='tight')
+        vmin = float("inf")
+        vmax = -float("inf")
+        scores = dict()
+        for ck, (k1, k2) in enumerate(class_combos):
+            scores[ck] = dict()
+            for k in states:
+                states_1 = class_partitions[k1][k]
+                states_2 = class_partitions[k2][k]
+                ttest = ttest_ind(states_1, states_2, axis=0)
+                score = np.log10(ttest.pvalue)*np.sign(ttest.statistic)
+                scores[ck][k] = score
+                mmin = np.min(score)
+                mmax = np.max(score)
+                if mmin < vmin:
+                    vmin = mmin
+                if mmax > vmax:
+                    vmax = mmax
+        for ck, (k1, k2) in enumerate(class_combos):
+            fig2, ax = plt.subplots(1, len(states))
+            ttest_filename = ttest_fileprefix + "%s-%s.png" % (k1, k2)
+            for k in states:
+                score = scores[ck][k]
+                Z = np.zeros((nc, nc))
+                Z[np.triu_indices(nc)] = score
+                Z = Z.T
+                Z[np.triu_indices(nc)] = score
+                ax[k].imshow(Z, cmap='jet', vmin=vmin, vmax=vmax)
+                ax[k].set_title("State %d/ TTest %s - %s" % (k, k1, k2))
                 ax[k].set_xticks(())
                 ax[k].set_yticks(())
-            plt.savefig(filename, bbox_inches='tight')
-        else:
-            class_labels = np.unique(classes)
-            class_combos = list(combinations(class_labels, 2))
-            num_classes = len(class_labels)
-            sb.set()
-            fig, ax = plt.subplots(num_classes+len(class_combos), num_states, figsize=(30, 10))
-            class_centroids = dict()
-
-            for j, L in enumerate(class_labels):
-                relevant_indices = [i for i in range(len(assignments)) if classes[i] == L]
-                relevant_windows = np.stack(subject_data[relevant_indices], 0)
-                relevant_windows = relevant_windows.reshape(relevant_windows.shape[0]*relevant_windows.shape[1], relevant_windows.shape[2])
-                relevant_assignments = np.concatenate(assignments[relevant_indices]).flatten()
-                class_centroids[L] = dict()
-                for k in states:
-                    matched_windows = [relevant_windows[i, :] for i in range(len(relevant_assignments)) if relevant_assignments[i] == k]
-                    centroid_k = np.mean(matched_windows, 0)
-                    Z = np.zeros((nc, nc))
-                    Z[np.triu_indices(nc)] = centroid_k
-                    Z = Z.T
-                    Z[np.triu_indices(nc)] = centroid_k
-                    ax[j, k].imshow(Z, cmap='jet')
-                    ax[j, k].set_title("State %d/ Class %s" % (k, L))
-                    ax[j, k].set_xticks(())
-                    ax[j, k].set_yticks(())
-                    class_centroids[L][k] = matched_windows
-            for k in states:
-                for ck, (k1, k2) in enumerate(class_combos):
-                    states_1 = class_centroids[k1][k]
-                    states_2 = class_centroids[k2][k]
-                    ttest = ttest_ind(states_1, states_2, axis=0)
-                    Z = np.zeros((nc, nc))
-                    score = np.log10(ttest.pvalue)*np.sign(ttest.statistic)
-                    Z[np.triu_indices(nc)] = score
-                    Z = Z.T
-                    Z[np.triu_indices(nc)] = score
-                    #print('States %d, TTest %s vs %s - %s' % (k, k1, k2, ck+num_classes))
-                    ax[ck+num_classes, k].imshow(Z, cmap='jet')
-                    ax[ck+num_classes, k].set_title("State %d/ TTest %s - %s" % (k, k1, k2))
-                    ax[ck+num_classes, k].set_xticks(())
-                    ax[ck+num_classes, k].set_yticks(())
-            plt.savefig(filename, bbox_inches='tight')
-
-        return fig
+            plt.savefig(ttest_filename, bbox_inches='tight')
+        return fig1
 
     def save(self, filename):
         package = dict()
         package['first_stage_clusterer'] = self.exemplar_clusterer
-        package['second_stage_clusterer'] = self.second_stage_clusterer
+        package['second_stage_clusterer'] = self.last_clusterer
         package['exemplars'] = self.exemplars
         package['subjects'] = self.subjects
         np.save(filename, package, allow_pickle=True)
