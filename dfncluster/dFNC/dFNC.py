@@ -28,6 +28,7 @@ class dFNC:
         self.subjects = None
         self.exemplars = None
         self.cluster_assignments_over_time = None
+        self.betas = None
         self.metric = metric
         self.time_index = time_index
         self.window_size = window_size
@@ -290,7 +291,7 @@ class dFNC:
         print("Reassigning states to subjects")
         assignments = self.reassign_to_subjects(
             cluster_instance.assignments, self.subjects)
-        self.cluster_assignments_over_time = assignments
+        self.cluster_assignments_over_time = assignments.copy()
         subject_windows = self.reassign_to_subjects(
             fnc_features, self.subjects
         )
@@ -298,6 +299,7 @@ class dFNC:
         self.visualize_clusters(fnc_features, cluster_instance.assignments, kwargs['name'], vis_filename, cluster_instance.centroids)
         self.visualize_states(assignments, filename=state_filename, classes=self.dataset.labels, subject_data=subject_windows, time_index=self.time_index)
         class_centroids, beta_features = self.collect_states(assignments, classes=self.dataset.labels, subject_data=subject_windows, time_index=self.time_index)
+        self.betas = beta_features.copy()
         return cluster_instance.results, assignments, beta_features
 
     def reassign_to_subjects(self, cluster_assigments, subjects):
@@ -442,4 +444,5 @@ class dFNC:
         if self.save_features:
             np.savez(filename + "_features",
                      assignments=self.cluster_assignments_over_time,
+                     betas=self.betas,
                      subjects=self.subjects)
