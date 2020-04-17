@@ -1,8 +1,8 @@
 #  Internal Modules
 from warnings import simplefilter
 from dfncluster.Dataset import MatDataset, SklearnDataset, GaussianConnectivityDataset
-from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, GMMClusterer, DBSCANClusterer
-from dfncluster.Clusterer.HierarchicalClusterer import HierarchicalClusterer
+from dfncluster.Clusterer import KMeansClusterer, BayesianGMMClusterer, GMMClusterer, DBSCANClusterer, OpticsClusterer, HierarchicalClusterer
+#from dfncluster.Clusterer.HierarchicalClusterer import HierarchicalClusterer
 from dfncluster.dFNC import dFNC
 from dfncluster.Classifiers import Polyssifier
 #  Internal Dataset Imports
@@ -57,6 +57,7 @@ CLUSTERERS = dict(
     gmm=GMMClusterer,
     dbscan=DBSCANClusterer,
     hierarchical=HierarchicalClusterer,
+    optics=OpticsClusterer,
     vae=None
 )
 ELBOW_METRICS = [
@@ -74,6 +75,7 @@ def parse_main_args():
     parser.add_argument("--remake_data", default=False, help="<bool> whether or not to remake the data set; DEFAULT=%s" % False, action='store_true')
     parser.add_argument("--clusterer", default="kmeans", type=str,
                         help="<str> the clusterer to use. Options are kmeans, bgmm, gmm, dbscan; DEFAULT=%s" % "kmeans")
+    parser.add_argument("--second_clusterer", default=None)
     parser.add_argument("--window_size", default=22, type=int, help="<int> the size of the dFNC window; DEFAULT=%s" % 22)
     parser.add_argument("--time_index", default=0, type=int, help="<int> the dimension in which dFNC windows will be computed; DEFAULT=%s" % 1)
     parser.add_argument("--clusterer_params", default="{}", type=str, help="<str(dict)> dict to be loaded for classifier params (JSON); DEFAULT=%s" % "\"{}\"")
@@ -116,6 +118,13 @@ if __name__ == '__main__':
     os.makedirs(result_dir, exist_ok=True)
 
     InputClusterer = CLUSTERERS[args.clusterer]
+    if args.second_clusterer is not None:
+        if args.second_clusterer == 'NONE':
+            SecondInputClusterer = None
+        else:
+            SecondInputClusterer = CLUSTERERS[args.second_clusterer]
+    else:
+        SecondInputClusterer = InputClusterer
 
     # Add input params to params
     params = InputClusterer.default_params()
@@ -151,7 +160,8 @@ if __name__ == '__main__':
             grid_params = json.load(open(args.cluster_grid, 'r'))
         dfnc = dFNC(
             dataset=dataset,
-            clusterer=InputClusterer,
+            first_stage_algorithm=InputClusterer,
+            second_stage_algorithm=SecondInputClusterer,
             window_size=args.window_size,
             time_index=args.time_index)
         print("Running dFNC elbow criterion with %s clustering" % args.clusterer)
@@ -159,23 +169,24 @@ if __name__ == '__main__':
             elbow_k = args.elbow.split(",")
             if len(elbow_k) > 0:
                 elbow_k = [int(s) for s in elbow_k]
-                dfnc.eval_k_clusters(elbow_k, "results/%s_%s/%s_%s_elbow.png" % (args.clusterer, args.dataset,
-                                                                                 args.clusterer, args.dataset))
+                dfnc.eval_k_clusters(elbow_k, "%s/%s_%s_elbow.png" % (result_dir,
+                                                                      args.clusterer, args.dataset))
                 exit(0)
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
-        results, assignments, betas = dfnc.run(grid_params=grid_params, vis_filename="results/%s_%s/%s_%s_visualization.png" %
-                                               (args.clusterer, args.dataset, args.clusterer, args.dataset),
-                                               state_filename="results/%s_%s/%s_%s_states.png" %
-                                               (args.clusterer, args.dataset, args.clusterer, args.dataset),
+        results, assignments, betas = dfnc.run(grid_params=grid_params, vis_filename="%s/%s_%s_visualization.png" %
+                                               (result_dir, args.clusterer, args.dataset),
+                                               state_filename="%s/%s_%s_states.png" %
+                                               (result_dir, args.clusterer, args.dataset),
+                                               ttest_fileprefix="%s/%s_%s_ttest" % (result_dir, args.clusterer, args.dataset),
                                                **params)
 
         subject_data, subject_labels = dfnc.get_subjects()
         print("dFNC Clustering Results")
         print(results, assignments)
         print("Saving dFNC Results")
-        dfnc.save(os.path.join('results', args.outdir, args.dfnc_outfile))
+        dfnc.save(os.path.join(result_dir, args.dfnc_outfile))
 
     if not args.skip_classify:
         if not args.skip_dfnc:
