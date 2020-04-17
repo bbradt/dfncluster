@@ -3,7 +3,7 @@ from dfncluster.Clusterer import Clusterer
 import sklearn.metrics as skm
 import numpy as np
 import scipy.cluster.hierarchy as sch
-import pdb 
+import pdb
 
 ALLOWED_KWARGS = [
     'eps',
@@ -18,7 +18,7 @@ ALLOWED_KWARGS = [
 ]
 
 SCORE_METRICS = dict(
-        adjusted_rand_score=skm.cluster.adjusted_rand_score
+    adjusted_rand_score=skm.cluster.adjusted_rand_score
 )
 
 LABEL_METRICS = dict(
@@ -32,8 +32,8 @@ class DBSCANClusterer(Clusterer):
     @staticmethod
     def default_params():
         return dict(
-            eps=0.01,
-            min_samples=3,
+            eps=0.3,
+            min_samples=100,
             metrics=[],
             evaluate=True,
             metric="correlation"
@@ -41,7 +41,7 @@ class DBSCANClusterer(Clusterer):
 
     def __init__(self, **kwargs):
         super(DBSCANClusterer, self).__init__(**kwargs)
-        self.model = skc.DBSCAN(**{k:v for k,v in kwargs.items() if k in ALLOWED_KWARGS})
+        self.model = skc.DBSCAN(**{k: v for k, v in kwargs.items() if k in ALLOWED_KWARGS})
 
     def fit(self):
         self.model.fit(self.X, self.Y)
@@ -49,7 +49,7 @@ class DBSCANClusterer(Clusterer):
         centroids = []
         for k in np.unique(self.assignments):
             samples = self.X[self.assignments == k, :]
-            centroids.append(np.mean(samples,0))
+            centroids.append(np.mean(samples, 0))
         self.centroids = np.vstack(centroids)
         print(self.centroids.shape)
 
@@ -75,6 +75,6 @@ class DBSCANClusterer(Clusterer):
             print('Evaluating clustering with metric %s' % metric)
             if metric in LABEL_METRICS.keys():
                 results[metric] = LABEL_METRICS[metric](self.X, self.model.labels_)
-        results['adjusted_rand_score'] = SCORE_METRICS['adjusted_rand_score'](self.Y[:,0], self.model.labels_)
+        results['adjusted_rand_score'] = SCORE_METRICS['adjusted_rand_score'](self.Y[:, 0], self.model.labels_)
         self.results = results
         return results

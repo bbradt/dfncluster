@@ -110,7 +110,7 @@ class Clusterer:
 
     def fit_grid(self):
         if self.param_grid is not None:
-            clf = skms.GridSearchCV(self.model, self.param_grid, scoring=Clusterer.silhouette_score)
+            clf = skms.GridSearchCV(self.model, self.param_grid, scoring=Clusterer.silhouette_score, n_jobs=32)
             clf.fit(self.X, self.Y)
             self.best_cv = clf
             return clf.best_estimator_
