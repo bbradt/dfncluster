@@ -1,14 +1,22 @@
 # Introduction
 
 Although psychological and behavioral manifestations of schizophrenia are well-studied, neuroscientists have
-yet to determine a set of corresponding neurological biomarkers. Functional magnetic resonance imaging
-(fMRI) data can help determine non-invasive biomarkers for schizophrenia in brain function [14, 5]. One
-fMRI analysis technique, called dynamic functional network connectivity (dFNC) [1], uses K-Means clustering
-to characterize time-varying connectivity between functional networks. Although dFNC has been used to
-determine schizophrenia biomarkers in the past [14, 12, 13, 5] little attention has been given to choice of
-clustering technique. We propose a novel study of dFNC applying sophisticated clustering techniques to
-determine dynamic states, with a goal of improving schizophrenia classication.
+yet to determine a set of corresponding neurological biomarkers. One
+fMRI analysis technique, called dynamic functional network connectivity  (dFNC) [1], uses K-Means clustering
+to characterize time-varying connectivity between functional networks to identify schizophrenia biomarkers. Although dFNC has been used to determine biomarkers in the past [14, 12, 13, 5] little attention has been given to choice of
+clustering technique. In this project, we study how applying different clustering techniques on
+fMRI data can yield dynamic states that impact the accuracy of identifying schizophrenia with varying classifiers.
 
+We specifically apply DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian Mixture Models clustering methods on time-varying connectivity fMRI data and use the output cluster classifications as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to classify schizophrenia. 
+
+Section II delves into the data that is used in this project's experiments, while Section III summarizes the different algorithms used on both in the clustering and classification end of our experiments. Section IV compares the accuracy from using clustering and classification algorithms for schizophrenia diagnosis, along with presenting a series of charts that analyze the clustering states produced from the selected fMRI data.
+
+
+# Section II: Data
+
+# Section III: Methods
+
+# Section IV: Results
 
 # dFNCluster
 
