@@ -1,3 +1,15 @@
+# Introduction
+
+Although psychological and behavioral manifestations of schizophrenia are well-studied, neuroscientists have
+yet to determine a set of corresponding neurological biomarkers. Functional magnetic resonance imaging
+(fMRI) data can help determine non-invasive biomarkers for schizophrenia in brain function [14, 5]. One
+fMRI analysis technique, called dynamic functional network connectivity (dFNC) [1], uses K-Means clustering
+to characterize time-varying connectivity between functional networks. Although dFNC has been used to
+determine schizophrenia biomarkers in the past [14, 12, 13, 5] little attention has been given to choice of
+clustering technique. We propose a novel study of dFNC applying sophisticated clustering techniques to
+determine dynamic states, with a goal of improving schizophrenia classication.
+
+
 # dFNCluster
 
 dFNCluster implements Dynamic Functional Network Connectivity (dFNC) with several clustering algorithms, and
