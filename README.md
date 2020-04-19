@@ -17,7 +17,18 @@ Section II describes the fMRI data used in our experimentation, while Section II
 
 # Section IV: Results
 
+
+## Gaussian Simulated Dataset 
+
+![](images/sim_pre_clustering_AUC.png?raw=true)
+
+
+## FBIRN Dataset 
+
 ![](images/fbirn_pre_clustering_AUC.png?raw=true)
+
+## UCLA Dataset
+![](images/ucla_pre_clustering_AUC.png?raw=true)
 
 # dFNCluster
 
