@@ -35,7 +35,7 @@ def plot_curve_compare(x, y1, y2, title='Ys over X',
         plt.savefig(filename_path)
 
 
-def plot_multiple_ptest_results(df, nrows, ncols, title, figsize=None, filename=None):
+def plot_multiple_ptest_results(df, nrows, ncols, title, figsize=None, feature_domain="Time", filename=None):
 
     # Initialize Figure
     plt.style.use('seaborn-darkgrid')
@@ -76,7 +76,7 @@ def plot_multiple_ptest_results(df, nrows, ncols, title, figsize=None, filename=
         if subplot_num <= (nrows - 1) * ncols:
             plt.tick_params(labelbottom=False)
         else:
-            plt.xlabel('Time')
+            plt.xlabel(feature_domain)
 
     plt.suptitle(title, fontsize=20)
 

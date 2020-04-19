@@ -17,6 +17,11 @@ Section II describes the fMRI data used in our experimentation, while Section II
 
 # Section IV: Results
 
+### UCLA Significant Comparisons
+
+![](images/assignment_t_test_visualization.png?raw=true)
+
+![](images/beta_t_test_visualization.png?raw=true)
 
 ### Gaussian Simulated Dataset 
 
