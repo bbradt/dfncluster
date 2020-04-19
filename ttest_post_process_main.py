@@ -24,17 +24,19 @@ def load_data():
 
 
 def main():
+
     results, labels = load_data()
+    del results['dbscan']
 
     df = pd.DataFrame({
         cluster: t_test(data['assignments'], labels, p_level=0.10)
         for cluster, data in results.items()
     })
     plot_multiple_ptest_results(
-        df, nrows=2, ncols=3,
-        title='Assignment T-Test', figsize=(16, 10), filename='assign_test.png')
-
-    del results['dbscan']
+        df, nrows=2, ncols=2,
+        title='UCLA Assignment T-Test Comparisons', figsize=(16, 10),
+        feature_domain='Time',
+        filename='assignment_t_test_visualization.png')
 
     df = pd.DataFrame({
         cluster: t_test(data['betas'], labels, p_level=0.10)
@@ -42,7 +44,9 @@ def main():
     })
     plot_multiple_ptest_results(
         df, nrows=2, ncols=2,
-        title='Betas T-Test', figsize=(16, 10), filename='beta_test.png')
+        title='UCLA Betas T-Test Comparisons', figsize=(16, 10),
+        feature_domain='Beta Coefficient',
+        filename='beta_t_test_visualization.png')
 
 
 if __name__ == "__main__":
