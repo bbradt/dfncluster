@@ -47,19 +47,19 @@ def plot_multiple_ptest_results(df, nrows, ncols, title, figsize=None, filename=
         plt.figure(figsize=figsize)
 
     subplot_num = 0
-    for result in df.drop('time_window', axis=1):
+    for result in df.columns:
         subplot_num += 1
         plt.subplot(nrows, ncols, subplot_num)
 
         # plot all results in grey-scale
-        for ele in df.drop('time_window', axis=1):
+        for ele in df.columns:
             plt.plot(
-                df['time_window'], df[ele],
+                df.index, df[ele],
                 marker='', color='grey',
                 linewidth=0.6, alpha=0.3)
 
         # plot specific algorithm results in bold color
-        plt.plot(df['time_window'], df[result],
+        plt.plot(df.index, df[result],
                  color=palette[subplot_num % len(palette)],
                  label=result,
                  linewidth=2.4, alpha=0.9)
