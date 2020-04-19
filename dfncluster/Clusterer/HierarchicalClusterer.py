@@ -71,11 +71,11 @@ class HierarchicalClusterer(Clusterer):
             distance_threshold = None
         )
 
-    def __init__(self, **kwargs):
+    def __init__(self, dendogram_filename="results/dendogram.png", **kwargs):
         super(HierarchicalClusterer, self).__init__(**kwargs)
         self.model = skc.AgglomerativeClustering(**{k:v for k,v in kwargs.items() if k in ALLOWED_KWARGS})
         
-        self.dendrogram_name = kwargs['vis_filename'].split('.')[0] + "dendrogram.png"
+        self.dendrogram_name = dendogram_filename
         
 
     def fit(self):
