@@ -4,14 +4,108 @@ dFNCluster implements Dynamic Functional Network Connectivity (dFNC) with severa
 actively compares the performance of classification under different clustering algorithms and hyper-parameters.
 
 # Introduction
-Schizophrenia is a chronic and serious mental disorder which affects how a person thinks, feels, and behaves. Although there have been many studies about psychological and behavioral manifestations of schizophrenia, neuroscientists have yet to determine a set of corresponding neurological biomarkers for this disorder. In the meanwhile, functional magnetic resonance imaging (fMRI) data can help determine non-invasive biomarkers for schizophrenia in brain function[[1]](#ref1)[[2]](#ref2) and one of the fMRI analysis is dynamic functional network connectivity (dFNC)[[3]](#ref3) using K-Means clustering to characterize time-varying connectivity between functional networks. Researches has worked on finding correlation between schizophrenia and dFNC[[1]](#ref1)[[2]](#ref2)[[4]](#ref4)[[5]](#ref5), but little work has been done with the choice of clustering algorithm. Therefore, we propse a  novel  study  of  dFNC  applying  sophisticated clustering techniques to determine dynamic states, and also exploring classifiers with a goal of improving schizophrenia classification.
+Schizophrenia is a chronic and serious mental disorder which affects how a person thinks, feels, and behaves. Although there have been many studies about psychological and behavioral manifestations of schizophrenia, neuroscientists have yet to determine a set of corresponding neurological biomarkers for this disorder. A functional magnetic resonance imaging (fMRI) can help determine non-invasive biomarkers for schizophrenia in brain function[[1]](#ref1)[[2]](#ref2) and one of the fMRI analysis technique called, dynamic functional network connectivity (dFNC)[[3]](#ref3), using K-Means clustering to characterize time-varying connectivity between functional networks. Researches has worked on finding correlation between schizophrenia and dFNC[[1]](#ref1)[[2]](#ref2)[[4]](#ref4)[[5]](#ref5), but little work has been done with the choice of clustering algorithm. Therefore, n this project, we study how modifying the clustering technique in the dFNC pipeline can yield dynamic states from fMRI data that impact the accuracy of classifying schizophrenia.
 
-# Dataset
-## Real Data
-From 3 studies, A total of 11,298 images were earned from 608 subjects.
+We experiment with DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian Mixture Models clustering methods on subject connectivity matrices produced from fMRI data, and each algorithm's cluster assignments as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to classify schizophrenia.
 
-- Fbirn, UCLA Data description
+Section II describes the fMRI data used in our experimentation, while Section III summarizes the aforementioned clustering and classification algorithms used in the pipeline. Section IV compares the accuracy of these classifiers, along with presenting a series of charts that analyze the cluster assignments produced on the fMRI data.
 
+# Section II: Data
+
+# Section III: Methods
+
+# Section IV: Results
+
+
+### Gaussian Simulated Dataset 
+
+![](images/sim_pre_clustering_AUC.png?raw=true)
+
+
+### FBIRN Dataset 
+
+![](images/fbirn_pre_clustering_AUC.png?raw=true)
+
+### UCLA Dataset
+![](images/ucla_pre_clustering_AUC.png?raw=true)
+
+# dFNCluster
+
+dFNCluster implements Dynamic Functional Network Connectivity (dFNC) with several clustering algorithms, and
+actively compares the performance of classification under different clustering algorithms and hyper-parameters.
+
+## Prerequisites
+
+First, install git submodules
+
+```
+git submodule update --init --recursive
+```
+
+This project has been tested in Python 3.6+
+
+It is recommended you use a conda virtual environment.
+
+```
+conda create -y --name dfncluster
+```
+
+and install requirements via pip
+
+```
+pip install -r requirements.txt
+```
+
+## Running the Code
+
+You can run `main.py` with the arguments given below, or look at them by running `python main.py --help`
+
+```
+usage: main.py [-h] [--dataset DATASET] [--remake_data REMAKE_DATA]
+               [--clusterer CLUSTERER] [--window_size WINDOW_SIZE]
+               [--time_index TIME_INDEX] [--clusterer_params CLUSTERER_PARAMS]
+               [--classifier_params CLASSIFIER_PARAMS] [--outdir OUTDIR]
+               [--dfnc DFNC] [--classify CLASSIFY] [--subset_size SUBSET_SIZE]
+               [--dfnc_outfile DFNC_OUTFILE] [--seed SEED] [--k K]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --dataset DATASET     <str> the data set to use. Options are fbirn, simtb,
+                        gaussian; DEFAULT=fbirn
+  --remake_data REMAKE_DATA
+                        <bool> whether or not to remake the data set;
+                        DEFAULT=False
+  --clusterer CLUSTERER
+                        <str> the clusterer to use. Options are kmeans, bgmm,
+                        gmm, dbscan; DEFAULT=kmeans
+  --window_size WINDOW_SIZE
+                        <int> the size of the dFNC window; DEFAULT=22
+  --time_index TIME_INDEX
+                        <int> the dimension in which dFNC windows will be
+                        computed; DEFAULT=1
+  --clusterer_params CLUSTERER_PARAMS
+                        <str(dict)> dict to be loaded for classifier
+                        params(JSON); DEFAULT="{}"
+  --classifier_params CLASSIFIER_PARAMS
+                        <str(dict)> dict to be loaded for classifier params
+                        (JSON); DEFAULT="{}"
+  --outdir OUTDIR       <str> Name of the results directory. Saving hierarchy
+                        is: results/<outdir>; DEFAULT=FNCOnly
+  --dfnc DFNC           <bool> Do or do not run dFNC; DEFAULT=True
+  --classify CLASSIFY   <bool> Do or do not do classification; DEFAULT=True
+  --subset_size SUBSET_SIZE
+                        <float [0,1]> percentage of data to use; DEFAULT=1.0
+                        (all data)
+  --dfnc_outfile DFNC_OUTFILE
+                        <str> The filename for saving dFNC results;
+                        DEFAULT=dfnc.npy
+  --seed SEED           <int> Seed for numpy RNG. Used for random generation
+                        of the data set, or for controlling randomness in
+                        Clusterings.; DEFAULT=None (do not use seed)
+  --k K                 <int> number of folds for k-fold cross-validation
+```
+
+## Examples
 
 ## Sklearn Datasets
 
@@ -74,43 +168,19 @@ the data set object as a pickled npy file
 PYTHONPATH=. python data/MatDatasets/OmegaSim/OmegaSim.py
 ```
 
-## UCLA
-
-
 ### Running on Subsets
 
 To run on a subset of the simulated data set, you can either edit data.csv in the data directory, and rebuild,
 or copy that directory under a new name, edit, rebuild and point main.py to the new data set.
 
-## Prerequisites
+## Other Examples
 
-First, install git submodules
+TODO (Brad): Make example run files, and writeups for other data sets, such as OpenNeuro
 
-```
-git submodule update --init --recursive
-```
+## Repostory Organization
 
-This project has been tested in Python 3.6+
+TODO (Brad): Add a writeup explaining the repository organization
 
-It is recommended you use a conda virtual environment.
-
-```
-conda env create -y --name dfncluster
-```
-
-and install requirements via pip
-
-```
-pip install -r requirements.txt
-```
-
-## Methods
-
-(Probably draw some workflow chart for the whole process)
-
-## Results
-
-(Currently in the ppt file)
 
 ## References
 <a name="ref1"></a> 1. Eswar Damaraju et al. “Dynamic functional connectivity analysis reveals transient states of dyscon-nectivity in schizophrenia”. In:NeuroImage: Clinical5 (2014), pp. 298–308.<br>
