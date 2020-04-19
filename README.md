@@ -17,6 +17,8 @@ Section II describes the fMRI data used in our experimentation, while Section II
 
 # Section IV: Results
 
+![](images/fbirn_pre_clustering_AUC.png?raw=true)
+
 # dFNCluster
 
 dFNCluster implements Dynamic Functional Network Connectivity (dFNC) with several clustering algorithms, and
