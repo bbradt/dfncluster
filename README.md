@@ -188,4 +188,6 @@ TODO (Brad): Add a writeup explaining the repository organization
 
 [2]. Damaraju, E., et al. “Dynamic Functional Connectivity Analysis Reveals Transient States of Dysconnectivity in Schizophrenia.” NeuroImage: Clinical, vol. 5, 2014, pp. 298–308., doi:10.1016/j.nicl.2014.07.003.
 
-[3]. Pedregosa et al. “2.3. Clustering.” Scikit, scikit-learn.org/stable/modules/clustering.html.
+[3]. Elena A. Allen, Eswar Damaraju, Sergey M. Plis, Erik B. Erhardt, Tom Eichele, Vince D. Calhoun, Tracking Whole-Brain Connectivity Dynamics in the Resting State, Cerebral Cortex, Volume 24, Issue 3, March 2014, Pages 663–676, https://doi.org/10.1093/cercor/bhs352
+
+[4]. Pedregosa et al. “2.3. Clustering.” Scikit, scikit-learn.org/stable/modules/clustering.html.
