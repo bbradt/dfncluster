@@ -7,7 +7,7 @@ to characterize time-varying connectivity between functional networks to identif
 clustering technique. In this project, we study how modifying the clustering technique in the dFNC pipeline
 can yield dynamic states from fMRI data that impact the accuracy of classifying schizophrenia.
 
-We experiment with DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian Mixture Models clustering methods on subject connectivity matrices produced from fMRI data, and each algorithm's cluster assignments as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to classify schizophrenia. 
+We experiment with DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian Mixture Models clustering methods on subject connectivity matrices produced from fMRI data, and each algorithm's cluster assignments as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to classify schizophrenia.
 
 Section II describes the fMRI data used in our experimentation, while Section III summarizes the aforementioned clustering and classification algorithms used in the pipeline. Section IV compares the accuracy of these classifiers, along with presenting a series of charts that analyze the cluster assignments produced on the fMRI data.
 
@@ -47,12 +47,15 @@ are displayed below.
 
 ![](images/beta_t_test_visualization.png?raw=true)
 
-### Gaussian Simulated Dataset 
+Each clustering algorithm found statistically different beta coefficients. The reduced feature space
+(10 features for 267 patients for the UCLA data set) facilitated the correct classification of healthy and
+schizophrenic patients across all clustering algorithms for all of the supervised learning algorithms.
+
+### Gaussian Simulated Dataset
 
 ![](images/sim_pre_clustering_AUC.png?raw=true)
 
-
-### FBIRN Dataset 
+### FBIRN Dataset
 
 ![](images/fbirn_pre_clustering_AUC.png?raw=true)
 
