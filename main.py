@@ -108,6 +108,9 @@ if __name__ == '__main__':
     args = parse_main_args()
     if args.outdir is None:
         args.outdir = "%s_%s" % (args.clusterer, args.dataset)
+    cluster_prefix = "%s_%s" % (args.clusterer, args.dataset)
+    if args.second_clusterer is not None:
+        args.outdir += "_%s" % args.second_clusterer
     if args.betas:
         args.outdir += "_betas"
     print("ARGS")
@@ -115,6 +118,7 @@ if __name__ == '__main__':
     if args.clusterer not in CLUSTERERS.keys():
         raise(ValueError("The clusterer %s has not been added to main.py" % args.clusterer))
     result_dir = os.path.join('results', args.outdir)
+
     os.makedirs(result_dir, exist_ok=True)
 
     InputClusterer = CLUSTERERS[args.clusterer]
@@ -175,11 +179,11 @@ if __name__ == '__main__':
 
         # Run it, passing [KMeans, BayesGMM, GMM] params
         print("Running dFNC with %s clustering" % args.clusterer)
-        results, assignments, betas = dfnc.run(grid_params=grid_params, vis_filename="%s/%s_%s_visualization.png" %
-                                               (result_dir, args.clusterer, args.dataset),
-                                               state_filename="%s/%s_%s_states.png" %
-                                               (result_dir, args.clusterer, args.dataset),
-                                               ttest_fileprefix="%s/%s_%s_ttest" % (result_dir, args.clusterer, args.dataset),
+        results, assignments, betas = dfnc.run(grid_params=grid_params, vis_filename="%s/%s_visualization.png" %
+                                               (result_dir, cluster_prefix),
+                                               state_filename="%s/%s_states.png" %
+                                               (result_dir, cluster_prefix),
+                                               ttest_fileprefix="%s/%s_ttest" % (result_dir, cluster_prefix),
                                                **params)
 
         subject_data, subject_labels = dfnc.get_subjects()

@@ -220,8 +220,8 @@ class dFNC:
         plt.clf()
         COLOR_LABELS = np.reshape(assignments, (-1))
 
-        plt.scatter(dim_reduced_X[:, 0], dim_reduced_X[:, 1], c=COLOR_LABELS, marker='o', cmap='viridis')
-        plt.legend(np.unique(COLOR_LABELS).tolist())
+        scatter0 = plt.scatter(dim_reduced_X[:, 0], dim_reduced_X[:, 1], c=COLOR_LABELS, marker='o', cmap='viridis')
+        legend0 = plt.legend(*scatter0.legend_elements(), loc="lower left", title="Classes")
 
         if centroids is not None:
 
@@ -273,6 +273,7 @@ class dFNC:
             print("Performing exemplar clustering")
             exemplar_clusterer = self.first_stage_algorithm(X=self.exemplars['x'], Y=self.exemplars['y'], param_grid=grid_params, **kwargs)
             exemplar_clusterer.model = exemplar_clusterer.fit_grid()
+            self.cluster_grid = exemplar_clusterer.best_cv
             exemplar_clusterer.fit()
             self.exemplar_clusterer = exemplar_clusterer
             if self.second_stage_algorithm is not None:
@@ -378,7 +379,10 @@ class dFNC:
                 for k in states:
                     centroid = class_centroids[L][k]
                     model = LinearRegression()
-                    model.fit(np.nan_to_num(xi.T), np.nan_to_num(centroid))
+                    try:
+                        model.fit(np.nan_to_num(xi.T), np.nan_to_num(centroid))
+                    except TypeError:
+                        continue
                     betas[:, j, k] = model.coef_
             betas = np.mean(betas, 0)
             beta_features[i, :] = betas.reshape(num_classes*num_states)
@@ -448,11 +452,13 @@ class dFNC:
                 ax[k].set_title("State %d/ TTest %s - %s" % (k, k1, k2))
                 ax[k].set_xticks(())
                 ax[k].set_yticks(())
+            print("Saving ttest to %s" % ttest_filename)
             plt.savefig(ttest_filename, bbox_inches='tight')
         return fig1
 
     def save(self, filename):
         package = dict()
+        package['grid_search'] = self.cluster_grid
         package['first_stage_clusterer'] = self.exemplar_clusterer
         package['second_stage_clusterer'] = self.last_clusterer
         package['exemplars'] = self.exemplars
