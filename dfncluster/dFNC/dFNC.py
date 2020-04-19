@@ -381,9 +381,9 @@ class dFNC:
                     model = LinearRegression()
                     try:
                         model.fit(np.nan_to_num(xi.T), np.nan_to_num(centroid))
+                        betas[:, j, k] = model.coef_
                     except TypeError:
                         continue
-                    betas[:, j, k] = model.coef_
             betas = np.mean(betas, 0)
             beta_features[i, :] = betas.reshape(num_classes*num_states)
         return class_centroids, beta_features, class_partitions, nc
