@@ -1,3 +1,35 @@
+# Introduction
+
+Although psychological and behavioral manifestations of schizophrenia are well-studied, neuroscientists have
+yet to determine a set of corresponding neurological biomarkers. One
+fMRI analysis technique, called dynamic functional network connectivity  (dFNC) [1], uses K-Means clustering
+to characterize time-varying connectivity between functional networks to identify schizophrenia biomarkers. Although dFNC has been used to determine biomarkers in the past [14, 12, 13, 5] little attention has been given to choice of
+clustering technique. In this project, we study how modifying the clustering technique in the dFNC pipeline
+can yield dynamic states from fMRI data that impact the accuracy of classifying schizophrenia.
+
+We experiment with DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian Mixture Models clustering methods on subject connectivity matrices produced from fMRI data, and each algorithm's cluster assignments as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to classify schizophrenia. 
+
+Section II describes the fMRI data used in our experimentation, while Section III summarizes the aforementioned clustering and classification algorithms used in the pipeline. Section IV compares the accuracy of these classifiers, along with presenting a series of charts that analyze the cluster assignments produced on the fMRI data.
+
+# Section II: Data
+
+# Section III: Methods
+
+# Section IV: Results
+
+
+### Gaussian Simulated Dataset 
+
+![](images/sim_pre_clustering_AUC.png?raw=true)
+
+
+### FBIRN Dataset 
+
+![](images/fbirn_pre_clustering_AUC.png?raw=true)
+
+### UCLA Dataset
+![](images/ucla_pre_clustering_AUC.png?raw=true)
+
 # dFNCluster
 
 dFNCluster implements Dynamic Functional Network Connectivity (dFNC) with several clustering algorithms, and
