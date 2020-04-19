@@ -378,8 +378,11 @@ class dFNC:
                 for k in states:
                     centroid = class_centroids[L][k]
                     model = LinearRegression()
-                    model.fit(np.nan_to_num(xi.T), np.nan_to_num(centroid))
-                    betas[:, j, k] = model.coef_
+                    try:
+                        model.fit(np.nan_to_num(xi.T), np.nan_to_num(centroid))
+                        betas[:, j, k] = model.coef_
+                    except TypeError:
+                        continue
             betas = np.mean(betas, 0)
             beta_features[i, :] = betas.reshape(num_classes*num_states)
         return class_centroids, beta_features, class_partitions, nc
