@@ -19,18 +19,18 @@ class GaussianConnectivityDataset(Dataset):
                  window_size=22,
                  class_parameters=[
                      dict(
-                         states=[0.1, 0.1, 0.2, 0.6],
+                         states=[0.15, 0.15, 0.15, 0.4, 0.15],
                          sigma_ics=0.1,
                          sigma_ext=0.001,
                          epsilon=0.1,
-                         transition_probability=[0.5, 0.5, 0.5, 0.5]
+                         transition_probability=[0.5, 0.5, 0.5, 0.25, 0.5]
                      ),
                      dict(
-                         states=[0.6, 0.2, 0.1, 0.1],
+                         states=[0.4, 0.15, 0.15, 0.15, 0.15],
                          sigma_ics=0.1,
                          sigma_ext=0.001,
                          epsilon=0.1,
-                         transition_probability=[0.5, 0.5, 0.5, 0.5]
+                         transition_probability=[0.25, 0.5, 0.5, 0.5, 0.5]
                      )
                  ],
                  epsilon=1):

@@ -37,7 +37,7 @@ class OpticsClusterer(Clusterer):
     @staticmethod
     def default_params():
         return dict(
-            min_samples=5,
+            min_samples=20,
             max_eps=np.inf,
             metric='minkowski',
             p=2,
@@ -46,10 +46,10 @@ class OpticsClusterer(Clusterer):
             eps=None,
             xi=0.05,
             predecessor_correction=True,
-            min_cluster_size=None,
+            min_cluster_size=10,
             algorithm='auto',
             leaf_size=30,
-            n_jobs=None
+            n_jobs=32
         )
 
     def __init__(self, **kwargs):
@@ -74,7 +74,7 @@ class OpticsClusterer(Clusterer):
             hard clustering approach that doesn't require any initialization. Still
             implemented in order to smoothly run the dFNC pipeline.
         """
-        return dict()
+        return dict(init=self.centroids, n_clusters=self.centroids.shape[0])
 
     def evaluate(self):
         """

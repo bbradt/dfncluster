@@ -225,8 +225,8 @@ class dFNC:
         plt.clf()
         COLOR_LABELS = np.reshape(assignments, (-1))
 
-        plt.scatter(dim_reduced_X[:, 0], dim_reduced_X[:, 1], c=COLOR_LABELS, marker='o', cmap='viridis')
-        plt.legend(np.unique(COLOR_LABELS).tolist())
+        scatter0 = plt.scatter(dim_reduced_X[:, 0], dim_reduced_X[:, 1], c=COLOR_LABELS, marker='o', cmap='viridis')
+        legend0 = plt.legend(*scatter0.legend_elements(), loc="lower left", title="Classes")
 
         if centroids is not None:
 
@@ -278,6 +278,7 @@ class dFNC:
             print("Performing exemplar clustering")
             exemplar_clusterer = self.first_stage_algorithm(X=self.exemplars['x'], Y=self.exemplars['y'], param_grid=grid_params, **kwargs)
             exemplar_clusterer.model = exemplar_clusterer.fit_grid()
+            self.cluster_grid = exemplar_clusterer.best_cv
             exemplar_clusterer.fit()
             self.exemplar_clusterer = exemplar_clusterer
             if self.second_stage_algorithm is not None:
@@ -423,10 +424,16 @@ class dFNC:
                 Z[np.triu_indices(nc)] = centroid_k
                 Z = Z.T
                 Z[np.triu_indices(nc)] = centroid_k
-                ax[ck, k].imshow(Z, cmap='jet', vmin=state_min, vmax=state_max)
-                ax[ck, k].set_title("State %d" % k)
-                ax[ck, k].set_xticks(())
-                ax[ck, k].set_yticks(())
+                if num_states == 1:
+                    ax[ck].imshow(Z, cmap='jet', vmin=state_min, vmax=state_max)
+                    ax[ck].set_title("State %d" % k)
+                    ax[ck].set_xticks(())
+                    ax[ck].set_yticks(())
+                else:
+                    ax[ck, k].imshow(Z, cmap='jet', vmin=state_min, vmax=state_max)
+                    ax[ck, k].set_title("State %d" % k)
+                    ax[ck, k].set_xticks(())
+                    ax[ck, k].set_yticks(())
         plt.savefig(filename, bbox_inches='tight')
         vmin = float("inf")
         vmax = -float("inf")
@@ -458,11 +465,13 @@ class dFNC:
                 ax[k].set_title("State %d/ TTest %s - %s" % (k, k1, k2))
                 ax[k].set_xticks(())
                 ax[k].set_yticks(())
+            print("Saving ttest to %s" % ttest_filename)
             plt.savefig(ttest_filename, bbox_inches='tight')
         return fig1
 
     def save(self, filename):
         package = dict()
+        package['grid_search'] = self.cluster_grid
         package['first_stage_clusterer'] = self.exemplar_clusterer
         package['second_stage_clusterer'] = self.last_clusterer
         package['exemplars'] = self.exemplars

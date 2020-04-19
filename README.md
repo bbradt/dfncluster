@@ -210,3 +210,19 @@ TODO (Brad): Make example run files, and writeups for other data sets, such as O
 ## Repostory Organization
 
 TODO (Brad): Add a writeup explaining the repository organization
+
+## References:
+
+[1]. Rashid, Barnaly, et al. “Classification of Schizophrenia and Bipolar Patients Using Static and Dynamic Resting-State FMRI Brain Connectivity.” NeuroImage, vol. 134, 2016, pp. 645–657., doi:10.1016/j.neuroimage.2016.04.051.
+
+[2]. Damaraju, E., et al. “Dynamic Functional Connectivity Analysis Reveals Transient States of Dysconnectivity in Schizophrenia.” NeuroImage: Clinical, vol. 5, 2014, pp. 298–308., doi:10.1016/j.nicl.2014.07.003.
+
+[3]. V. M. Vergara, A. Abrol, F. A. Espinoza and V. D. Calhoun, "Selection of Efficient Clustering Index to Estimate the Number of Dynamic Brain States from Functional Network Connectivity*," 2019 41st Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), Berlin, Germany, 2019, pp. 632-635.
+
+[4]. D. K. Saha, A. Abrol, E. Damaraju, B. Rashid, S. M. Plis and V. D. Calhoun, "Classification As a Criterion to Select Model Order For Dynamic Functional Connectivity States in Rest-fMRI Data," 2019 IEEE 16th International Symposium on Biomedical Imaging (ISBI 2019), Venice, Italy, 2019, pp. 1602-1605.
+
+[5]. Elena A. Allen, Eswar Damaraju, Sergey M. Plis, Erik B. Erhardt, Tom Eichele, Vince D. Calhoun, Tracking Whole-Brain Connectivity Dynamics in the Resting State, Cerebral Cortex, Volume 24, Issue 3, March 2014, Pages 663–676, https://doi.org/10.1093/cercor/bhs352
+
+[6]. D. Zhi et al., "Abnormal Dynamic Functional Network Connectivity and Graph Theoretical Analysis in Major Depressive Disorder," 2018 40th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), Honolulu, HI, 2018, pp. 558-561.
+
+[7]. Pedregosa et al. “2.3. Clustering.” Scikit, scikit-learn.org/stable/modules/clustering.html.
