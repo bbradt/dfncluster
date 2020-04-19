@@ -17,9 +17,33 @@ Section II describes the fMRI data used in our experimentation, while Section II
 
 # Section IV: Results
 
-### UCLA Significant Comparisons
+### Initial UCLA Significant Comparisons
+
+In order to evaluate the predictive capacities of the features produced by each clustering algorithm,
+two-tailed t-test were performed to measure the statistical difference between the healthy control and the
+schizophrenic patients.
+
+The first t-test comparision was performed using the distribution of cluster assignments for each patient across
+the time domain. For each time window, the average cluster assignment for all the healthy control patients was
+compared to the average cluster assignment for all the schizophrenic patients. The corresponding p-values were then
+tested at a significance level of 0.10.
+
+The results displayed below highlight the points in time when there were less that a 10% chance that the observed
+difference in a healthy control's cluster assignment and a schizophrenic's cluster assignment was due to normal
+random variation. In theory, the more points of significance across time, the more likely a trained mode would be
+able to correctly diagnose a subject. The results indicated that both k-means and gaussian mixture models failed to
+produce statistically different cluster assignments over time. The Bayesian produced a few significant differences while
+the hierarchical clustering algorithm was significant at every point in time. These results initially suggested that the
+hierarchical clustering algorithm should outperform all the other clustering algorithms, but the subsequent results from
+the trained supervised models refuted this hypothesis.
 
 ![](images/assignment_t_test_visualization.png?raw=true)
+
+Given the lack of improvement in accuracy across all clustering algorithms, it was believed that training supervised
+models using cluster assignment over time as input features was impracticable and would require much more data for
+successful training. For each subject, there would be 130 time slots or features. To reduce the dimensionality of
+the while maintaining relevant information, the beta coefficients were used in lieu of the time windows. The results
+are displayed below.
 
 ![](images/beta_t_test_visualization.png?raw=true)
 
