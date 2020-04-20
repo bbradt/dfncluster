@@ -1,7 +1,4 @@
 {
-    "n_clusters": [
-        5
-    ],
     "linkage": [
         "ward",
         "complete",

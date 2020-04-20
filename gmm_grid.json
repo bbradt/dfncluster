@@ -1,7 +1,4 @@
 {
-    "n_components": [
-        5
-    ],
     "covariance_type": [
         "full"
     ],

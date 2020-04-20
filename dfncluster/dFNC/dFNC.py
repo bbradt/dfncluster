@@ -248,7 +248,7 @@ class dFNC:
         plt.close()
         plt.figure()
         plt.clf()
-        fig = plt.figure(3, figsize=(8, 6))
+        fig = plt.figure(figsize=(8, 6))
         ax = fig.gca(projection='3d')
         scatter = ax.scatter(xs=dim_reduced_X[:, 0], ys=dim_reduced_X[:, 1], zs=dim_reduced_X[:, 2],
                              c=COLOR_LABELS, marker='o', cmap='rainbow', s=10, alpha=0.5)
@@ -319,6 +319,7 @@ class dFNC:
             print("Collecting state statistics")
             class_centroids, beta_features, class_partitions, nc = self.collect_states(assignments, classes=self.dataset.labels,
                                                                                        subject_data=subject_windows, time_index=self.time_index)
+            self.visualize_clusters(beta_features, self.dataset.labels, kwargs['name'], vis_filename.replace('visualization', 'beta-space'), None)
             self.betas = beta_features.copy()
             print("Visualizing States")
             self.visualize_states(assignments, class_centroids, class_partitions, nc, filename=state_filename,
