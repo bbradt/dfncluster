@@ -65,14 +65,14 @@ For example the following connectivity matrices were computed from randomly sele
 
 
 For our simulation we generate <img src="https://render.githubusercontent.com/render/math?math=C %3D 2"> classes, <img src="https://render.githubusercontent.com/render/math?math=K %3D 5"> states, for <img src="https://render.githubusercontent.com/render/math?math=N %3D 300">  subjects with<img src="https://render.githubusercontent.com/render/math?math=M %3D 50"> source signals. The parameters <img src="https://render.githubusercontent.com/render/math?math=Q"> were set at 0.5 for each class and each state, so that transitioning out of states was equally likely 
-for all classes and states. Baseline noise was set at <img src="https://render.githubusercontent.com/render/math?math=\sigma_c %3D 1\times 10^{-2}"> for each class, and the <img src="https://render.githubusercontent.com/render/math?math=sigma_k"> for all source signals was set at <img src="https://render.githubusercontent.com/render/math?math=\sigma_c %3D 1\times 10^{-2}"> <img src="https://render.githubusercontent.com/render/math?math=sigma_k %3D 1\times 10^{-1}">.
+for all classes and states. Baseline noise was set at <img src="https://render.githubusercontent.com/render/math?math=\sigma_c %3D 1\times 10^{-2}"> for each class, and the <img src="https://render.githubusercontent.com/render/math?math=sigma_k"> for all source signals was set at <img src="https://render.githubusercontent.com/render/math?math=\sigma_c %3D 1\times 10^{-2}"> and <img src="https://render.githubusercontent.com/render/math?math=sigma_k %3D 1\times 10^{-1}">.
 
-The parameters for <img src="https://render.githubusercontent.com/render/math?math=P"> $P$ for each class were selected as:
+The parameters for <img src="https://render.githubusercontent.com/render/math?math=P"> for each class were selected as:
 
 | Class Parameter | State 0 | State 1 | State 2 | State 3 | State 4 |
 | --------------- | ------- | ------- | ------- | ------- | ------- |
-| $P_(c=0,k)$     | 0.4     | 0.1     | 0.1     | 0.3     | 0.1     |
-| $P_(c=1,k)%     | 0.1     | 0.1     | 0.3     | 0.1     | 0.4     |
+| <img src="https://render.githubusercontent.com/render/math?math=P_(c %3D 0,k)">     | 0.4     | 0.1     | 0.1     | 0.3     | 0.1     |
+| <img src="https://render.githubusercontent.com/render/math?math=P_(c %3D1,k)">      | 0.1     | 0.1     | 0.3     | 0.1     | 0.4     |
 
 
 ### FBIRN Dataset 
