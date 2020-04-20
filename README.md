@@ -91,7 +91,19 @@ Through this process, we generat a total of $N\times(T-W)$ window instances, whi
 
 ## Clustering Details
 
+We implemented 5 different clustering algorithms as part of the dFNC pipeline: K-Means, DBSCAN, Gaussian Mixture Models, Bayesian Gaussian Mixture Models, and 
+Agglomerative Hierarchical Clustering.
+
 ### Elbow Criterion
+
+For K-Means, GMM, bGMM, and Agglomerative clustering, we measured the elbow criterion on a range of 2-9 components. We measured both the correlation-distance dispersion, as is recommended in Damaraju et al. 2014 [], as well as the silhouette measure. The results from this analysis are included below. In general, we found either unclear or multiple elbows in the range $K=3,4,5,6$ for each data set, with the location of the elbow varying depending on the clustering algorithm used and the data set. Thus, we decided to compromise, and use the choice of $K=5$ from Damaraju et al., which is an established result for the Fbirn data set, and which is a common number of clusters chosen elswhere in the literature. 
+
+|                                             Gaussian                                              |                                               Fbirn                                               |                                              UCLA                                               |
+| :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: |
+|       <img width="100%" src="results/kmeans_gauss_betas/kmeans_gauss_elbow.png?raw=True" />       |       <img width="100%" src="results/kmeans_fbirn_betas/kmeans_fbirn_elbow.png?raw=True" />       |       <img width="100%" src="results/kmeans_ucla_betas/kmeans_ucla_elbow.png?raw=True" />       |
+|          <img width="100%" src="results/gmm_gauss_betas/gmm_gauss_elbow.png?raw=True" />          |          <img width="100%" src="results/gmm_fbirn_betas/gmm_fbirn_elbow.png?raw=True" />          |          <img width="100%" src="results/gmm_ucla_betas/gmm_ucla_elbow.png?raw=True" />          |
+|         <img width="100%" src="results/bgmm_gauss_betas/bgmm_gauss_elbow.png?raw=True" />         |         <img width="100%" src="results/bgmm_fbirn_betas/bgmm_fbirn_elbow.png?raw=True" />         |         <img width="100%" src="results/bgmm_ucla_betas/bgmm_ucla_elbow.png?raw=True" />         |
+| <img width="100%" src="results/hierarchical_gauss_betas/hierarchical_gauss_elbow.png?raw=True" /> | <img width="100%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_elbow.png?raw=True" /> | <img width="100%" src="results/hierarchical_ucla_betas/hierarchical_ucla_elbow.png?raw=True" /> |
 
 ## Classification Details
 
