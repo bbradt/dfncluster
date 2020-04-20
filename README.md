@@ -37,22 +37,28 @@ We also use derivatives from the UCLA Consortium for Neuropsychiatric Phenomics 
 
 ## Gaussian Simulated Dataset 
 
-| Clustering Algorithm | Multilayer Perceptron | Nearest Neighbors | SVM             | Random Forest | Extra Trees   | Gradient Boost  | Logistic Regression | Passive Aggressive Classifier | Perceptron      | Gaussian Process | Ada Boost         | Voting            | Bernoulli Naive Bayes | Bagging           | Decision Tree     |
-| -------------------- | --------------------- | ----------------- | --------------- | ------------- | ------------- | --------------- | ------------------- | ----------------------------- | --------------- | ---------------- | ----------------- | ----------------- | --------------------- | ----------------- | ----------------- |
-| kmeans               | 0.972 ± 0.026         | 0.96 ± 0.021      | 0.972 ± 0.023   | 0.962 ± 0.027 | 0.966 ± 0.024 | 0.954 ± 0.031   | 0.971 ± 0.022       | 0.974 ± 0.02                  | *0.947 ± 0.062* | 0.955 ± 0.027    | 0.957 ± 0.032     | 0.92 ± 0.037      | 0.948 ± 0.022         | 0.941 ± 0.035     | *0.938 ± 0.036*   |
-| gmm                  | 0.963 ± 0.028         | 0.954 ± 0.03      | 0.972 ± 0.025   | 0.967 ± 0.022 | 0.976 ± 0.017 | 0.928 ± 0.046   | 0.962 ± 0.028       | 0.97 ± 0.024                  | 0.962 ± 0.028   | 0.952 ± 0.029    | 0.955 ± 0.031     | 0.92 ± 0.045      | 0.938 ± 0.028         | 0.917 ± 0.036     | 0.923 ± 0.033     |
-| bgmm                 | 0.966 ± 0.023         | 0.949 ± 0.028     | *0.974 ± 0.027* | 0.966 ± 0.026 | 0.963 ± 0.028 | 0.962 ± 0.03    | 0.974 ± 0.02        | 0.972 ± 0.024                 | 0.969 ± 0.029   | 0.955 ± 0.029    | 0.958 ± 0.029     | 0.923 ± 0.045     | 0.949 ± 0.028         | 0.931 ± 0.043     | 0.933 ± 0.026     |
-| dbscan               | 0.971 ± 0.024         | 0.952 ± 0.025     | 0.972 ± 0.022   | 0.961 ± 0.024 | 0.965 ± 0.023 | 0.962 ± 0.022   | 0.967 ± 0.025       | 0.968 ± 0.026                 | 0.957 ± 0.035   | 0.96 ± 0.032     | 0.967 ± 0.028     | 0.913 ± 0.034     | 0.93 ± 0.031          | 0.93 ± 0.036      | 0.943 ± 0.022     |
-| hierarchical         | **1.0 ± 0.0**         | **1.0 ± 0.0**     | **1.0 ± 0.0**   | **1.0 ± 0.0** | **1.0 ± 0.0** | **1.0 ± 0.001** | **1.0 ± 0.0**       | **1.0 ± 0.0**                 | **1.0 ± 0.0**   | **1.0 ± 0.001**  | **0.999 ± 0.002** | **0.993 ± 0.014** | **0.991 ± 0.009**     | **0.983 ± 0.016** | **0.969 ± 0.035** |
+| Clustering Algorithm | Multilayer Perceptron | Nearest Neighbors | SVM             | Random Forest | Extra Trees   | Gradient Boost  | Logistic Regression | Passive Aggressive Classifier |
+| -------------------- | --------------------- | ----------------- | --------------- | ------------- | ------------- | --------------- | ------------------- | ----------------------------- |
+| kmeans               | 0.972 ± 0.026         | 0.96 ± 0.021      | 0.972 ± 0.023   | 0.962 ± 0.027 | 0.966 ± 0.024 | 0.954 ± 0.031   | 0.971 ± 0.022       | 0.974 ± 0.02                  |
+| gmm                  | 0.963 ± 0.028         | 0.954 ± 0.03      | 0.972 ± 0.025   | 0.967 ± 0.022 | 0.976 ± 0.017 | 0.928 ± 0.046   | 0.962 ± 0.028       | 0.97 ± 0.024                  |
+| bgmm                 | 0.966 ± 0.023         | 0.949 ± 0.028     | *0.974 ± 0.027* | 0.966 ± 0.026 | 0.963 ± 0.028 | 0.962 ± 0.03    | 0.974 ± 0.02        | 0.972 ± 0.024                 |
+| dbscan               | 0.971 ± 0.024         | 0.952 ± 0.025     | 0.972 ± 0.022   | 0.961 ± 0.024 | 0.965 ± 0.023 | 0.962 ± 0.022   | 0.967 ± 0.025       | 0.968 ± 0.026                 |
+| hierarchical         | **1.0 ± 0.0**         | **1.0 ± 0.0**     | **1.0 ± 0.0**   | **1.0 ± 0.0** | **1.0 ± 0.0** | **1.0 ± 0.001** | **1.0 ± 0.0**       | **1.0 ± 0.0**                 |
 
+
+| Clustering Algorithm | Perceptron      | Gaussian Process | Ada Boost         | Voting            | Bernoulli Naive Bayes | Bagging           | Decision Tree     |
+| -------------------- | --------------- | ---------------- | ----------------- | ----------------- | --------------------- | ----------------- | ----------------- |
+| kmeans               | *0.947 ± 0.062* | 0.955 ± 0.027    | 0.957 ± 0.032     | 0.92 ± 0.037      | 0.948 ± 0.022         | 0.941 ± 0.035     | *0.938 ± 0.036*   |
+| gmm                  | 0.962 ± 0.028   | 0.952 ± 0.029    | 0.955 ± 0.031     | 0.92 ± 0.045      | 0.938 ± 0.028         | 0.917 ± 0.036     | 0.923 ± 0.033     |
+| bgmm                 | 0.969 ± 0.029   | 0.955 ± 0.029    | 0.958 ± 0.029     | 0.923 ± 0.045     | 0.949 ± 0.028         | 0.931 ± 0.043     | 0.933 ± 0.026     |
+| dbscan               | 0.957 ± 0.035   | 0.96 ± 0.032     | 0.967 ± 0.028     | 0.913 ± 0.034     | 0.93 ± 0.031          | 0.93 ± 0.036      | 0.943 ± 0.022     |
+| hierarchical         | **1.0 ± 0.0**   | **1.0 ± 0.001**  | **0.999 ± 0.002** | **0.993 ± 0.014** | **0.991 ± 0.009**     | **0.983 ± 0.016** | **0.969 ± 0.035** |
 
 ![](images/sim_pre_clustering_AUC.png?raw=true)
 
 Above plot shows "Area Under Curve" of various classifiers on simulated Gaussian Data before clustering where SVM seems to be performing the best followed by "Ada Boost" and "Gradient Boost" while "Bernoulli Naive Bayes" seems to be performing the worst.
 
-<img width="79%" src="results/gauss_betas_accuracy.png?raw=True" />
-
-<img width="20%" src="results/accuracy_legend.png?raw=true" />
+<img width="86%" src="results/gauss_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" /> 
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.4 to 0.6 for KMeans and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and Passive Aggressive Classifier in BGMM shows some improvement over KMeans clustering.
 
@@ -71,15 +77,11 @@ Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixt
 
 Above plot shows "Area Under Curve" of various classifiers on FBirn Data before clustering where "Random Forest" seems to be performing the best followed by "Gradient Boost" and "Multi Layer Perceptron" while "Decision Tree" and "Bernoulli Naive Bayes" seems to be performing the worst.
 
-![](results/fbirn_assignments_accuracy.png?raw=true)
-
-<img width="20%" src="results/accuracy_legend.png?raw=true" />
+<img width="86%" src="results/fbirn_assignments_accuracy.png?raw=true" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data without using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.5 to 0.7 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and "Logistic Regression" and "Passive Aggressive Classifier" in BGMM shows some improvement over KMeans clustering.
 
-<img width="79%" src="results/fbirn_betas_accuracy.png?raw=True" />
-
-<img width="20%" src="results/accuracy_legend.png?raw=true" />
+<img width="86%" src="results/fbirn_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above with clusterer but without using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. "Random Forest" and "Extra Trees" classifier shows some improvement in GMM over KMeans and "Random Forest", "Extra Trees"  and "Perceptron" Classifier in BGMM shows some improvement over KMeans clustering.
 
@@ -98,9 +100,8 @@ Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixt
 
 Above plot shows "Area Under Curve" of various classifiers on UCLA Data before clustering where SVM seems to be performing the best followed by "Multilayer Perceptron" and "Gradient Boost" while "Gaussian Process" and "Decision Tree" seems to be performing the worst.
 
-<img width="79%" src="results/ucla_betas_accuracy.png?raw=True" />
+<img width="86%" src="results/ucla_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
 
-<img width="20%" src="results/accuracy_legend.png?raw=true" />
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. Almost all the classifiers in all the clusterer shows improvement over KMeans clustering.
 
