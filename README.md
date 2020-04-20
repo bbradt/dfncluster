@@ -4,7 +4,7 @@ dFNCluster implements Dynamic Functional Network Connectivity (dFNC) with severa
 actively compares the performance of classification under different clustering algorithms and hyper-parameters.
 
 # Introduction
-Schizophrenia is a chronic and serious mental disorder which affects how a person thinks, feels, and behaves. Although there have been many studies about psychological and behavioral manifestations of schizophrenia, neuroscientists have yet to determine a set of corresponding neurological biomarkers for this disorder. A functional magnetic resonance imaging (fMRI) can help determine non-invasive biomarkers for schizophrenia in brain function[[1]](#ref1)[[2]](#ref2) and one of the fMRI analysis technique called, dynamic functional network connectivity (dFNC)[[3]](#ref3), using K-Means clustering to characterize time-varying connectivity between functional networks. Researches has worked on finding correlation between schizophrenia and dFNC[[1]](#ref1)[[2]](#ref2)[[4]](#ref4)[[5]](#ref5), but little work has been done with the choice of clustering algorithm. Therefore, n this project, we study how modifying the clustering technique in the dFNC pipeline can yield dynamic states from fMRI data that impact the accuracy of classifying schizophrenia.
+Schizophrenia is a chronic and serious mental disorder which affects how a person thinks, feels, and behaves. Although there have been many studies about psychological and behavioral manifestations of schizophrenia, neuroscientists have yet to determine a set of corresponding neurological biomarkers for this disorder. A functional magnetic resonance imaging (fMRI) can help determine non-invasive biomarkers for schizophrenia in brain function[[1]](#ref1)[[2]](#ref2) and one of the fMRI analysis technique called, dynamic functional network connectivity (dFNC)[[3]](#ref3)[[4]](#ref4), using K-Means clustering to characterize time-varying connectivity between functional networks. Researches has worked on finding correlation between schizophrenia and dFNC[[1]](#ref1)[[2]](#ref2)[[5]](#ref5)[[6]](#ref6), but little work has been done with the choice of clustering algorithm[[7]](#ref7). Therefore, n this project, we study how modifying the clustering technique in the dFNC pipeline can yield dynamic states from fMRI data that impact the accuracy of classifying schizophrenia.
 
 We experiment with DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian Mixture Models clustering methods on subject connectivity matrices produced from fMRI data, and each algorithm's cluster assignments as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to classify schizophrenia.
 
@@ -184,7 +184,17 @@ TODO (Brad): Add a writeup explaining the repository organization
 
 ## References
 <a name="ref1"></a> [1]. Eswar Damaraju et al. “Dynamic functional connectivity analysis reveals transient states of dyscon-nectivity in schizophrenia”. In:NeuroImage: Clinical5 (2014), pp. 298–308.<br>
+
 <a name="ref2"></a> [2]. Mustafa S Salman et al. “Group ICA for identifying biomarkers in schizophrenia:‘Adaptive’networks viaspatially constrained ICA show more sensitivity to group differences than spatio-temporal regression”.In:NeuroImage: Clinical22 (2019), p. 101747.<br>
+
 <a name="ref3"></a> [3]. Elena A Allen et al. “Tracking whole-brain connectivity dynamics in the resting state”. In:Cerebralcortex24.3 (2014), pp. 663–676.<br>
-<a name="ref4"></a> [4]. U Sakoglu, AM Michael, and VD Calhoun. “Classification of schizophrenia patients vs healthy controlswith dynamic functional network connectivity”. In:Neuroimage47.1 (2009), S39–41.<br>
-<a name="ref5"></a> [5]. Unal  Sako ̆glu  et  al.  “A  method  for  evaluating  dynamic  functional  network  connectivity  and  task-modulation: application to schizophrenia”. In:Magnetic Resonance Materials in Physics, Biology andMedicine23.5-6 (2010), pp. 351–366.<br>
+
+<a name="ref4"></a> [4]. D. Zhi et al., "Abnormal Dynamic Functional Network Connectivity and Graph Theoretical Analysis in Major Depressive Disorder," 2018 40th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), Honolulu, HI, 2018, pp. 558-561.<br>
+
+<a name="ref5"></a> [5]. U Sakoglu, AM Michael, and VD Calhoun. “Classification of schizophrenia patients vs healthy controlswith dynamic functional network connectivity”. In:Neuroimage47.1 (2009), S39–41.<br>
+
+<a name="ref6"></a> [6]. Unal  Sako ̆glu  et  al.  “A  method  for  evaluating  dynamic  functional  network  connectivity  and  task-modulation: application to schizophrenia”. In:Magnetic Resonance Materials in Physics, Biology andMedicine23.5-6 (2010), pp. 351–366.<br>
+
+<a name="ref7"></a> [7]. V. M. Vergara, A. Abrol, F. A. Espinoza and V. D. Calhoun, "Selection of Efficient Clustering Index to Estimate the Number of Dynamic Brain States from Functional Network Connectivity*," 2019 41st Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), Berlin, Germany, 2019, pp. 632-635.<br>
+
+<a name="ref8"></a> [8]. Pedregosa et al. “2.3. Clustering.” Scikit, scikit-learn.org/stable/modules/clustering.html.<br>
