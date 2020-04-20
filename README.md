@@ -51,6 +51,47 @@ Above plot shows "Area Under Curve" of various classifiers on simulated Gaussian
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.4 to 0.6 for KMeans and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and Passive Aggressive Classifier in BGMM shows some improvement over KMeans clustering.
 
+
+<img width="98%" src="results/kmeans_fbirn/kmeans_fbirn_states.png?raw=true" /> 
+Visualization of states with KMeans clustering with Gaussian Simulated Data
+
+
+<img width="49%" src="results/kmeans_gauss/kmeans_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_gauss/kmeans_gauss_visualization.png?raw=true" />  
+Visualization of clusters with KMeans clustering in 2-d and 3-d with Gaussian Simulated Data
+
+
+<img width="98%" src="results/gmm_gauss/gmm_gauss_states.png?raw=true" /> 
+Visualization of states with GMM clustering with Gaussian Simulated Data
+
+
+<img width="49%" src="results/gmm_gauss/gmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_gauss/gmm_gauss_visualization.png?raw=true" />  
+Visualization of clusters with GMM clustering in 2-d and 3-d with Gaussian Simulated Data
+
+
+<img width="98%" src="results/bgmm_gauss/bgmm_gauss_states.png?raw=true" /> 
+Visualization of states with BGMM clustering with Gaussian Simulated Data
+
+
+<img width="49%" src="results/bgmm_gauss/bgmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_gauss/bgmm_gauss_visualization.png?raw=true" />  
+Visualization of clusters with BGMM clustering in 2-d and 3-d with Gaussian Simulated Data
+
+
+<img width="98%" src="results/dbscan_gauss/dbscan_gauss_states.png?raw=true" /> 
+Visualization of states with DBSCAN clustering with Gaussian Simulated Data
+
+
+<img width="49%" src="results/dbscan_gauss/dbscan_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_gauss/dbscan_gauss_visualization.png?raw=true" />  
+Visualization of clusters with DBSCAN clustering in 2-d and 3-d with Gaussian Simulated Data
+
+
+<img width="98%" src="results/hierarchical_gauss/hierarchical_gauss_states.png?raw=true" /> 
+Visualization of states with Hierarchical clustering with Gaussian Simulated Data
+
+
+<img width="49%" src="results/hierarchical_gauss/hierarchical_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_gauss/hierarchical_gauss_visualization.png?raw=true" />  
+Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gaussian Simulated Data
+
+
 ## FBIRN Dataset 
 
 | Clustering Algorithm | SVM               | Multilayer Perceptron | Logistic Regression | Passive Aggressive Classifier | Perceptron        | Random Forest     | Extra Trees       |
@@ -78,6 +119,47 @@ Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixt
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above with clusterer but without using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. "Random Forest" and "Extra Trees" classifier shows some improvement in GMM over KMeans and "Random Forest", "Extra Trees"  and "Perceptron" Classifier in BGMM shows some improvement over KMeans clustering.
 
+<img width="98%" src="results/kmeans_fbirn/kmeans_fbirn_states.png?raw=true" /> 
+Visualization of states with KMeans clustering with FBirn Data
+
+
+<img width="49%" src="results/kmeans_fbirn/kmeans_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_fbirn/kmeans_fbirn_visualization.png?raw=true" />  
+Visualization of clusters with KMeans clustering in 2-d and 3-d with FBirn Data
+
+
+<img width="98%" src="results/gmm_fbirn/gmm_fbirn_states.png?raw=true" /> 
+Visualization of states with GMM clustering with FBirn Data
+
+
+<img width="49%" src="results/gmm_fbirn/gmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_fbirn/gmm_fbirn_visualization.png?raw=true" />  
+Visualization of clusters with GMM clustering in 2-d and 3-d with FBirn Data
+
+
+<img width="98%" src="results/bgmm_fbirn/bgmm_fbirn_states.png?raw=true" /> 
+Visualization of states with BGMM clustering with FBirn Data
+
+
+<img width="49%" src="results/bgmm_fbirn/bgmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_fbirn/bgmm_fbirn_visualization.png?raw=true" />  
+Visualization of clusters with BGMM clustering in 2-d and 3-d with FBirn Data
+
+
+<img width="98%" src="results/dbscan_fbirn/dbscan_fbirn_states.png?raw=true" /> 
+Visualization of states with DBSCAN clustering with FBirn Data
+
+
+<img width="49%" src="results/dbscan_fbirn/dbscan_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_fbirn/dbscan_fbirn_visualization.png?raw=true" />  
+Visualization of clusters with DBSCAN clustering in 2-d and 3-d with FBirn Data
+
+
+<img width="98%" src="results/hierarchical_fbirn/hierarchical_fbirn_states.png?raw=true" /> 
+Visualization of states with Hierarchical clustering with FBirn Data
+
+
+<img width="49%" src="results/hierarchical_fbirn/hierarchical_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_fbirn/hierarchical_fbirn_visualization.png?raw=true" />  
+Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn Data
+
+
+
 ## UCLA Dataset
 
 | Clustering Algorithm | SVM              | Multilayer Perceptron | Logistic Regression | Passive Aggressive Classifier | Perceptron        | Extra Trees       | Random Forest     |
@@ -98,6 +180,49 @@ Above plot shows "Area Under Curve" of various classifiers on UCLA Data before c
 <img width="20%" src="results/accuracy_legend.png?raw=true" />
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. Almost all the classifiers in all the clusterer shows improvement over KMeans clustering.
+
+
+
+<img width="98%" src="results/kmeans_ucla/kmeans_ucla_states.png?raw=true" /> 
+Visualization of states with KMeans clustering with UCLA Data
+
+
+<img width="49%" src="results/kmeans_ucla/kmeans_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_ucla/kmeans_ucla_visualization.png?raw=true" />  
+Visualization of clusters with KMeans clustering in 2-d and 3-d with UCLA Data
+
+
+<img width="98%" src="results/gmm_ucla/gmm_ucla_states.png?raw=true" /> 
+Visualization of states with GMM clustering with UCLA Data
+
+
+<img width="49%" src="results/gmm_ucla/gmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_ucla/gmm_ucla_visualization.png?raw=true" />  
+Visualization of clusters with GMM clustering in 2-d and 3-d with UCLA Data
+
+
+<img width="98%" src="results/bgmm_ucla/bgmm_ucla_states.png?raw=true" /> 
+Visualization of states with BGMM clustering with UCLA Data
+
+
+<img width="49%" src="results/bgmm_ucla/bgmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_ucla/bgmm_ucla_visualization.png?raw=true" />  
+Visualization of clusters with BGMM clustering in 2-d and 3-d with UCLA Data
+
+
+<img width="98%" src="results/dbscan_ucla/dbscan_ucla_states.png?raw=true" /> 
+Visualization of states with DBSCAN clustering with UCLA Data
+
+
+<img width="49%" src="results/dbscan_ucla/dbscan_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_ucla/dbscan_ucla_visualization.png?raw=true" />  
+Visualization of clusters with DBSCAN clustering in 2-d and 3-d with UCLA Data
+
+
+<img width="98%" src="results/hierarchical_ucla/hierarchical_ucla_states.png?raw=true" /> 
+Visualization of states with Hierarchical clustering with UCLA Data
+
+
+<img width="49%" src="results/hierarchical_ucla/hierarchical_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_ucla/hierarchical_ucla_visualization.png?raw=true" />  
+Visualization of clusters with Hierarchical clustering in 2-d and 3-d with UCLA Data
+
+
 
 ### Initial UCLA Significant Comparisons
 
