@@ -119,24 +119,71 @@ We performed a Grid-Search over all available parameters for each of the classif
 
 ## Gaussian Simulated Dataset 
 
-| Clustering Algorithm | Multilayer Perceptron | Nearest Neighbors | SVM             | Random Forest | Extra Trees   | Gradient Boost  | Logistic Regression | Passive Aggressive Classifier | Perceptron      | Gaussian Process | Ada Boost         | Voting            | Bernoulli Naive Bayes | Bagging           | Decision Tree     |
-| -------------------- | --------------------- | ----------------- | --------------- | ------------- | ------------- | --------------- | ------------------- | ----------------------------- | --------------- | ---------------- | ----------------- | ----------------- | --------------------- | ----------------- | ----------------- |
-| kmeans               | 0.972 ± 0.026         | 0.96 ± 0.021      | 0.972 ± 0.023   | 0.962 ± 0.027 | 0.966 ± 0.024 | 0.954 ± 0.031   | 0.971 ± 0.022       | 0.974 ± 0.02                  | *0.947 ± 0.062* | 0.955 ± 0.027    | 0.957 ± 0.032     | 0.92 ± 0.037      | 0.948 ± 0.022         | 0.941 ± 0.035     | *0.938 ± 0.036*   |
-| gmm                  | 0.963 ± 0.028         | 0.954 ± 0.03      | 0.972 ± 0.025   | 0.967 ± 0.022 | 0.976 ± 0.017 | 0.928 ± 0.046   | 0.962 ± 0.028       | 0.97 ± 0.024                  | 0.962 ± 0.028   | 0.952 ± 0.029    | 0.955 ± 0.031     | 0.92 ± 0.045      | 0.938 ± 0.028         | 0.917 ± 0.036     | 0.923 ± 0.033     |
-| bgmm                 | 0.966 ± 0.023         | 0.949 ± 0.028     | *0.974 ± 0.027* | 0.966 ± 0.026 | 0.963 ± 0.028 | 0.962 ± 0.03    | 0.974 ± 0.02        | 0.972 ± 0.024                 | 0.969 ± 0.029   | 0.955 ± 0.029    | 0.958 ± 0.029     | 0.923 ± 0.045     | 0.949 ± 0.028         | 0.931 ± 0.043     | 0.933 ± 0.026     |
-| dbscan               | 0.971 ± 0.024         | 0.952 ± 0.025     | 0.972 ± 0.022   | 0.961 ± 0.024 | 0.965 ± 0.023 | 0.962 ± 0.022   | 0.967 ± 0.025       | 0.968 ± 0.026                 | 0.957 ± 0.035   | 0.96 ± 0.032     | 0.967 ± 0.028     | 0.913 ± 0.034     | 0.93 ± 0.031          | 0.93 ± 0.036      | 0.943 ± 0.022     |
-| hierarchical         | **1.0 ± 0.0**         | **1.0 ± 0.0**     | **1.0 ± 0.0**   | **1.0 ± 0.0** | **1.0 ± 0.0** | **1.0 ± 0.001** | **1.0 ± 0.0**       | **1.0 ± 0.0**                 | **1.0 ± 0.0**   | **1.0 ± 0.001**  | **0.999 ± 0.002** | **0.993 ± 0.014** | **0.991 ± 0.009**     | **0.983 ± 0.016** | **0.969 ± 0.035** |
+| Clustering Algorithm | Multilayer Perceptron | Nearest Neighbors | SVM             | Random Forest | Extra Trees   | Gradient Boost  | Logistic Regression | Passive Aggressive Classifier |
+| -------------------- | --------------------- | ----------------- | --------------- | ------------- | ------------- | --------------- | ------------------- | ----------------------------- |
+| kmeans               | 0.972 ± 0.026         | 0.96 ± 0.021      | 0.972 ± 0.023   | 0.962 ± 0.027 | 0.966 ± 0.024 | 0.954 ± 0.031   | 0.971 ± 0.022       | 0.974 ± 0.02                  |
+| gmm                  | 0.963 ± 0.028         | 0.954 ± 0.03      | 0.972 ± 0.025   | 0.967 ± 0.022 | 0.976 ± 0.017 | 0.928 ± 0.046   | 0.962 ± 0.028       | 0.97 ± 0.024                  |
+| bgmm                 | 0.966 ± 0.023         | 0.949 ± 0.028     | *0.974 ± 0.027* | 0.966 ± 0.026 | 0.963 ± 0.028 | 0.962 ± 0.03    | 0.974 ± 0.02        | 0.972 ± 0.024                 |
+| dbscan               | 0.971 ± 0.024         | 0.952 ± 0.025     | 0.972 ± 0.022   | 0.961 ± 0.024 | 0.965 ± 0.023 | 0.962 ± 0.022   | 0.967 ± 0.025       | 0.968 ± 0.026                 |
+| hierarchical         | **1.0 ± 0.0**         | **1.0 ± 0.0**     | **1.0 ± 0.0**   | **1.0 ± 0.0** | **1.0 ± 0.0** | **1.0 ± 0.001** | **1.0 ± 0.0**       | **1.0 ± 0.0**                 |
 
+
+| Clustering Algorithm | Perceptron      | Gaussian Process | Ada Boost         | Voting            | Bernoulli Naive Bayes | Bagging           | Decision Tree     |
+| -------------------- | --------------- | ---------------- | ----------------- | ----------------- | --------------------- | ----------------- | ----------------- |
+| kmeans               | *0.947 ± 0.062* | 0.955 ± 0.027    | 0.957 ± 0.032     | 0.92 ± 0.037      | 0.948 ± 0.022         | 0.941 ± 0.035     | *0.938 ± 0.036*   |
+| gmm                  | 0.962 ± 0.028   | 0.952 ± 0.029    | 0.955 ± 0.031     | 0.92 ± 0.045      | 0.938 ± 0.028         | 0.917 ± 0.036     | 0.923 ± 0.033     |
+| bgmm                 | 0.969 ± 0.029   | 0.955 ± 0.029    | 0.958 ± 0.029     | 0.923 ± 0.045     | 0.949 ± 0.028         | 0.931 ± 0.043     | 0.933 ± 0.026     |
+| dbscan               | 0.957 ± 0.035   | 0.96 ± 0.032     | 0.967 ± 0.028     | 0.913 ± 0.034     | 0.93 ± 0.031          | 0.93 ± 0.036      | 0.943 ± 0.022     |
+| hierarchical         | **1.0 ± 0.0**   | **1.0 ± 0.001**  | **0.999 ± 0.002** | **0.993 ± 0.014** | **0.991 ± 0.009**     | **0.983 ± 0.016** | **0.969 ± 0.035** |
 
 ![](images/sim_pre_clustering_AUC.png?raw=true)
 
 Above plot shows "Area Under Curve" of various classifiers on simulated Gaussian Data before clustering where SVM seems to be performing the best followed by "Ada Boost" and "Gradient Boost" while "Bernoulli Naive Bayes" seems to be performing the worst.
 
-<img width="79%" src="results/gauss_betas_accuracy.png?raw=True" />
-
-<img width="20%" src="results/accuracy_legend.png?raw=true" />
+<img width="86%" src="results/gauss_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" /> 
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.4 to 0.6 for KMeans and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and Passive Aggressive Classifier in BGMM shows some improvement over KMeans clustering.
+
+
+<img width="98%" src="results/kmeans_fbirn/kmeans_fbirn_states.png?raw=true" /> 
+Visualization of states with KMeans clustering with Gaussian Simulated Data
+
+
+<img width="49%" src="results/kmeans_gauss/kmeans_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_gauss/kmeans_gauss_visualization.png?raw=true" />  
+Visualization of clusters with KMeans clustering in 2-d and 3-d with Gaussian Simulated Data
+
+
+<img width="98%" src="results/gmm_gauss/gmm_gauss_states.png?raw=true" /> 
+Visualization of states with GMM clustering with Gaussian Simulated Data
+
+
+<img width="49%" src="results/gmm_gauss/gmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_gauss/gmm_gauss_visualization.png?raw=true" />  
+Visualization of clusters with GMM clustering in 2-d and 3-d with Gaussian Simulated Data
+
+
+<img width="98%" src="results/bgmm_gauss/bgmm_gauss_states.png?raw=true" /> 
+Visualization of states with BGMM clustering with Gaussian Simulated Data
+
+
+<img width="49%" src="results/bgmm_gauss/bgmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_gauss/bgmm_gauss_visualization.png?raw=true" />  
+Visualization of clusters with BGMM clustering in 2-d and 3-d with Gaussian Simulated Data
+
+
+<img width="98%" src="results/dbscan_gauss/dbscan_gauss_states.png?raw=true" /> 
+Visualization of states with DBSCAN clustering with Gaussian Simulated Data
+
+
+<img width="49%" src="results/dbscan_gauss/dbscan_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_gauss/dbscan_gauss_visualization.png?raw=true" />  
+Visualization of clusters with DBSCAN clustering in 2-d and 3-d with Gaussian Simulated Data
+
+
+<img width="98%" src="results/hierarchical_gauss/hierarchical_gauss_states.png?raw=true" /> 
+Visualization of states with Hierarchical clustering with Gaussian Simulated Data
+
+
+<img width="49%" src="results/hierarchical_gauss/hierarchical_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_gauss/hierarchical_gauss_visualization.png?raw=true" />  
+Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gaussian Simulated Data
+
 
 ## FBIRN Dataset 
 
@@ -153,17 +200,54 @@ Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixt
 
 Above plot shows "Area Under Curve" of various classifiers on FBirn Data before clustering where "Random Forest" seems to be performing the best followed by "Gradient Boost" and "Multi Layer Perceptron" while "Decision Tree" and "Bernoulli Naive Bayes" seems to be performing the worst.
 
-![](results/fbirn_assignments_accuracy.png?raw=true)
-
-<img width="20%" src="results/accuracy_legend.png?raw=true" />
+<img width="86%" src="results/fbirn_assignments_accuracy.png?raw=true" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data without using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.5 to 0.7 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and "Logistic Regression" and "Passive Aggressive Classifier" in BGMM shows some improvement over KMeans clustering.
 
-<img width="79%" src="results/fbirn_betas_accuracy.png?raw=True" />
-
-<img width="20%" src="results/accuracy_legend.png?raw=true" />
+<img width="86%" src="results/fbirn_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above with clusterer but without using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. "Random Forest" and "Extra Trees" classifier shows some improvement in GMM over KMeans and "Random Forest", "Extra Trees"  and "Perceptron" Classifier in BGMM shows some improvement over KMeans clustering.
+
+<img width="98%" src="results/kmeans_fbirn/kmeans_fbirn_states.png?raw=true" /> 
+Visualization of states with KMeans clustering with FBirn Data
+
+
+<img width="49%" src="results/kmeans_fbirn/kmeans_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_fbirn/kmeans_fbirn_visualization.png?raw=true" />  
+Visualization of clusters with KMeans clustering in 2-d and 3-d with FBirn Data
+
+
+<img width="98%" src="results/gmm_fbirn/gmm_fbirn_states.png?raw=true" /> 
+Visualization of states with GMM clustering with FBirn Data
+
+
+<img width="49%" src="results/gmm_fbirn/gmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_fbirn/gmm_fbirn_visualization.png?raw=true" />  
+Visualization of clusters with GMM clustering in 2-d and 3-d with FBirn Data
+
+
+<img width="98%" src="results/bgmm_fbirn/bgmm_fbirn_states.png?raw=true" /> 
+Visualization of states with BGMM clustering with FBirn Data
+
+
+<img width="49%" src="results/bgmm_fbirn/bgmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_fbirn/bgmm_fbirn_visualization.png?raw=true" />  
+Visualization of clusters with BGMM clustering in 2-d and 3-d with FBirn Data
+
+
+<img width="98%" src="results/dbscan_fbirn/dbscan_fbirn_states.png?raw=true" /> 
+Visualization of states with DBSCAN clustering with FBirn Data
+
+
+<img width="49%" src="results/dbscan_fbirn/dbscan_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_fbirn/dbscan_fbirn_visualization.png?raw=true" />  
+Visualization of clusters with DBSCAN clustering in 2-d and 3-d with FBirn Data
+
+
+<img width="98%" src="results/hierarchical_fbirn/hierarchical_fbirn_states.png?raw=true" /> 
+Visualization of states with Hierarchical clustering with FBirn Data
+
+
+<img width="49%" src="results/hierarchical_fbirn/hierarchical_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_fbirn/hierarchical_fbirn_visualization.png?raw=true" />  
+Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn Data
+
+
 
 ## UCLA Dataset
 
@@ -180,11 +264,53 @@ Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixt
 
 Above plot shows "Area Under Curve" of various classifiers on UCLA Data before clustering where SVM seems to be performing the best followed by "Multilayer Perceptron" and "Gradient Boost" while "Gaussian Process" and "Decision Tree" seems to be performing the worst.
 
-<img width="79%" src="results/ucla_betas_accuracy.png?raw=True" />
+<img width="86%" src="results/ucla_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
 
-<img width="20%" src="results/accuracy_legend.png?raw=true" />
 
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. Almost all the classifiers in all the clusterer shows improvement over KMeans clustering.
+
+
+
+<img width="98%" src="results/kmeans_ucla/kmeans_ucla_states.png?raw=true" /> 
+Visualization of states with KMeans clustering with UCLA Data
+
+
+<img width="49%" src="results/kmeans_ucla/kmeans_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_ucla/kmeans_ucla_visualization.png?raw=true" />  
+Visualization of clusters with KMeans clustering in 2-d and 3-d with UCLA Data
+
+
+<img width="98%" src="results/gmm_ucla/gmm_ucla_states.png?raw=true" /> 
+Visualization of states with GMM clustering with UCLA Data
+
+
+<img width="49%" src="results/gmm_ucla/gmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_ucla/gmm_ucla_visualization.png?raw=true" />  
+Visualization of clusters with GMM clustering in 2-d and 3-d with UCLA Data
+
+
+<img width="98%" src="results/bgmm_ucla/bgmm_ucla_states.png?raw=true" /> 
+Visualization of states with BGMM clustering with UCLA Data
+
+
+<img width="49%" src="results/bgmm_ucla/bgmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_ucla/bgmm_ucla_visualization.png?raw=true" />  
+Visualization of clusters with BGMM clustering in 2-d and 3-d with UCLA Data
+
+
+<img width="98%" src="results/dbscan_ucla/dbscan_ucla_states.png?raw=true" /> 
+Visualization of states with DBSCAN clustering with UCLA Data
+
+
+<img width="49%" src="results/dbscan_ucla/dbscan_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_ucla/dbscan_ucla_visualization.png?raw=true" />  
+Visualization of clusters with DBSCAN clustering in 2-d and 3-d with UCLA Data
+
+
+<img width="98%" src="results/hierarchical_ucla/hierarchical_ucla_states.png?raw=true" /> 
+Visualization of states with Hierarchical clustering with UCLA Data
+
+
+<img width="49%" src="results/hierarchical_ucla/hierarchical_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_ucla/hierarchical_ucla_visualization.png?raw=true" />  
+Visualization of clusters with Hierarchical clustering in 2-d and 3-d with UCLA Data
+
+
 
 ### Initial UCLA Significant Comparisons
 
@@ -368,13 +494,6 @@ PYTHONPATH=. python data/MatDatasets/OmegaSim/OmegaSim.py
 To run on a subset of the simulated data set, you can either edit data.csv in the data directory, and rebuild,
 or copy that directory under a new name, edit, rebuild and point main.py to the new data set.
 
-## Other Examples
-
-TODO (Brad): Make example run files, and writeups for other data sets, such as OpenNeuro
-
-## Repostory Organization
-
-TODO (Brad): Add a writeup explaining the repository organization
 
 
 ## References
