@@ -35,7 +35,7 @@ def plot_curve_compare(x, y1, y2, title='Ys over X',
         plt.savefig(filename_path)
 
 
-def plot_multiple_ptest_results(df, nrows, ncols, title, figsize=None, filename=None):
+def plot_multiple_ptest_results(df, nrows, ncols, title, figsize=None, feature_domain="Time", filename=None):
 
     # Initialize Figure
     plt.style.use('seaborn-darkgrid')
@@ -47,19 +47,19 @@ def plot_multiple_ptest_results(df, nrows, ncols, title, figsize=None, filename=
         plt.figure(figsize=figsize)
 
     subplot_num = 0
-    for result in df.drop('time_window', axis=1):
+    for result in df.columns:
         subplot_num += 1
         plt.subplot(nrows, ncols, subplot_num)
 
         # plot all results in grey-scale
-        for ele in df.drop('time_window', axis=1):
+        for ele in df.columns:
             plt.plot(
-                df['time_window'], df[ele],
+                df.index, df[ele],
                 marker='', color='grey',
                 linewidth=0.6, alpha=0.3)
 
         # plot specific algorithm results in bold color
-        plt.plot(df['time_window'], df[result],
+        plt.plot(df.index, df[result],
                  color=palette[subplot_num % len(palette)],
                  label=result,
                  linewidth=2.4, alpha=0.9)
@@ -76,7 +76,7 @@ def plot_multiple_ptest_results(df, nrows, ncols, title, figsize=None, filename=
         if subplot_num <= (nrows - 1) * ncols:
             plt.tick_params(labelbottom=False)
         else:
-            plt.xlabel('Time')
+            plt.xlabel(feature_domain)
 
     plt.suptitle(title, fontsize=20)
 

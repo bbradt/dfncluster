@@ -27,7 +27,8 @@ def test_multiple_2d_plot():
 
 
 def test_plot_multiple_ptest_results():
-    # stage prepared assignments and label data representative of dFNC results
+    # stage prepared assignments and label data representative of
+    # dFNC results
     assignments = np.random.randint(low=0, high=5, size=(2048, 2048))
     subject_labels = np.random.randint(low=0, high=1, size=(2048, 1))
 
@@ -37,7 +38,7 @@ def test_plot_multiple_ptest_results():
     df = pd.DataFrame({
 
         # required argument to specify x-axis used across all subplots
-        'time_window': np.arange(sig_levels.size),
+        #'time_window': np.arange(sig_levels.size),
 
         # after specifying time window, add as many as you want
         # going to use same data across all 'clustering algorithms'
