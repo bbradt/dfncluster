@@ -116,8 +116,69 @@ We performed a Grid-Search over all available parameters for each of the classif
 
 # Section IV: Results & Discussion
 
+## Initial UCLA Significant Comparisons
 
-## Gaussian Simulated Dataset 
+In order to evaluate the predictive capacities of the features produced by each clustering algorithm, a
+two-tailed t-test was performed comparing the healthy control and the schizophrenic patients.
+
+The first t-test comparision was performed using the cluster assignments for each patient across
+the time domain where each time slot represented a feature of the training data. For each time slot (feature),
+the average cluster assignment for all the healthy control patients was compared to the average cluster assignment
+for all the schizophrenic patients. The corresponding p-values were then tested at a significance level of 0.10.
+
+The results displayed below highlight the points in time when there was less that a 10% chance that the
+observed difference in a healthy control's cluster assignment and a schizophrenic's cluster assignment was due to normal
+random variation. In theory, the more points of significance across time the more likely a trained model would accurately
+diagnose a subject. The results indicated that both K-Means and Gaussian Mixture Models failed to produce statistically
+different cluster assignments across time. The Bayesian Gaussian Mixture Model produced some significant differences while
+the Hierarchical clustering was significant at every time point.
+
+These results initially suggested that Hierarchical clustering would outperform all the other clustering algorithms,
+but the subsequent testing disporved this hypothesis.
+
+![](images/assignment_t_test_visualization.png?raw=true)
+
+Given the lack of improvement in accuracy across all clustering algorithms, it was believed that training supervised
+models using using time points as features would require much more data for successful classification.
+Using time slots as features meant that there were 130 features in the data. Since there were only 267 patients
+in the UCLA data set, it was surmised that the dimensionality of the data was too high. To reduce the dimensionality
+of the datasets, the beta coefficients were calculated reducing the number of training features form 130 to 10.
+
+![](images/beta_t_test_visualization.png?raw=true)
+
+Each clustering algorithm produced statistically different beta coefficients between the health control and
+schizophrenic patients. With the reduced dimenstionality of the data, we successfully improved the accuracy of
+out diagnoses across all supervised learning algorithms for each clustering algorithm. These results are discussed
+later in the report.
+
+## Reporting Results
+
+For all results, the Area Under Curve (AUC) metric was used since we were trying to classify two possible outcomes.
+Patients were with either healthy or had schizophrenia. AUC scores near 0.50 meant that the models randomly diagnosed
+patients as healthy or schizophrenic. This represented the worst possible outcome. Any model with and AUC scores between
+0.40 and 0.60 was deemed a failed model. AUC scores near 1.0 meant that diagnoses were accurate with few false positives
+(high specificiy) and few false negatives (high recall). There were no observed models that completely reversed the
+diagnoses with AUC scores near 0.0.
+
+## Gaussian Simulated Dataset
+
+We initially trained the supervised learning algorithms using simulated Gaussian datasets since we did not
+have access to the real patient data until later in the semester. We first trained the supervised learning models
+without any clustering in order to establish a baseline AUC scores for our clustering algorithms to impove upon.
+These baseline results are displayed below.
+
+![](images/sim_pre_clustering_AUC.png?raw=true)
+
+The key result from this experiment was that without any clustering, no supervised learning algorithm could consistently
+achieve and AUC score above 0.60. Some learners such as the Multilayer Perceptron, Passive Aggressive Classifier,
+and Bernoulli Naive Bayes surprisingly scored below 0.40 suggesting that they consistently misdiagnose patients.
+This result was attributed to being due to random error, and was disregarded.
+
+After establishing the baseline AUC scores, we performed clustering and beta feature generation for the simulated
+Gaussian datasets. Using these clustered and reduced datasets, we trained across the same classifiers to for each
+clustering algorithm (K-Means, Gaussian Mixture Model, Bayesian Gaussian Mixture Model, DBSCAN, and Hierarchical)
+to generate the results below.
+
 
 | Clustering Algorithm | Multilayer Perceptron | Nearest Neighbors | SVM             | Random Forest | Extra Trees   | Gradient Boost  | Logistic Regression | Passive Aggressive Classifier |
 | -------------------- | --------------------- | ----------------- | --------------- | ------------- | ------------- | --------------- | ------------------- | ----------------------------- |
@@ -127,7 +188,6 @@ We performed a Grid-Search over all available parameters for each of the classif
 | dbscan               | 0.971 ± 0.024         | 0.952 ± 0.025     | 0.972 ± 0.022   | 0.961 ± 0.024 | 0.965 ± 0.023 | 0.962 ± 0.022   | 0.967 ± 0.025       | 0.968 ± 0.026                 |
 | hierarchical         | **1.0 ± 0.0**         | **1.0 ± 0.0**     | **1.0 ± 0.0**   | **1.0 ± 0.0** | **1.0 ± 0.0** | **1.0 ± 0.001** | **1.0 ± 0.0**       | **1.0 ± 0.0**                 |
 
-
 | Clustering Algorithm | Perceptron      | Gaussian Process | Ada Boost         | Voting            | Bernoulli Naive Bayes | Bagging           | Decision Tree     |
 | -------------------- | --------------- | ---------------- | ----------------- | ----------------- | --------------------- | ----------------- | ----------------- |
 | kmeans               | *0.947 ± 0.062* | 0.955 ± 0.027    | 0.957 ± 0.032     | 0.92 ± 0.037      | 0.948 ± 0.022         | 0.941 ± 0.035     | *0.938 ± 0.036*   |
@@ -136,14 +196,16 @@ We performed a Grid-Search over all available parameters for each of the classif
 | dbscan               | 0.957 ± 0.035   | 0.96 ± 0.032     | 0.967 ± 0.028     | 0.913 ± 0.034     | 0.93 ± 0.031          | 0.93 ± 0.036      | 0.943 ± 0.022     |
 | hierarchical         | **1.0 ± 0.0**   | **1.0 ± 0.001**  | **0.999 ± 0.002** | **0.993 ± 0.014** | **0.991 ± 0.009**     | **0.983 ± 0.016** | **0.969 ± 0.035** |
 
-![](images/sim_pre_clustering_AUC.png?raw=true)
-
-Above plot shows "Area Under Curve" of various classifiers on simulated Gaussian Data before clustering where SVM seems to be performing the best followed by "Ada Boost" and "Gradient Boost" while "Bernoulli Naive Bayes" seems to be performing the worst.
-
 <img width="86%" src="results/gauss_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" /> 
 
-Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.4 to 0.6 for KMeans and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and Passive Aggressive Classifier in BGMM shows some improvement over KMeans clustering.
+The clustering combined with the beta feature generation dramatically improved the AUC scores on the simulated
+Gaussian datasets. All clustering algorithms produced AUC scores above 0.90 with standard deviations below 0.05 across
+all supervised models. The hierarchical clustering even produced perfect predictions. These results confirmed our
+suspicions that in order to accurately diagnose patients, we needed to perform clustering and reduce the number
+of features we trained our models on. These initial results using simulated data helped us tremendously when deploying
+our models on real patient data.
 
+## Simulated Visualizations
 
 <img width="98%" src="results/kmeans_fbirn/kmeans_fbirn_states.png?raw=true" /> 
 Visualization of states with KMeans clustering with Gaussian Simulated Data
@@ -184,8 +246,29 @@ Visualization of states with Hierarchical clustering with Gaussian Simulated Dat
 <img width="49%" src="results/hierarchical_gauss/hierarchical_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_gauss/hierarchical_gauss_visualization.png?raw=true" />  
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gaussian Simulated Data
 
+## FBIRN Dataset
 
-## FBIRN Dataset 
+The FBIRN dataset was trained in the exact same manner as the as the simulated Guassian dataset. First, the supervised 
+models were trained without clustering or beta feature generation. As expected, the classifiers failed to consistently
+achieve AUC scores outside of the 0.40-0.60 range suggesting that all the models produced random diagnoses.
+The baseline results are displayed below.
+
+![](images/fbirn_pre_clustering_AUC.png?raw=true)
+
+Next we trained the models on the FBIRN data after clustering and using only cluster assignments. No beta features
+were generated to reduce the dimensionality of the training dataset. The results are displayed below.
+
+<img width="86%" src="results/fbirn_assignments_accuracy.png?raw=true" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
+
+
+The results indicated that is was possible for some of the clustering algorithms to lift the AUC scores to an average
+of 0.70 for most supervised models with the exclusion the Voting learner. The one exception was DBSCAN which failed to
+move the AUC from 0.50. Regardless, none of these models achieved a high enough score to be used a clinical environment.
+It was surmised the number of features in the datasets had to be reduced from cluster assignments over time to beta
+features in order for the supervised learning models to accurately diagnose patients.
+
+After performing beta features generation with clustering, the final results for the FBIRN dataset were obtained and
+are displayed below.
 
 | Clustering Algorithm | SVM               | Multilayer Perceptron | Logistic Regression | Passive Aggressive Classifier | Perceptron        | Random Forest     | Extra Trees       |
 | -------------------- | ----------------- | --------------------- | ------------------- | ----------------------------- | ----------------- | ----------------- | ----------------- |
@@ -195,18 +278,13 @@ Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gauss
 | dbscan               | 0.883 ± 0.027     | 0.893 ± 0.031         | 0.892 ± 0.033       | 0.884 ± 0.027                 | 0.828 ± 0.064     | 0.805 ± 0.064     | 0.806 ± 0.058     |
 | hierarchical         | **0.957 ± 0.032** | **0.954 ± 0.038**     | **0.953 ± 0.038**   | **0.951 ± 0.032**             | *0.891 ± 0.098*   | *0.881 ± 0.032*   | *0.872 ± 0.048*   |
 
-
-![](images/fbirn_pre_clustering_AUC.png?raw=true)
-
-Above plot shows "Area Under Curve" of various classifiers on FBirn Data before clustering where "Random Forest" seems to be performing the best followed by "Gradient Boost" and "Multi Layer Perceptron" while "Decision Tree" and "Bernoulli Naive Bayes" seems to be performing the worst.
-
-<img width="86%" src="results/fbirn_assignments_accuracy.png?raw=true" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
-
-Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data without using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.5 to 0.7 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and "Logistic Regression" and "Passive Aggressive Classifier" in BGMM shows some improvement over KMeans clustering.
-
 <img width="86%" src="results/fbirn_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
 
-Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above with clusterer but without using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. "Random Forest" and "Extra Trees" classifier shows some improvement in GMM over KMeans and "Random Forest", "Extra Trees"  and "Perceptron" Classifier in BGMM shows some improvement over KMeans clustering.
+As expected, the reduced number of training features increased the accuracy of all the learners with Support Vector Machines
+acheiveing the highest accuracy acrocc all clustering algorithms. Only DBCAN failed to get above an average AUC score of 0.90
+for support vector machines and Hierarchical clusterting obtained this highest score of 0.957.
+
+## FBIRN Data Visualizations
 
 <img width="98%" src="results/kmeans_fbirn/kmeans_fbirn_states.png?raw=true" /> 
 Visualization of states with KMeans clustering with FBirn Data
@@ -248,8 +326,20 @@ Visualization of states with Hierarchical clustering with FBirn Data
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn Data
 
 
-
 ## UCLA Dataset
+
+The UCAL Dataset was similarly trained. Firstly, it was trained using unclustered data to establish a baseline to compare
+against. The results are displayed below and as expected the supervised mdoels failed to obtain suitable AUC scores.
+
+
+![](images/ucla_pre_clustering_AUC.png?raw=true)
+
+The below plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM),
+Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on
+Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without
+using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer.
+Almost all the classifiers in all the clusterer shows improvement over KMeans clustering.
+
 
 | Clustering Algorithm | SVM              | Multilayer Perceptron | Logistic Regression | Passive Aggressive Classifier | Perceptron        | Extra Trees       | Random Forest     |
 | -------------------- | ---------------- | --------------------- | ------------------- | ----------------------------- | ----------------- | ----------------- | ----------------- |
@@ -259,17 +349,9 @@ Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn
 | dbscan               | 0.409 ± 0.118    | 0.467 ± 0.131         | 0.69 ± 0.096        | 0.667 ± 0.122                 | 0.5 ± 0.0         | 0.643 ± 0.171     | 0.649 ± 0.125     |
 | hierarchical         | *0.886 ± 0.054*  | *0.889 ± 0.07*        | *0.9 ± 0.069*       | *0.883 ± 0.071*               | *0.826 ± 0.122*   | **0.829 ± 0.099** | **0.792 ± 0.114** |
 
-
-![](images/ucla_pre_clustering_AUC.png?raw=true)
-
-Above plot shows "Area Under Curve" of various classifiers on UCLA Data before clustering where SVM seems to be performing the best followed by "Multilayer Perceptron" and "Gradient Boost" while "Gaussian Process" and "Decision Tree" seems to be performing the worst.
-
 <img width="86%" src="results/ucla_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
 
-
-Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. Almost all the classifiers in all the clusterer shows improvement over KMeans clustering.
-
-
+## UCLA Data Visualisations
 
 <img width="98%" src="results/kmeans_ucla/kmeans_ucla_states.png?raw=true" /> 
 Visualization of states with KMeans clustering with UCLA Data
@@ -309,43 +391,6 @@ Visualization of states with Hierarchical clustering with UCLA Data
 
 <img width="49%" src="results/hierarchical_ucla/hierarchical_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_ucla/hierarchical_ucla_visualization.png?raw=true" />  
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with UCLA Data
-
-
-
-### Initial UCLA Significant Comparisons
-
-In order to evaluate the predictive capacities of the features produced by each clustering algorithm,
-two-tailed t-test were performed to measure the statistical difference between the healthy control and the
-schizophrenic patients.
-
-The first t-test comparision was performed using the distribution of cluster assignments for each patient across
-the time domain. For each time window, the average cluster assignment for all the healthy control patients was
-compared to the average cluster assignment for all the schizophrenic patients. The corresponding p-values were then
-tested at a significance level of 0.10.
-
-The results displayed below highlight the points in time when there were less that a 10% chance that the observed
-difference in a healthy control's cluster assignment and a schizophrenic's cluster assignment was due to normal
-random variation. In theory, the more points of significance across time, the more likely a trained mode would be
-able to correctly diagnose a subject. The results indicated that both k-means and gaussian mixture models failed to
-produce statistically different cluster assignments over time. The Bayesian produced a few significant differences while
-the hierarchical clustering algorithm was significant at every point in time. These results initially suggested that the
-hierarchical clustering algorithm should outperform all the other clustering algorithms, but the subsequent results from
-the trained supervised models refuted this hypothesis.
-
-![](images/assignment_t_test_visualization.png?raw=true)
-
-Given the lack of improvement in accuracy across all clustering algorithms, it was believed that training supervised
-models using cluster assignment over time as input features was impracticable and would require much more data for
-successful training. For each subject, there would be 130 time slots or features. To reduce the dimensionality of
-the while maintaining relevant information, the beta coefficients were used in lieu of the time windows. The results
-are displayed below.
-
-![](images/beta_t_test_visualization.png?raw=true)
-
-Each clustering algorithm found statistically different beta coefficients. The reduced feature space
-(10 features for 267 patients for the UCLA data set) facilitated the correct classification of healthy and
-schizophrenic patients across all clustering algorithms for all of the supervised learning algorithms.
-
 
 # Section V: Conclusion
 
