@@ -244,7 +244,7 @@ Visualization of clusters with DBSCAN clustering in 2-d and 3-d with FBirn Data
 Visualization of states with Hierarchical clustering with FBirn Data
 
 
-<img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_fbirn_gauss/hierarchical_fbirn_visualization.png?raw=true" />  
+<img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization.png?raw=true" />  
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn Data
 
 
