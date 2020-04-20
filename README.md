@@ -37,17 +37,10 @@ The addition of noise, and the fact that windows are created with a size $W$ at 
 
 For example the following connectivity matrices were computed from randomly selected subjects from each class, for each state:
 
-<img width="19%" src="data/examples/gauss/class0_state0.png?raw=True" />
-<img width="19%" src="data/examples/gauss/class0_state1.png?raw=True" />
-<img width="19%" src="data/examples/gauss/class0_state2.png?raw=True" />
-<img width="19%" src="data/examples/gauss/class0_state3.png?raw=True" />
-<img width="19%" src="data/examples/gauss/class0_state4.png?raw=True" />
-<img width="19%" src="data/examples/gauss/class1_state0.png?raw=True" />
-<img width="19%" src="data/examples/gauss/class1_state1.png?raw=True" />
-<img width="19%" src="data/examples/gauss/class1_state2.png?raw=True" />
-<img width="19%" src="data/examples/gauss/class1_state3.png?raw=True" />
-<img width="19%" src="data/examples/gauss/class1_state4.png?raw=True" />
-
+| Class |                                  State 0                                  |                                  State 1                                  |                                  State 2                                  |                                  State 3                                  |                                  State 4                                  |
+| :---: | :-----------------------------------------------------------------------: | :-----------------------------------------------------------------------: | :-----------------------------------------------------------------------: | :-----------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
+|   0   | <img width="100%" src="data/examples/gauss/class0_state0.png?raw=True" /> | <img width="100%" src="data/examples/gauss/class0_state1.png?raw=True" /> | <img width="100%" src="data/examples/gauss/class0_state2.png?raw=True" /> | <img width="100%" src="data/examples/gauss/class0_state3.png?raw=True" /> | <img width="100%" src="data/examples/gauss/class0_state4.png?raw=True" /> |
+|   1   | <img width="100%" src="data/examples/gauss/class1_state0.png?raw=True" /> | <img width="100%" src="data/examples/gauss/class1_state1.png?raw=True" /> | <img width="100%" src="data/examples/gauss/class1_state2.png?raw=True" /> | <img width="100%" src="data/examples/gauss/class1_state3.png?raw=True" /> | <img width="100%" src="data/examples/gauss/class1_state4.png?raw=True" /> |
 
 For our simulation we generate $C=2$ classes, $K=5$ states, for $N=300$ subjects with $M=50$ source signals. The parameters $Q$ were set at 0.5 for each class and each state, so that transitioning out of states was equally likely for all classes and states. Baseline noise was set at $\sigma_c= 1\times 10^{-2}$ for each class, and the $sigma_k$ for all source signals was set at $sigma_k = 1\times 10^{-1}$.
 
@@ -73,7 +66,9 @@ We also use derivatives from the UCLA Consortium for Neuropsychiatric Phenomics 
 
 <img width="100%" src="results/dfnc_pipeline(1).png?raw=True" />
 
-## Functional MRI Preprocessing
+## Preprocessing
+
+As is standard in Dynamic Functional Network Connectivity, Group Independent Component Analysis of subject images is used to compute a set of $M$ statistically independent spatial maps from the data, along with a set of $M$ time-courses, which are used for the dFNC analysis. For the Fbirn data, we used pre-computed ICA timecourses provided by Damaraju et al. 2014. These timecourses were computed using Infomax ICA [] with 100 components, which were then manually selected based on biological relevance for a total of 47 remaining components. For the UCLA data, because no ICA derivatives were readily available, we used Group Information Guided ICA [] which is included as part of the GIFT NeuroImaging Analysis Toolbox []. As a template for GIG-ICA, we used the NeuroMark template [], which has been shown to provide reliable estimations of components in many different settings. This provides us with 53 independent components for Uhe UCLA data.
 
 ### Sliding Window Analysis
 
@@ -106,6 +101,10 @@ For K-Means, GMM, bGMM, and Agglomerative clustering, we measured the elbow crit
 | <img width="100%" src="results/hierarchical_gauss_betas/hierarchical_gauss_elbow.png?raw=True" /> | <img width="100%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_elbow.png?raw=True" /> | <img width="100%" src="results/hierarchical_ucla_betas/hierarchical_ucla_elbow.png?raw=True" /> |
 
 ## Classification Details
+
+### Feature Generation
+
+As features for generation, we follow the precedent in [], and compute means of clusters for each class, and use these centers to form a regression matrix of size $2k \times (T-W)$. For each subject, we then regress out these cluster centers from each FNC window, and collect the beta coefficients. The mean of the $\beta$-coefficients over all timepoints are then used as features for the final classification.
 
 ### Evaluation Metric
 
