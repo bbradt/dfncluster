@@ -13,6 +13,20 @@ Section II describes the fMRI data used in our experimentation, while Section II
 
 # Section II: Data
 
+All datasets used in this project are derivatives of fMRI data (functional magnetic resonance imaging), which is data measuring brain activity to track a patient's thought processs over a predefined time period.
+
+### Gaussian Simulated Dataset 
+
+We derive our own synthetic dataset in order to test out our clusterers and classifiers on a simulated dataset for sanity checking their implementation. This Gaussian Simulated dataset follows .... (need more info here -> how should we write about this one?)
+
+### FBIRN Dataset 
+
+We use derivatives from the Phase 3 Dataset of FBIRN (Functional Biomedical Infromatics Research Network Data Repository), which specifically focuses on brain activity maps from patients with schizophrenia. This dataset includes 186 healthy controls and 176 indivduals from schizophrenia from around the United States. Subject participants in this dataset are between the ages of 18-62. 
+
+### UCLA Dataset
+
+We also use derivatives from the UCLA Consortium for Neuropsychiatric Phenomics archives, which includes neuroimages for roughly 272 participants. The subject population consists of roughly 272 healthy controls, as well as participants with a diagnosis of schizophrenia (50 subjects). Subject participants in this dataset range from 21 to 50 years 
+
 # Section III: Methods
 
 # Section IV: Results
