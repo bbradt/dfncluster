@@ -38,17 +38,17 @@ Formally a single subjects signal within a window of size <img src="https://rend
 
 <img src="https://render.githubusercontent.com/render/math?math=X_i = \mathcal{N}(\theta_{c}) +  \mathcal{N}(\theta_{k})">
 
-where $\theta_{c}$ and $\theta_{k}$ are the parameters for the baseline class signal for class $c$ and the source signal for state $k$ respectively. Because all source signals for state $k$ will have the same distribution, their 
+where <img src="https://render.githubusercontent.com/render/math?math=\theta_{c}"> and <img src="https://render.githubusercontent.com/render/math?math=\theta_{k}"> are the parameters for the baseline class signal for class <img src="https://render.githubusercontent.com/render/math?math=c"> and the source signal for state <img src="https://render.githubusercontent.com/render/math?math=k"> respectively. Because all source signals for state <img src="https://render.githubusercontent.com/render/math?math=k"> will have the same distribution, their 
 correlation will be high, providing the same block-matrix correlation for the dFNC analysis.
 
-The probability for entering from state $k$ into a new state $k'$ at a timepoint $T$, given that the last transition occured $W$ time-points ago, is given as the joint probability of the prior distribution for the class ever 
-entering into state $k'$, as well as the probability of transitioning out of state $k$.
+The probability for entering from state <img src="https://render.githubusercontent.com/render/math?math=k"> into a new state <img src="https://render.githubusercontent.com/render/math?math=k'"> at a timepoint <img src="https://render.githubusercontent.com/render/math?math=T">, given that the last transition occured <img src="https://render.githubusercontent.com/render/math?math=W"> time-points ago, is given as the joint probability of the prior distribution for the class ever 
+entering into state <img src="https://render.githubusercontent.com/render/math?math=k'"> $k'$, as well as the probability of transitioning out of state <img src="https://render.githubusercontent.com/render/math?math=k">.
 i.e.
-$$
-Z_{c, k, k'}(P_{c,k'}, Q_{c,k})
-$$
 
-The addition of noise, and the fact that windows are created with a size $W$ at each timepoint means that there is a high chance for bleed-over between the actual states detected for an individual subject.
+<img src="https://render.githubusercontent.com/render/math?math=Z_{c, k, k'}(P_{c,k'}, Q_{c,k})">
+
+
+The addition of noise, and the fact that windows are created with a size <img src="https://render.githubusercontent.com/render/math?math=W"> at each timepoint means that there is a high chance for bleed-over between the actual states detected for an individual subject.
 
 For example the following connectivity matrices were computed from randomly selected subjects from each class, for each state:
 
@@ -64,10 +64,10 @@ For example the following connectivity matrices were computed from randomly sele
 <img width="19%" src="data/examples/gauss/class1_state4.png?raw=True" />
 
 
-For our simulation we generate $C=2$ classes, $K=5$ states, for $N=300$ subjects with $M=50$ source signals. The parameters $Q$ were set at 0.5 for each class and each state, so that transitioning out of states was equally likely 
-for all classes and states. Baseline noise was set at $\sigma_c= 1\times 10^{-2}$ for each class, and the $sigma_k$ for all source signals was set at $sigma_k = 1\times 10^{-1}$.
+For our simulation we generate <img src="https://render.githubusercontent.com/render/math?math=C %3D 2"> classes, <img src="https://render.githubusercontent.com/render/math?math=K %3D 5"> states, for <img src="https://render.githubusercontent.com/render/math?math=N %3D 300">  subjects with<img src="https://render.githubusercontent.com/render/math?math=M %3D 50"> source signals. The parameters <img src="https://render.githubusercontent.com/render/math?math=Q"> were set at 0.5 for each class and each state, so that transitioning out of states was equally likely 
+for all classes and states. Baseline noise was set at <img src="https://render.githubusercontent.com/render/math?math=\sigma_c %3D 1\times 10^{-2}"> for each class, and the <img src="https://render.githubusercontent.com/render/math?math=sigma_k"> for all source signals was set at <img src="https://render.githubusercontent.com/render/math?math=\sigma_c %3D 1\times 10^{-2}"> <img src="https://render.githubusercontent.com/render/math?math=sigma_k %3D 1\times 10^{-1}">.
 
-The parameters for $P$ for each class were selected as:
+The parameters for <img src="https://render.githubusercontent.com/render/math?math=P"> $P$ for each class were selected as:
 
 | Class Parameter | State 0 | State 1 | State 2 | State 3 | State 4 |
 | --------------- | ------- | ------- | ------- | ------- | ------- |
