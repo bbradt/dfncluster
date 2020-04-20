@@ -207,43 +207,43 @@ our models on real patient data.
 
 ## Simulated Visualizations
 
-<img width="98%" src="results/kmeans_fbirn/kmeans_fbirn_states.png?raw=true" /> 
+<img width="98%" src="results/kmeans_fbirn_betas/kmeans_fbirn_states.png?raw=true" /> 
 Visualization of states with KMeans clustering with Gaussian Simulated Data
 
 
-<img width="49%" src="results/kmeans_gauss/kmeans_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_gauss/kmeans_gauss_visualization.png?raw=true" />  
+<img width="49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization.png?raw=true" />  
 Visualization of clusters with KMeans clustering in 2-d and 3-d with Gaussian Simulated Data
 
 
-<img width="98%" src="results/gmm_gauss/gmm_gauss_states.png?raw=true" /> 
+<img width="98%" src="results/gmm_gauss_betas/gmm_gauss_states.png?raw=true" /> 
 Visualization of states with GMM clustering with Gaussian Simulated Data
 
 
-<img width="49%" src="results/gmm_gauss/gmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_gauss/gmm_gauss_visualization.png?raw=true" />  
+<img width="49%" src="results/gmm_gauss_betas/gmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_gauss_betas/gmm_gauss_visualization.png?raw=true" />  
 Visualization of clusters with GMM clustering in 2-d and 3-d with Gaussian Simulated Data
 
 
-<img width="98%" src="results/bgmm_gauss/bgmm_gauss_states.png?raw=true" /> 
+<img width="98%" src="results/bgmm_gauss_betas/bgmm_gauss_states.png?raw=true" /> 
 Visualization of states with BGMM clustering with Gaussian Simulated Data
 
 
-<img width="49%" src="results/bgmm_gauss/bgmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_gauss/bgmm_gauss_visualization.png?raw=true" />  
+<img width="49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization.png?raw=true" />  
 Visualization of clusters with BGMM clustering in 2-d and 3-d with Gaussian Simulated Data
 
 
-<img width="98%" src="results/dbscan_gauss/dbscan_gauss_states.png?raw=true" /> 
+<img width="98%" src="results/dbscan_gauss_betas/dbscan_gauss_states.png?raw=true" /> 
 Visualization of states with DBSCAN clustering with Gaussian Simulated Data
 
 
-<img width="49%" src="results/dbscan_gauss/dbscan_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_gauss/dbscan_gauss_visualization.png?raw=true" />  
+<img width="49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization.png?raw=true" />  
 Visualization of clusters with DBSCAN clustering in 2-d and 3-d with Gaussian Simulated Data
 
 
-<img width="98%" src="results/hierarchical_gauss/hierarchical_gauss_states.png?raw=true" /> 
+<img width="98%" src="results/hierarchical_gauss_betas/hierarchical_gauss_states.png?raw=true" /> 
 Visualization of states with Hierarchical clustering with Gaussian Simulated Data
 
 
-<img width="49%" src="results/hierarchical_gauss/hierarchical_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_gauss/hierarchical_gauss_visualization.png?raw=true" />  
+<img width="49%" src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization.png?raw=true" />  
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gaussian Simulated Data
 
 ## FBIRN Dataset
@@ -286,43 +286,43 @@ for support vector machines and Hierarchical clusterting obtained this highest s
 
 ## FBIRN Data Visualizations
 
-<img width="98%" src="results/kmeans_fbirn/kmeans_fbirn_states.png?raw=true" /> 
+<img width="98%" src="results/kmeans_fbirn_betas/kmeans_fbirn_states.png?raw=true" /> 
 Visualization of states with KMeans clustering with FBirn Data
 
 
-<img width="49%" src="results/kmeans_fbirn/kmeans_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_fbirn/kmeans_fbirn_visualization.png?raw=true" />  
+<img width="49%" src="results/kmeans_fbirn_betas/kmeans_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_fbirn_betas/kmeans_fbirn_visualization.png?raw=true" />  
 Visualization of clusters with KMeans clustering in 2-d and 3-d with FBirn Data
 
 
-<img width="98%" src="results/gmm_fbirn/gmm_fbirn_states.png?raw=true" /> 
+<img width="98%" src="results/gmm_fbirn_betas/gmm_fbirn_states.png?raw=true" /> 
 Visualization of states with GMM clustering with FBirn Data
 
 
-<img width="49%" src="results/gmm_fbirn/gmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_fbirn/gmm_fbirn_visualization.png?raw=true" />  
+<img width="49%" src="results/gmm_fbirn_betas/gmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_fbirn_betas/gmm_fbirn_visualization.png?raw=true" />  
 Visualization of clusters with GMM clustering in 2-d and 3-d with FBirn Data
 
 
-<img width="98%" src="results/bgmm_fbirn/bgmm_fbirn_states.png?raw=true" /> 
+<img width="98%" src="results/bgmm_fbirn_betas/bgmm_fbirn_states.png?raw=true" /> 
 Visualization of states with BGMM clustering with FBirn Data
 
 
-<img width="49%" src="results/bgmm_fbirn/bgmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_fbirn/bgmm_fbirn_visualization.png?raw=true" />  
+<img width="49%" src="results/bgmm_fbirn_betas/bgmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_fbirn_betas/bgmm_fbirn_visualization.png?raw=true" />  
 Visualization of clusters with BGMM clustering in 2-d and 3-d with FBirn Data
 
 
-<img width="98%" src="results/dbscan_fbirn/dbscan_fbirn_states.png?raw=true" /> 
+<img width="98%" src="results/dbscan_fbirn_betas/dbscan_fbirn_states.png?raw=true" /> 
 Visualization of states with DBSCAN clustering with FBirn Data
 
 
-<img width="49%" src="results/dbscan_fbirn/dbscan_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_fbirn/dbscan_fbirn_visualization.png?raw=true" />  
+<img width="49%" src="results/dbscan_fbirn_betas/dbscan_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_fbirn_betas/dbscan_fbirn_visualization.png?raw=true" />  
 Visualization of clusters with DBSCAN clustering in 2-d and 3-d with FBirn Data
 
 
-<img width="98%" src="results/hierarchical_fbirn/hierarchical_fbirn_states.png?raw=true" /> 
+<img width="98%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_states.png?raw=true" /> 
 Visualization of states with Hierarchical clustering with FBirn Data
 
 
-<img width="49%" src="results/hierarchical_fbirn/hierarchical_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_fbirn/hierarchical_fbirn_visualization.png?raw=true" />  
+<img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization.png?raw=true" />  
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn Data
 
 
@@ -353,43 +353,43 @@ Almost all the classifiers in all the clusterer shows improvement over KMeans cl
 
 ## UCLA Data Visualisations
 
-<img width="98%" src="results/kmeans_ucla/kmeans_ucla_states.png?raw=true" /> 
+<img width="98%" src="results/kmeans_ucla_betas/kmeans_ucla_states.png?raw=true" /> 
 Visualization of states with KMeans clustering with UCLA Data
 
 
-<img width="49%" src="results/kmeans_ucla/kmeans_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_ucla/kmeans_ucla_visualization.png?raw=true" />  
+<img width="49%" src="results/kmeans_ucla_betas/kmeans_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_ucla_betas/kmeans_ucla_visualization.png?raw=true" />  
 Visualization of clusters with KMeans clustering in 2-d and 3-d with UCLA Data
 
 
-<img width="98%" src="results/gmm_ucla/gmm_ucla_states.png?raw=true" /> 
+<img width="98%" src="results/gmm_ucla_betas/gmm_ucla_states.png?raw=true" /> 
 Visualization of states with GMM clustering with UCLA Data
 
 
-<img width="49%" src="results/gmm_ucla/gmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_ucla/gmm_ucla_visualization.png?raw=true" />  
+<img width="49%" src="results/gmm_ucla_betas/gmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_ucla_betas/gmm_ucla_visualization.png?raw=true" />  
 Visualization of clusters with GMM clustering in 2-d and 3-d with UCLA Data
 
 
-<img width="98%" src="results/bgmm_ucla/bgmm_ucla_states.png?raw=true" /> 
+<img width="98%" src="results/bgmm_ucla_betas/bgmm_ucla_states.png?raw=true" /> 
 Visualization of states with BGMM clustering with UCLA Data
 
 
-<img width="49%" src="results/bgmm_ucla/bgmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_ucla/bgmm_ucla_visualization.png?raw=true" />  
+<img width="49%" src="results/bgmm_ucla_betas/bgmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_ucla_betas/bgmm_ucla_visualization.png?raw=true" />  
 Visualization of clusters with BGMM clustering in 2-d and 3-d with UCLA Data
 
 
-<img width="98%" src="results/dbscan_ucla/dbscan_ucla_states.png?raw=true" /> 
+<img width="98%" src="results/dbscan_ucla_betas/dbscan_ucla_states.png?raw=true" /> 
 Visualization of states with DBSCAN clustering with UCLA Data
 
 
-<img width="49%" src="results/dbscan_ucla/dbscan_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_ucla/dbscan_ucla_visualization.png?raw=true" />  
+<img width="49%" src="results/dbscan_ucla_betas/dbscan_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_ucla_betas/dbscan_ucla_visualization.png?raw=true" />  
 Visualization of clusters with DBSCAN clustering in 2-d and 3-d with UCLA Data
 
 
-<img width="98%" src="results/hierarchical_ucla/hierarchical_ucla_states.png?raw=true" /> 
+<img width="98%" src="results/hierarchical_ucla_betas/hierarchical_ucla_states.png?raw=true" /> 
 Visualization of states with Hierarchical clustering with UCLA Data
 
 
-<img width="49%" src="results/hierarchical_ucla/hierarchical_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_ucla/hierarchical_ucla_visualization.png?raw=true" />  
+<img width="49%" src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization.png?raw=true" />  
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with UCLA Data
 
 # Section V: Conclusion
