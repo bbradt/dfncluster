@@ -1,5 +1,7 @@
 # Introduction
-
+$$
+x^2
+$$
 Although psychological and behavioral manifestations of schizophrenia are well-studied, neuroscientists have
 yet to determine a set of corresponding neurological biomarkers. One
 fMRI analysis technique, called dynamic functional network connectivity  (dFNC) [1], uses K-Means clustering
