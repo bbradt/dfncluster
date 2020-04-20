@@ -42,7 +42,7 @@ where <img src="https://render.githubusercontent.com/render/math?math=\theta_{c}
 correlation will be high, providing the same block-matrix correlation for the dFNC analysis.
 
 The probability for entering from state <img src="https://render.githubusercontent.com/render/math?math=k"> into a new state <img src="https://render.githubusercontent.com/render/math?math=k'"> at a timepoint <img src="https://render.githubusercontent.com/render/math?math=T">, given that the last transition occured <img src="https://render.githubusercontent.com/render/math?math=W"> time-points ago, is given as the joint probability of the prior distribution for the class ever 
-entering into state <img src="https://render.githubusercontent.com/render/math?math=k'"> $k'$, as well as the probability of transitioning out of state <img src="https://render.githubusercontent.com/render/math?math=k">.
+entering into state <img src="https://render.githubusercontent.com/render/math?math=k'">, as well as the probability of transitioning out of state <img src="https://render.githubusercontent.com/render/math?math=k">.
 i.e.
 
 <img src="https://render.githubusercontent.com/render/math?math=Z_{c, k, k'}(P_{c,k'}, Q_{c,k})">
