@@ -156,11 +156,16 @@ for support vector machines and Hierarchical clusterting obtained this highest s
 
 ## UCLA Dataset
 
+The UCAL Dataset was similarly trained. Firstly, it was trained using unclustered data to establish a baseline to compare
+against. The results are displayed below and as expected the supervised mdoels failed to obtain suitable AUC scores.
+
 ![](images/ucla_pre_clustering_AUC.png?raw=true)
 
-Above plot shows "Area Under Curve" of various classifiers on UCLA Data before clustering where SVM seems to be performing the best followed by
-"Multilayer Perceptron" and "Gradient Boost" while "Gaussian Process" and "Decision Tree" seems to be performing the worst.
-
+The below plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM),
+Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on
+Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without
+using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer.
+Almost all the classifiers in all the clusterer shows improvement over KMeans clustering.
 
 | Clustering Algorithm | SVM              | Multilayer Perceptron | Logistic Regression | Passive Aggressive Classifier | Perceptron        | Extra Trees       | Random Forest     |
 | -------------------- | ---------------- | --------------------- | ------------------- | ----------------------------- | ----------------- | ----------------- | ----------------- |
@@ -172,12 +177,6 @@ Above plot shows "Area Under Curve" of various classifiers on UCLA Data before c
 
 <img width="79%" src="results/ucla_betas_accuracy.png?raw=True" />
 <img width="20%" src="results/accuracy_legend.png?raw=true" />
-
-Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM),
-Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on
-Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without
-using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer.
-Almost all the classifiers in all the clusterer shows improvement over KMeans clustering.
 
 # Section V: Conclusion
 
