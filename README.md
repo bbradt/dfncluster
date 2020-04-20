@@ -48,11 +48,13 @@ We also use derivatives from the UCLA Consortium for Neuropsychiatric Phenomics 
 
 ![](images/sim_pre_clustering_AUC.png?raw=true)
 
+Above plot shows "Area Under Curve" of various classifiers on simulated Gaussian Data before clustering where SVM seems to be performing the best followed by "Ada Boost" and "Gradient Boost" while "Bernoulli Naive Bayes" seems to be performing the worst.
 
 <img width="79%" src="results/gauss_betas_accuracy.png?raw=True" />
 
-
 <img width="20%" src="results/accuracy_legend.png?raw=true" />
+
+Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.4 to 0.6 for KMeans and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and Passive Aggressive Classifier in BGMM shows some improvement over KMeans clustering.
 
 ## FBIRN Dataset 
 
@@ -67,12 +69,19 @@ We also use derivatives from the UCLA Consortium for Neuropsychiatric Phenomics 
 
 ![](images/fbirn_pre_clustering_AUC.png?raw=true)
 
+Above plot shows "Area Under Curve" of various classifiers on FBirn Data before clustering where "Random Forest" seems to be performing the best followed by "Gradient Boost" and "Multi Layer Perceptron" while "Decision Tree" and "Bernoulli Naive Bayes" seems to be performing the worst.
 
-<img width="79%" src="results/fbirn_betas_accuracy.png?raw=True" />
-
+![](results/fbirn_assignments_accuracy.png?raw=true)
 
 <img width="20%" src="results/accuracy_legend.png?raw=true" />
 
+Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data without using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.5 to 0.7 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and "Logistic Regression" and "Passive Aggressive Classifier" in BGMM shows some improvement over KMeans clustering.
+
+<img width="79%" src="results/fbirn_betas_accuracy.png?raw=True" />
+
+<img width="20%" src="results/accuracy_legend.png?raw=true" />
+
+Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above with clusterer but without using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. "Random Forest" and "Extra Trees" classifier shows some improvement in GMM over KMeans and "Random Forest", "Extra Trees"  and "Perceptron" Classifier in BGMM shows some improvement over KMeans clustering.
 
 ## UCLA Dataset
 
@@ -87,12 +96,13 @@ We also use derivatives from the UCLA Consortium for Neuropsychiatric Phenomics 
 
 ![](images/ucla_pre_clustering_AUC.png?raw=true)
 
+Above plot shows "Area Under Curve" of various classifiers on UCLA Data before clustering where SVM seems to be performing the best followed by "Multilayer Perceptron" and "Gradient Boost" while "Gaussian Process" and "Decision Tree" seems to be performing the worst.
 
 <img width="79%" src="results/ucla_betas_accuracy.png?raw=True" />
 
-
 <img width="20%" src="results/accuracy_legend.png?raw=true" />
 
+Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.7 to 0.9 for KMeans with "Multi Layer Perceptron" and likewise for other clusterer. Almost all the classifiers in all the clusterer shows improvement over KMeans clustering.
 
 ### Initial UCLA Significant Comparisons
 
