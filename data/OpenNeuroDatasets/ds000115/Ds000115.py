@@ -6,7 +6,12 @@ class Ds000115:
     @staticmethod
     def make():
         dataset = OpenNeuroDataset("ds000115",
-                                   directory='data/OpenNeuroDatasets/ds000115')
+                                   directory='data/OpenNeuroDatasets/ds000115',
+                                   modalities=['func'],
+                                   series='*task-*.nii.gz',
+                                   feature_columns=['task-letter0backtask_bold'],
+                                   label_columns=['condit']
+                                   )
         return dataset
 
 

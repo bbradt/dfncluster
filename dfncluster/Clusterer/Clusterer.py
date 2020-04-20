@@ -18,8 +18,12 @@
 """
 
 import sklearn.metrics as skm
+import sklearn.model_selection as skms
 import numpy as np
 import abc
+from yellowbrick.cluster import KElbowVisualizer
+import matplotlib.pyplot as plt
+
 
 def paired_wrapper(metric, agg=np.sum):
     """Wrap paired metrics with a numpy aggregation function
@@ -30,9 +34,10 @@ def paired_wrapper(metric, agg=np.sum):
         Returns:
             function handle for the newly wrapped function
     """
-    def wrapped(X,Y):
-        return agg(metric(X,Y))
+    def wrapped(X, Y):
+        return agg(metric(X, Y))
     return wrapped
+
 
 LABEL_METRICS = dict(
     calinksi_harabaz=skm.calinski_harabaz_score,
@@ -51,8 +56,9 @@ CENTROID_METRICS = dict(
     max_city=paired_wrapper(skm.pairwise.paired_manhattan_distances, np.max),
 )
 
+
 class Clusterer:
-    def __init__(self, metrics=[], X=[], Y=[], centroids=None, **kwargs):
+    def __init__(self, metrics=[], X=[], Y=[], centroids=None, initialization={}, param_grid=None, **kwargs):
         """
             metrics - list<str> - list of metrics to use for evaluation
             X - ndarray<float> - NxD features array
@@ -68,8 +74,20 @@ class Clusterer:
         self.X = X
         self.Y = Y
         self.params = kwargs
-        self.params['metrics'] = metrics        
-    
+        self.params['metrics'] = metrics
+        self.param_grid = param_grid
+        self.best_cv = None
+
+    @staticmethod
+    @abc.abstractmethod
+    def default_params():
+        """
+            Abstact run time parameter generation method. Helps
+            encapsulates clustering algorithm withing each clustering
+            class to ease integration testing.
+        """
+        pass
+
     @abc.abstractmethod
     def fit(self):
         """
@@ -79,7 +97,26 @@ class Clusterer:
         """
         self.centroids = []
         self.assignments = []
-    
+
+    @staticmethod
+    def silhouette_score(estimator, X, labels_true):
+        labels = estimator.fit_predict(X)
+        try:
+            score = skm.silhouette_score(X, labels, metric='euclidean')
+            # score = sklearn.metrics.calinski_harabasz_score(X, labels)
+        except ValueError:
+            score = -1
+        return score
+
+    def fit_grid(self):
+        if self.param_grid is not None:
+            clf = skms.GridSearchCV(self.model, self.param_grid, scoring=Clusterer.silhouette_score, n_jobs=32)
+            clf.fit(self.X, self.Y)
+            self.best_cv = clf
+            return clf.best_estimator_
+        else:
+            return self.model
+
     def evaluate(self):
         """
             Run evaluation metrics and save in self.results
@@ -96,7 +133,7 @@ class Clusterer:
                 results[metric] = LABEL_METRICS[metric](self.X, self.assignments)
         self.results = results
         return results
-    
+
     def save(self, filename):
         """
             Save the clusterer, serializing centroids and assignments.
@@ -111,4 +148,5 @@ class Clusterer:
         package['assignments'] = self.assignments
         package['results'] = self.results
         package['model'] = self.model.__name__
+        package['best'] = self.best_cv
         np.save(filename, package, allow_pickle=True)

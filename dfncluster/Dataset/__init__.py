@@ -2,6 +2,7 @@ from .Dataset import Dataset
 from .CsvDataset import CsvDataset
 from .FileFeatureDataset import FileFeatureDataset
 from .GaussianDataset import GaussianDataset
+from .GaussianConnectivityDataset import GaussianConnectivityDataset
 from .NiftiDataset import NiftiDataset
 from .OpenNeuroDataset import OpenNeuroDataset
 from .MatDataset import MatDataset
@@ -17,5 +18,6 @@ __all__ = [
     "NiftiDataset",
     "FileFeatureDataset",
     "OpenNeuroDataset",
-    "SklearnDataset"
+    "SklearnDataset",
+    "GaussianConnectivityDataset"
 ]
