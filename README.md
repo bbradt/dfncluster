@@ -94,7 +94,9 @@ and Bernoulli Naive Bayes surprisingly scored below 0.40 suggesting that they co
 This result was attributed to being due to random error, and was disregarded.
 
 After establishing the baseline AUC scores, we performed clustering and beta feature generation for the simulated
-Gaussian datasets. Using these reduced datasets we, trained across the same classifiers to generate the results below.
+Gaussian datasets. Using these clustered and reduced datasets, we trained across the same classifiers to for each
+clustering algorithm (K-Means, Gaussian Mixture Model, Bayesian Gaussian Mixture Model, DBSCAN, and Hierarchical)
+to generate the results below.
 
 
 | Clustering Algorithm | Multilayer Perceptron | Nearest Neighbors | SVM             | Random Forest | Extra Trees   | Gradient Boost  | Logistic Regression | Passive Aggressive Classifier | Perceptron      | Gaussian Process | Ada Boost         | Voting            | Bernoulli Naive Bayes | Bagging           | Decision Tree     |
@@ -109,13 +111,12 @@ Gaussian datasets. Using these reduced datasets we, trained across the same clas
 
 <img width="20%" src="results/accuracy_legend.png?raw=true" />
 
-Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM),
-Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and
-Hierarchical clustering methods on Simulated Gaussian Data using beta features. 
-Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature
-say for example from 0.4 to 0.6 for KMeans and likewise for other clusterer. Multilayer percepteon classifier shows
-some improvement in GMM over KMeans and Passive Aggressive Classifier in BGMM shows some improvement over KMeans
-clustering.
+The clustering combined with the beta feature generation dramatically improved the AUC scores on the simulated
+Gaussian datasets. All clustering algorithms produced AUC scores above 0.90 with standard deviations below 0.05 across
+all supervised models. The hierarchical clustering even produced perfect predictions. These results confirmed our
+suspicions that in order to accurately diagnose patients, we needed to perform bother clustering and reduce the number
+of features we trained our models on. These initial results using simulated data helped us tremendously when deploying
+out models on real patient data.
 
 ## FBIRN Dataset 
 
