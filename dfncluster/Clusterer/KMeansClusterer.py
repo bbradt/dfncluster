@@ -47,16 +47,29 @@ class KMeansClusterer(Clusterer):
 
     def evaluate_k(self, ks, filename):
         distortions = []
+        silhouettes = []
         for k in ks:
             print("Evaluating KMeans with %d clusters" % k)
             clf = skc.KMeans(n_clusters=k, random_state=0, n_jobs=32)
             clf.fit(self.X, self.Y)
             distortions.append(sum(np.min(cdist(self.X, clf.cluster_centers_, 
                                 'correlation'),axis=1)) / self.X.shape[0]) 
+            silhouettes.append(silhouette_score(self.X, clf.predict(self.X)))
         sb.set()
         fig, ax = plt.subplots()
         ax.plot(ks, distortions)
+        ax.set_title('Elbow Criterion - KMeans')
+        ax.set_ylabel('Correlation Distortion')
+        ax.set_xlabel('Number of Components')
+        
+
+        ax2 = ax.twinx()
+        ax2.plot(ks, silhouettes, color='r')
+        ax2.set_ylabel('Silhouette Score')
+        ax.tick_params(axis='y', labelcolor='blue')
+        ax2.tick_params(axis='y', labelcolor='red')
         plt.savefig(filename, bbox_inches="tight")
+        print('saving in %s' % filename)
         plt.close()
 
 

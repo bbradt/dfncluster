@@ -1,8 +1,10 @@
 import numpy as np
 import sklearn.mixture as skm
+import sklearn.metrics as skmet
 from dfncluster.Clusterer import Clusterer
 import seaborn as sb
 import matplotlib.pyplot as plt
+from scipy.spatial.distance import cdist
 
 ALLOWED_KWARGS = [
     'n_components',
@@ -43,15 +45,28 @@ class BayesianGMMClusterer(Clusterer):
 
     def evaluate_k(self, ks, filename):
         distortions = []
+        silhouettes = []
         for k in ks:
             print("Evaluating KMeans with %d clusters" % k)
             clf = skm.BayesianGaussianMixture(n_components=k, random_state=0)
             clf.fit(self.X, self.Y)
-            distortions.append(clf.score(self.X))
+            distortions.append(sum(np.min(cdist(self.X, clf.means_, 
+                                'correlation'),axis=1)) / self.X.shape[0]) 
+            silhouettes.append(skmet.silhouette_score(self.X, clf.predict(self.X)))
+
         sb.set()
         fig, ax = plt.subplots()
         ax.plot(ks, distortions)
+        ax.set_title('Elbow Criterion - Bayesian GMM')
+        ax.set_ylabel('Correlation Distortion')
+        ax.set_xlabel('Number of Components')
+        ax2 = ax.twinx()
+        ax2.plot(ks, silhouettes, color='r')
+        ax2.set_ylabel('Silhouette Score')
+        ax.tick_params(axis='y', labelcolor='blue')
+        ax2.tick_params(axis='y', labelcolor='red')
         plt.savefig(filename, bbox_inches="tight")
+        print('saving in %s' % filename)
         plt.close()
 
 

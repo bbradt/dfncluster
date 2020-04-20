@@ -4,6 +4,8 @@ from dfncluster.Clusterer import Clusterer
 import sklearn.metrics as skm
 import numpy as np
 from matplotlib import pyplot as plt
+from scipy.spatial.distance import cdist
+import seaborn as sb
 
 ALLOWED_KWARGS = [
     'n_clusters',
@@ -126,3 +128,34 @@ class HierarchicalClusterer(Clusterer):
         return dict()
     
 
+    def evaluate_k(self, ks, filename):
+        distortions = []
+        silhouettes = []
+        for k in ks:
+            print("Evaluating KMeans with %d clusters" % k)
+            clf = skc.AgglomerativeClustering(n_clusters=k)
+            clf.fit(self.X, self.Y)
+            centroids = []
+            for k in np.unique(clf.labels_):
+                samples = self.X[clf.labels_ == k, :]
+                centroids.append(np.mean(samples, 0))
+            centroids = np.vstack(centroids)
+            distortions.append(sum(np.min(cdist(self.X, centroids, 
+                                'correlation'),axis=1)) / self.X.shape[0]) 
+            silhouettes.append(skm.silhouette_score(self.X, clf.fit_predict(self.X)))
+        sb.set()
+        fig, ax = plt.subplots()
+        ax.plot(ks, distortions)
+        ax.set_title('Elbow Criterion - Agglomerative')
+        ax.set_ylabel('Correlation Distortion')
+        ax.set_xlabel('Number of Components')
+
+        ax2 = ax.twinx()
+        ax2.plot(ks, silhouettes, color='r')
+        ax2.set_ylabel('Silhouette Score')
+        ax.tick_params(axis='y', labelcolor='blue')
+        ax2.tick_params(axis='y', labelcolor='red')
+
+        plt.savefig(filename, bbox_inches="tight")
+        print('saving in %s' % filename)
+        plt.close()
