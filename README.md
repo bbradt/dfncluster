@@ -35,6 +35,11 @@ Section II describes the fMRI data used in our experimentation, while Section II
 ![](images/sim_pre_clustering_AUC.png?raw=true)
 
 
+<img width="79%" src="results/gauss_betas_accuracy.png?raw=True" />
+
+
+<img width="20%" src="results/accuracy_legend.png?raw=true" />
+
 ## FBIRN Dataset 
 
 | Clustering Algorithm | SVM               | Multilayer Perceptron | Logistic Regression | Passive Aggressive Classifier | Perceptron        | Random Forest     | Extra Trees       |
