@@ -60,14 +60,42 @@ Given the lack of improvement in accuracy across all clustering algorithms, it w
 models using using time points as features would require much more data for successful classification.
 Using time slots as features meant that there were 130 features in the data. Since there were only 267 patients
 in the UCLA data set, it was surmised that the dimensionality of the data was too high. To reduce the dimensionality
-the beta coefficients were calculated for each subject reducing the number of training features form 130 to 10.
+of the datasets, the beta coefficients were calculated reducing the number of training features form 130 to 10.
 
 ![](images/beta_t_test_visualization.png?raw=true)
 
-Each clustering algorithm found statistically different beta coefficients. The reduced feature space facilitated the
-correct classification of healthy and schizophrenic patients regardless of the clustering algorithm used for each
-supervised learning model.
-## Gaussian Simulated Dataset 
+Each clustering algorithm produced statistically different beta coefficients between the health control and
+schizophrenic patients. With the reduced dimenstionality of the data, we successfully improved the accuracy of
+out diagnoses across all supervised learning algorithms for each clustering algorithm. These results are discussed
+later in the report.
+
+## Reporting Results
+
+For all results, the Area Under Curve (AUC) metric was used since we were trying to classify two possible outcomes.
+Patients were with either healthy or had schizophrenia. AUC scores near 0.50 meant that the models randomly diagnosed
+patients as healthy or schizophrenic. This represented the worst possible outcome. Any model with and AUC scores between
+0.40 and 0.60 was deemed a failed model. AUC scores near 1.0 meant that diagnoses were accurate with few false positives
+(high specificiy) and few false negatives (high recall).
+
+There were no observed models that completely reversed the diagnoses with AUC scores near 0.0.
+
+## Gaussian Simulated Dataset
+
+We initially trained the supervised learning algorithms using simulated Gaussian datasets since we did not
+have access to the real patient data until later in the semester. We first trained the supervised learning models
+without any clustering in order to establish a baseline AUC scores for our clustering algorithms to impove upon.
+These baseline results are displayed below.
+
+![](images/sim_pre_clustering_AUC.png?raw=true)
+
+The key result from this experiment was that without any clustering, no supervised learning algorithm could consistently
+achieve and AUC score above 0.60. Some learners such as the Multilayer Perceptron, Passive Aggressive Classifier,
+and Bernoulli Naive Bayes surprisingly scored below 0.40 suggesting that they consistently misdiagnose patients.
+This result was attributed to being due to random error, and was disregarded.
+
+After establishing the baseline AUC scores, we performed clustering and beta feature generation for the simulated
+Gaussian datasets. Using these reduced datasets we, trained across the same classifiers to generate the results below.
+
 
 | Clustering Algorithm | Multilayer Perceptron | Nearest Neighbors | SVM             | Random Forest | Extra Trees   | Gradient Boost  | Logistic Regression | Passive Aggressive Classifier | Perceptron      | Gaussian Process | Ada Boost         | Voting            | Bernoulli Naive Bayes | Bagging           | Decision Tree     |
 | -------------------- | --------------------- | ----------------- | --------------- | ------------- | ------------- | --------------- | ------------------- | ----------------------------- | --------------- | ---------------- | ----------------- | ----------------- | --------------------- | ----------------- | ----------------- |
@@ -77,16 +105,17 @@ supervised learning model.
 | dbscan               | 0.971 ± 0.024         | 0.952 ± 0.025     | 0.972 ± 0.022   | 0.961 ± 0.024 | 0.965 ± 0.023 | 0.962 ± 0.022   | 0.967 ± 0.025       | 0.968 ± 0.026                 | 0.957 ± 0.035   | 0.96 ± 0.032     | 0.967 ± 0.028     | 0.913 ± 0.034     | 0.93 ± 0.031          | 0.93 ± 0.036      | 0.943 ± 0.022     |
 | hierarchical         | **1.0 ± 0.0**         | **1.0 ± 0.0**     | **1.0 ± 0.0**   | **1.0 ± 0.0** | **1.0 ± 0.0** | **1.0 ± 0.001** | **1.0 ± 0.0**       | **1.0 ± 0.0**                 | **1.0 ± 0.0**   | **1.0 ± 0.001**  | **0.999 ± 0.002** | **0.993 ± 0.014** | **0.991 ± 0.009**     | **0.983 ± 0.016** | **0.969 ± 0.035** |
 
-
-![](images/sim_pre_clustering_AUC.png?raw=true)
-
-Above plot shows "Area Under Curve" of various classifiers on simulated Gaussian Data before clustering where SVM seems to be performing the best followed by "Ada Boost" and "Gradient Boost" while "Bernoulli Naive Bayes" seems to be performing the worst.
-
 <img width="79%" src="results/gauss_betas_accuracy.png?raw=True" />
 
 <img width="20%" src="results/accuracy_legend.png?raw=true" />
 
-Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.4 to 0.6 for KMeans and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and Passive Aggressive Classifier in BGMM shows some improvement over KMeans clustering.
+Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM),
+Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and
+Hierarchical clustering methods on Simulated Gaussian Data using beta features. 
+Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature
+say for example from 0.4 to 0.6 for KMeans and likewise for other clusterer. Multilayer percepteon classifier shows
+some improvement in GMM over KMeans and Passive Aggressive Classifier in BGMM shows some improvement over KMeans
+clustering.
 
 ## FBIRN Dataset 
 
