@@ -67,8 +67,6 @@ We use derivatives from the Phase 3 Dataset of FBIRN (Functional Biomedical Infr
 
 We also use derivatives from the UCLA Consortium for Neuropsychiatric Phenomics archives, which includes neuroimages for roughly 272 participants. The subject population consists of roughly 272 healthy controls, as well as participants with a diagnosis of schizophrenia (50 subjects). Subject participants in this dataset range from 21 to 50 years 
 
-
-
 # Section III: Methods
 
 ## Overview
