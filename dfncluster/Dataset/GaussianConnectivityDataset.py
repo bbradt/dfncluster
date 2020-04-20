@@ -1,5 +1,7 @@
+import os
 import numpy as np
 from dfncluster.Dataset import Dataset
+import matplotlib.pyplot as plt
 
 
 class GaussianConnectivityDataset(Dataset):
@@ -13,24 +15,25 @@ class GaussianConnectivityDataset(Dataset):
     """
 
     def __init__(self,
-                 num_ics=10,
+                 num_ics=50,
                  num_subjects=300,
                  num_features=159,
                  window_size=22,
+                 min_transition_len=22,
                  class_parameters=[
                      dict(
-                         states=[0.15, 0.15, 0.15, 0.4, 0.15],
-                         sigma_ics=0.1,
-                         sigma_ext=0.001,
-                         epsilon=0.1,
-                         transition_probability=[0.5, 0.5, 0.5, 0.25, 0.5]
+                         states=[0.4, 0.1, 0.1, 0.3, 0.1],
+                         sigma_ics=1e-1,
+                         sigma_ext=1e-2,
+                         epsilon=1e-2,
+                         transition_probability=[0.5, 0.5, 0.5, 0.5, 0.5]
                      ),
                      dict(
-                         states=[0.4, 0.15, 0.15, 0.15, 0.15],
-                         sigma_ics=0.1,
-                         sigma_ext=0.001,
-                         epsilon=0.1,
-                         transition_probability=[0.25, 0.5, 0.5, 0.5, 0.5]
+                         states=[0.1, 0.1, 0.3, 0.1, 0.4],
+                         sigma_ics=1e-1,
+                         sigma_ext=1e-2,
+                         epsilon=1e-2,
+                         transition_probability=[0.5, 0.5, 0.5, 0.5, 0.5]
                      )
                  ],
                  epsilon=1):
@@ -54,7 +57,8 @@ class GaussianConnectivityDataset(Dataset):
             num_classes=num_classes,
             num_features=num_features,
             class_parameters=class_parameters,
-            window_size=window_size
+            window_size=window_size,
+            min_transition_len=min_transition_len
         )
 
     def generate(self,  **kwargs):
@@ -80,8 +84,11 @@ class GaussianConnectivityDataset(Dataset):
         num_subjects = kwargs['num_subjects']
         num_classes = kwargs['num_classes']
         class_parameters = kwargs['class_parameters']
+        num_states = len(class_parameters[0]['states'])
+        num_ics_per_class = int(num_ics/num_states)
         num_features = kwargs['num_features']
         window_size = kwargs['window_size']
+        min_transition_len = kwargs['min_transition_len']
         num_created = 0
         features = []
         labels = []
@@ -89,7 +96,11 @@ class GaussianConnectivityDataset(Dataset):
         # for c in range(num_classes):
         #    class_signals.append(np.random.normal(loc=0, scale=sigma_ics, size=(1, num_features)))
         connected_states = []
+        for iii in range(num_states):
+            connected_states.append(np.arange(num_ics_per_class*iii, (num_ics_per_class*iii + num_ics_per_class)))
+        make_figures = [True for x in range(num_classes)]
         while num_created < num_subjects:
+            last_transition = 0
             label = np.random.randint(0, num_classes)
             parameters = class_parameters[label]
             sigma_ext = parameters['sigma_ext']
@@ -99,9 +110,6 @@ class GaussianConnectivityDataset(Dataset):
             transition_probability = parameters['transition_probability']
             num_states = len(states)
             state_vector = []
-            while len(connected_states) < num_states:
-                connected_states.append(np.random.choice(np.arange(num_ics), size=(np.random.randint(2, num_ics),)))
-
             source_signal = np.random.normal(loc=0, scale=sigma_ics, size=(1, num_features))
             signal = np.random.normal(loc=0, scale=sigma_ext, size=(num_ics, num_features))
             state_index = np.random.choice(np.arange(num_states), size=1, p=states)[0]
@@ -109,9 +117,21 @@ class GaussianConnectivityDataset(Dataset):
             for ww in range(0, num_features-window_size):
                 source_window = source_signal[:, ww:(ww+window_size)]
                 tprob = transition_probability[state_index]
-                if np.random.randn() < tprob:
+                if np.random.randn() < tprob and ww > last_transition + min_transition_len:
+
+                    fname = 'data/examples/frames/class%s_state%d.png' % (label, state_vector[last_transition])
                     state_index = np.random.choice(np.arange(num_states), size=1, p=states)[0]
                     actual_state = connected_states[state_index]
+                    if not os.path.exists(fname):
+                        window = np.corrcoef(signal[:, (last_transition):(ww)])
+                        fig, ax = plt.subplots(1,1)
+                        made=ax.imshow(window-np.eye(*window.shape), vmin=0, vmax=1)
+                        ax.set_title("Class %s / State %d" % (label, state_vector[last_transition]))
+                        os.makedirs('data/examples/frames', exist_ok=True)
+                        plt.savefig(fname, bbox_inches='tight')
+                        make_figures[label] = False
+                        plt.close()
+                    last_transition = ww-1
                 state_vector.append(state_index)
                 for ic in range(num_ics):
                     if ic in actual_state:
@@ -119,7 +139,7 @@ class GaussianConnectivityDataset(Dataset):
             labels.append(label)
             features.append(signal)
             num_created += 1
-            print("Created subject %d with label %d" % (num_created, label))
+            print("Created subject %d with label %d, states %s" % (num_created, label, state_vector))
         features = np.array(features)
         labels = np.array(labels)
         print(labels.shape, features.shape)

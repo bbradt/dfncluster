@@ -273,7 +273,7 @@ class dFNC:
         """
         print("Computing FNC Windows")
         fnc_features, fnc_labels = self.compute_windows()
-
+        self.visualize_clusters(fnc_features, fnc_labels, kwargs['name'], vis_filename.replace('visualization', 'features'),None)
         if self.first_stage_algorithm is not None:
             print("Performing exemplar clustering")
             exemplar_clusterer = self.first_stage_algorithm(X=self.exemplars['x'], Y=self.exemplars['y'], param_grid=grid_params, **kwargs)
