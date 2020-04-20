@@ -65,7 +65,12 @@ ELBOW_METRICS = [
     "distortion",
     "silhouette"
 ]
-
+NCLUSTER_MAP = dict(
+    kmeans='n_clusters',
+    bgmm='n_components',
+    gmm='n_components',
+    hierarchical='n_clusters'
+)
 
 def parse_main_args():
     parser = argparse.ArgumentParser()
@@ -88,7 +93,8 @@ def parse_main_args():
     parser.add_argument("--skip_classify", default=False, help="<bool> Do or do not do classification; DEFAULT=%s" % True, action='store_true')
     parser.add_argument("--subset_size", default=1.0, type=float, help="<float [0,1]> percentage of data to use; DEFAULT=1.0 (all data)")
     parser.add_argument("--dfnc_outfile", default="dfnc.npy", type=str, help="<str> The filename for saving dFNC results; DEFAULT=dfnc.npy")
-    parser.add_argument("--seed", default=None,
+    parser.add_argument("--n_clusters", default=None, type=int)
+    parser.add_argument("--seed", default=None, type=int,
                         help="<int> Seed for numpy RNG. Used for random generation of the data set, or for controlling randomness in Clusterings.; DEFAULT=None (do not use seed)",)
     parser.add_argument("--k", default=10, type=int, help="<int> number of folds for k-fold cross-validation")
     parser.add_argument("--class_grid", default=None, help="<str> Saved GridSearch for classification (JSON file or npy file)")
@@ -113,6 +119,8 @@ if __name__ == '__main__':
         args.outdir += "_%s" % args.second_clusterer
     if args.betas:
         args.outdir += "_betas"
+    if args.n_clusters is not None:
+        args.outdir += "_k%d" % args.n_clusters 
     print("ARGS")
     print(args.__dict__)
     if args.clusterer not in CLUSTERERS.keys():
@@ -136,6 +144,9 @@ if __name__ == '__main__':
     input_params = json.loads(args.clusterer_params)
     for k, v in input_params.items():
         params[k] = v
+
+    if args.n_clusters is not None and args.clusterer in NCLUSTER_MAP:
+        params[NCLUSTER_MAP[args.clusterer]] = args.n_clusters
 
     if args.dataset not in DATASETS.keys():
         raise(ValueError("The dataset %s is currently not supported in main.py" % args.dataset))
@@ -173,8 +184,8 @@ if __name__ == '__main__':
             elbow_k = args.elbow.split(",")
             if len(elbow_k) > 0:
                 elbow_k = [int(s) for s in elbow_k]
-                dfnc.eval_k_clusters(elbow_k, "%s/%s_%s_elbow.png" % (result_dir,
-                                                                      args.clusterer, args.dataset))
+                dfnc.eval_k_clusters(elbow_k, "%s/%s_elbow.png" % (result_dir,
+                                                                      cluster_prefix))
                 exit(0)
 
         # Run it, passing [KMeans, BayesGMM, GMM] params

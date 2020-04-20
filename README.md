@@ -13,9 +13,21 @@ Section II describes the fMRI data used in our experimentation, while Section II
 
 # Section II: Data
 
+## Gaussian Dataset
+
 # Section III: Methods
 
-<img width="50%" src="results/dfnc_pipeline(1).png?raw=True" />
+## Overview
+
+<img width="100%" src="results/dfnc_pipeline(1).png?raw=True" />
+
+## Preprocessing Details
+
+For the FBIRN 
+
+## Clusterer Elbow Criterion
+
+## Classifier Grid-Search
 
 # Section IV: Results & Discussion
 

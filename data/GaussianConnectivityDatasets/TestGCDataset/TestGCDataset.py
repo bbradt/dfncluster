@@ -19,4 +19,4 @@ if __name__ == '__main__':
         window_size=22,
         time_index=1)
     fnc_features, fnc_labels = dfnc.compute_windows()
-    dfnc.visualize_clusters(fnc_features, fnc_labels, 'Features', 'results/gauss_features.png',None)
+    dfnc.visualize_clusters(fnc_features, fnc_labels, 'Features', 'data/examples/gauss_features.png',None)
