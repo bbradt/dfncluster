@@ -145,43 +145,43 @@ Above plot shows "Area Under Curve" of various classifiers on simulated Gaussian
 Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.4 to 0.6 for KMeans and likewise for other clusterer. Multilayer percepteon classifier shows some improvement in GMM over KMeans and Passive Aggressive Classifier in BGMM shows some improvement over KMeans clustering.
 
 
-<img width="98%" src="results/kmeans_fbirn/kmeans_fbirn_states.png?raw=true" /> 
+<img width="98%" src="results/kmeans_fbirn_betas/kmeans_fbirn_states.png?raw=true" /> 
 Visualization of states with KMeans clustering with Gaussian Simulated Data
 
 
-<img width="49%" src="results/kmeans_gauss/kmeans_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_gauss/kmeans_gauss_visualization.png?raw=true" />  
+<img width="49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization.png?raw=true" />  
 Visualization of clusters with KMeans clustering in 2-d and 3-d with Gaussian Simulated Data
 
 
-<img width="98%" src="results/gmm_gauss/gmm_gauss_states.png?raw=true" /> 
+<img width="98%" src="results/gmm_gauss_betas/gmm_gauss_states.png?raw=true" /> 
 Visualization of states with GMM clustering with Gaussian Simulated Data
 
 
-<img width="49%" src="results/gmm_gauss/gmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_gauss/gmm_gauss_visualization.png?raw=true" />  
+<img width="49%" src="results/gmm_gauss_betas/gmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_gauss_betas/gmm_gauss_visualization.png?raw=true" />  
 Visualization of clusters with GMM clustering in 2-d and 3-d with Gaussian Simulated Data
 
 
-<img width="98%" src="results/bgmm_gauss/bgmm_gauss_states.png?raw=true" /> 
+<img width="98%" src="results/bgmm_gauss_betas/bgmm_gauss_states.png?raw=true" /> 
 Visualization of states with BGMM clustering with Gaussian Simulated Data
 
 
-<img width="49%" src="results/bgmm_gauss/bgmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_gauss/bgmm_gauss_visualization.png?raw=true" />  
+<img width="49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization.png?raw=true" />  
 Visualization of clusters with BGMM clustering in 2-d and 3-d with Gaussian Simulated Data
 
 
-<img width="98%" src="results/dbscan_gauss/dbscan_gauss_states.png?raw=true" /> 
+<img width="98%" src="results/dbscan_gauss_betas/dbscan_gauss_states.png?raw=true" /> 
 Visualization of states with DBSCAN clustering with Gaussian Simulated Data
 
 
-<img width="49%" src="results/dbscan_gauss/dbscan_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_gauss/dbscan_gauss_visualization.png?raw=true" />  
+<img width="49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization.png?raw=true" />  
 Visualization of clusters with DBSCAN clustering in 2-d and 3-d with Gaussian Simulated Data
 
 
-<img width="98%" src="results/hierarchical_gauss/hierarchical_gauss_states.png?raw=true" /> 
+<img width="98%" src="results/hierarchical_gauss_betas/hierarchical_gauss_states.png?raw=true" /> 
 Visualization of states with Hierarchical clustering with Gaussian Simulated Data
 
 
-<img width="49%" src="results/hierarchical_gauss/hierarchical_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_gauss/hierarchical_gauss_visualization.png?raw=true" />  
+<img width="49%" src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization.png?raw=true" />  
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gaussian Simulated Data
 
 
@@ -244,7 +244,7 @@ Visualization of clusters with DBSCAN clustering in 2-d and 3-d with FBirn Data
 Visualization of states with Hierarchical clustering with FBirn Data
 
 
-<img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results_betas/hierarchical_fbirn/hierarchical_fbirn_visualization.png?raw=true" />  
+<img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results_betas/hierarchical_fbirn_gauss/hierarchical_fbirn_visualization.png?raw=true" />  
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn Data
 
 
