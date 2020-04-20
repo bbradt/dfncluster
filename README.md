@@ -244,7 +244,7 @@ Visualization of clusters with DBSCAN clustering in 2-d and 3-d with FBirn Data
 Visualization of states with Hierarchical clustering with FBirn Data
 
 
-<img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results_betas/hierarchical_fbirn_gauss/hierarchical_fbirn_visualization.png?raw=true" />  
+<img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_fbirn_gauss/hierarchical_fbirn_visualization.png?raw=true" />  
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn Data
 
 
@@ -271,43 +271,43 @@ Above plot shows "Accuracy" of various classifiers such as KMeans, Gaussian Mixt
 
 
 
-<img width="98%" src="results/kmeans_ucla/kmeans_ucla_states.png?raw=true" /> 
+<img width="98%" src="results/kmeans_ucla_betas/kmeans_ucla_states.png?raw=true" /> 
 Visualization of states with KMeans clustering with UCLA Data
 
 
-<img width="49%" src="results/kmeans_ucla/kmeans_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_ucla/kmeans_ucla_visualization.png?raw=true" />  
+<img width="49%" src="results/kmeans_ucla_betas/kmeans_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_ucla_betas/kmeans_ucla_visualization.png?raw=true" />  
 Visualization of clusters with KMeans clustering in 2-d and 3-d with UCLA Data
 
 
-<img width="98%" src="results/gmm_ucla/gmm_ucla_states.png?raw=true" /> 
+<img width="98%" src="results/gmm_ucla_betas/gmm_ucla_states.png?raw=true" /> 
 Visualization of states with GMM clustering with UCLA Data
 
 
-<img width="49%" src="results/gmm_ucla/gmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_ucla/gmm_ucla_visualization.png?raw=true" />  
+<img width="49%" src="results/gmm_ucla_betas/gmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_ucla_betas/gmm_ucla_visualization.png?raw=true" />  
 Visualization of clusters with GMM clustering in 2-d and 3-d with UCLA Data
 
 
-<img width="98%" src="results/bgmm_ucla/bgmm_ucla_states.png?raw=true" /> 
+<img width="98%" src="results/bgmm_ucla_betas/bgmm_ucla_states.png?raw=true" /> 
 Visualization of states with BGMM clustering with UCLA Data
 
 
-<img width="49%" src="results/bgmm_ucla/bgmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_ucla/bgmm_ucla_visualization.png?raw=true" />  
+<img width="49%" src="results/bgmm_ucla_betas/bgmm_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_ucla_betas/bgmm_ucla_visualization.png?raw=true" />  
 Visualization of clusters with BGMM clustering in 2-d and 3-d with UCLA Data
 
 
-<img width="98%" src="results/dbscan_ucla/dbscan_ucla_states.png?raw=true" /> 
+<img width="98%" src="results/dbscan_ucla_betas/dbscan_ucla_states.png?raw=true" /> 
 Visualization of states with DBSCAN clustering with UCLA Data
 
 
-<img width="49%" src="results/dbscan_ucla/dbscan_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_ucla/dbscan_ucla_visualization.png?raw=true" />  
+<img width="49%" src="results/dbscan_ucla_betas/dbscan_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_ucla_betas/dbscan_ucla_visualization.png?raw=true" />  
 Visualization of clusters with DBSCAN clustering in 2-d and 3-d with UCLA Data
 
 
-<img width="98%" src="results/hierarchical_ucla/hierarchical_ucla_states.png?raw=true" /> 
+<img width="98%" src="results/hierarchical_ucla_betas/hierarchical_ucla_states.png?raw=true" /> 
 Visualization of states with Hierarchical clustering with UCLA Data
 
 
-<img width="49%" src="results/hierarchical_ucla/hierarchical_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_ucla/hierarchical_ucla_visualization.png?raw=true" />  
+<img width="49%" src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization.png?raw=true" />  
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with UCLA Data
 
 
