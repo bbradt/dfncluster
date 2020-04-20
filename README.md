@@ -1,6 +1,4 @@
 <img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
-
-<div id="text"></div>
  
 <script>
 document.getElementById("text").innerHTML = "Text added by JavaScript code";
