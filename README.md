@@ -494,13 +494,6 @@ PYTHONPATH=. python data/MatDatasets/OmegaSim/OmegaSim.py
 To run on a subset of the simulated data set, you can either edit data.csv in the data directory, and rebuild,
 or copy that directory under a new name, edit, rebuild and point main.py to the new data set.
 
-## Other Examples
-
-TODO (Brad): Make example run files, and writeups for other data sets, such as OpenNeuro
-
-## Repostory Organization
-
-TODO (Brad): Add a writeup explaining the repository organization
 
 
 ## References
