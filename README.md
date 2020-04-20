@@ -4,7 +4,7 @@ dFNCluster implements Dynamic Functional Network Connectivity (dFNC) with severa
 actively compares the performance of classification under different clustering algorithms and hyper-parameters.
 
 # Introduction
-Schizophrenia is a chronic and serious mental disorder which affects how a person thinks, feels, and behaves. Although there have been many studies about psychological and behavioral manifestations of schizophrenia, neuroscientists have yet to determine a set of corresponding neurological biomarkers for this disorder. A functional magnetic resonance imaging (fMRI) can help determine non-invasive biomarkers for schizophrenia in brain function[[1]](#ref1)[[2]](#ref2) and one of the fMRI analysis technique called, dynamic functional network connectivity (dFNC)[[3]](#ref3)[[4]](#ref4), using K-Means clustering to characterize time-varying connectivity between functional networks. Researches has worked on finding correlation between schizophrenia and dFNC[[1]](#ref1)[[2]](#ref2)[[5]](#ref5)[[6]](#ref6), but little work has been done with the choice of clustering algorithm[[7]](#ref7). Therefore, n this project, we study how modifying the clustering technique in the dFNC pipeline can yield dynamic states from fMRI data that impact the accuracy of classifying schizophrenia.
+Schizophrenia is a chronic and serious mental disorder which affects how a person thinks, feels, and behaves. Although there have been many studies about psychological and behavioral manifestations of schizophrenia, neuroscientists have yet to determine a set of corresponding neurological biomarkers for this disorder. A functional magnetic resonance imaging (fMRI) can help determine non-invasive biomarkers for schizophrenia in brain function[[1]](#ref1)[[2]](#ref2) and one of the fMRI analysis technique called, dynamic functional network connectivity (dFNC)[[3]](#ref3)[[4]](#ref4), using K-Means clustering to characterize time-varying connectivity between functional networks. Researches has worked on finding correlation between schizophrenia and dFNC[[1]](#ref1)[[2]](#ref2)[[5]](#ref5)[[6]](#ref6), but little work has been done with the choice of clustering algorithm[[7]](#ref7). Therefore, in this project, we study how modifying the clustering technique in the dFNC pipeline can yield dynamic states from fMRI data that impact the accuracy of classifying schizophrenia.
 
 We experiment with DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian Mixture Models clustering methods on subject connectivity matrices produced from fMRI data, and each algorithm's cluster assignments as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to classify schizophrenia.
 
@@ -197,4 +197,11 @@ TODO (Brad): Add a writeup explaining the repository organization
 
 <a name="ref7"></a> [7]. V. M. Vergara, A. Abrol, F. A. Espinoza and V. D. Calhoun, "Selection of Efficient Clustering Index to Estimate the Number of Dynamic Brain States from Functional Network Connectivity*," 2019 41st Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), Berlin, Germany, 2019, pp. 632-635.<br>
 
-<a name="ref8"></a> [8]. Pedregosa et al. “2.3. Clustering.” Scikit, scikit-learn.org/stable/modules/clustering.html.<br>
+<a name="ref8"></a> [8]. D. K. Saha, A. Abrol, E. Damaraju, B. Rashid, S. M. Plis and V. D. Calhoun, “Classification As a Criterion to Select Model Order For Dynamic Functional Connectivity States in Rest-fMRI Data,” 2019 IEEE 16th International Symposium on Biomedical Imaging (ISBI 2019), Venice, Italy, 2019, pp. 1602-1605.<br>
+
+<a name="ref9"></a> [9]. Pedregosa et al. “2.3. Clustering.” Scikit, scikit-learn.org/stable/modules/clustering.html.<br>
+
+<a name="ref10"></a> [10]. Rashid, Barnaly, et al. “Classification of Schizophrenia and Bipolar Patients Using Static and Dynamic Resting-State FMRI Brain Connectivity.” NeuroImage, vol. 134, 2016, pp. 645–657., doi:10.1016/j.neuroimage.2016.04.051.
+
+
+
