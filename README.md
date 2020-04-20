@@ -39,7 +39,39 @@ We also use derivatives from the UCLA Consortium for Neuropsychiatric Phenomics 
 
 # Section IV: Results & Discussion
 
+## Initial UCLA Significant Comparisons
 
+In order to evaluate the predictive capacities of the features produced by each clustering algorithm, a
+two-tailed t-test was performed comparing the healthy control and the schizophrenic patients.
+
+The first t-test comparision was performed using the cluster assignments for each patient across
+the time domain where each time slot represented a feature of the training data. For each time slot (feature),
+the average cluster assignment for all the healthy control patients was compared to the average cluster assignment
+for all the schizophrenic patients. The corresponding p-values were then tested at a significance level of 0.10.
+
+The results displayed below highlight the points in time when there was less that a 10% chance that the
+observed difference in a healthy control's cluster assignment and a schizophrenic's cluster assignment was due to normal
+random variation. In theory, the more points of significance across time the more likely a trained model would accurately
+diagnose a subject. The results indicated that both K-Means and Gaussian Mixture Models failed to produce statistically
+different cluster assignments across time. The Bayesian Gaussian Mixture Model produced some significant differences while
+the Hierarchical clustering was significant at every time point.
+
+These results initially suggested that Hierarchical clustering would outperform all the other clustering algorithms,
+but the subsequent testing disporved this hypothesis.
+
+![](images/assignment_t_test_visualization.png?raw=true)
+
+Given the lack of improvement in accuracy across all clustering algorithms, it was believed that training supervised
+models using using time points as features would require much more data for successful classification.
+Using time slots as features meant that there were 130 features in the data. Since there were only 267 patients
+in the UCLA data set, it was surmised that the dimensionality of the data was too high. To reduce the dimensionality
+the beta coefficients were calculated for each subject reducing the number of training features form 130 to 10.
+
+![](images/beta_t_test_visualization.png?raw=true)
+
+Each clustering algorithm found statistically different beta coefficients. The reduced feature space facilitated the
+correct classification of healthy and schizophrenic patients regardless of the clustering algorithm used for each
+supervised learning model.
 ## Gaussian Simulated Dataset 
 
 | Clustering Algorithm | Multilayer Perceptron | Nearest Neighbors | SVM             | Random Forest | Extra Trees   | Gradient Boost  | Logistic Regression | Passive Aggressive Classifier | Perceptron      | Gaussian Process | Ada Boost         | Voting            | Bernoulli Naive Bayes | Bagging           | Decision Tree     |
@@ -98,40 +130,6 @@ We also use derivatives from the UCLA Consortium for Neuropsychiatric Phenomics 
 
 <img width="20%" src="results/accuracy_legend.png?raw=true" />
 
-
-### Initial UCLA Significant Comparisons
-
-In order to evaluate the predictive capacities of the features produced by each clustering algorithm, a
-two-tailed t-test was performed comparing the healthy control and the schizophrenic patients.
-
-The first t-test comparision was performed using the cluster assignments for each patient across
-the time domain where each time slot represented a feature of the training data. For each time slot (feature),
-the average cluster assignment for all the healthy control patients was compared to the average cluster assignment
-for all the schizophrenic patients. The corresponding p-values were then tested at a significance level of 0.10.
-
-The results displayed below highlight the points in time when there was less that a 10% chance that the
-observed difference in a healthy control's cluster assignment and a schizophrenic's cluster assignment was due to normal
-random variation. In theory, the more points of significance across time the more likely a trained model would accurately
-diagnose a subject. The results indicated that both K-Means and Gaussian Mixture Models failed to produce statistically
-different cluster assignments across time. The Bayesian Gaussian Mixture Model produced some significant differences while
-the Hierarchical clustering was significant at every time point.
-
-These results initially suggested that Hierarchical clustering would outperform all the other clustering algorithms,
-but the subsequent testing disporved this hypothesis.
-
-![](images/assignment_t_test_visualization.png?raw=true)
-
-Given the lack of improvement in accuracy across all clustering algorithms, it was believed that training supervised
-models using using time points as features would require much more data for successful classification.
-Using time slots as features meant that there were 130 features in the data. Since there were only 267 patients
-in the UCLA data set, it was surmised that the dimensionality of the data was too high. To reduce the dimensionality
-the beta coefficients were calculated for each subject reducing the number of training features form 130 to 10.
-
-![](images/beta_t_test_visualization.png?raw=true)
-
-Each clustering algorithm found statistically different beta coefficients. The reduced feature space facilitated the
-correct classification of healthy and schizophrenic patients regardless of the clustering algorithm used for each
-supervised learning model.
 
 # Section V: Conclusion
 
