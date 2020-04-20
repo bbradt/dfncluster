@@ -1,5 +1,5 @@
 <img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
-
+<script type="text/javascript" src="path-to-MathJax/MathJax.js"></script>
 # Introduction
 
 Schizophrenia is a chronic and serious mental disorder which affects how a person thinks, feels, and behaves. Although there have been many studies about psychological and behavioral manifestations of schizophrenia, 
