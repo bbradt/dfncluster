@@ -139,7 +139,7 @@ but the subsequent testing disporved this hypothesis.
 ![](images/assignment_t_test_visualization.png?raw=true)
 
 Given the lack of improvement in accuracy across all clustering algorithms, it was believed that training supervised
-models using using time points as features would require much more data for successful classification.
+models using time points as features would require much more data for successful classification.
 Using time slots as features meant that there were 130 features in the data. Since there were only 267 patients
 in the UCLA data set, it was surmised that the dimensionality of the data was too high. To reduce the dimensionality
 of the datasets, the beta coefficients were calculated reducing the number of training features form 130 to 10.
@@ -170,7 +170,7 @@ These baseline results are displayed below.
 ![](images/sim_pre_clustering_AUC.png?raw=true)
 
 The key result from this experiment was that without any clustering, no supervised learning algorithm could consistently
-achieve and AUC score above 0.60. Some learners such as the Multilayer Perceptron, Passive Aggressive Classifier,
+achieve AUC score above 0.60. Some learners such as the Multilayer Perceptron, Passive Aggressive Classifier,
 and Bernoulli Naive Bayes surprisingly scored below 0.40 suggesting that they consistently misdiagnose patients.
 This result was attributed to being due to random error, and was disregarded.
 
@@ -248,7 +248,7 @@ Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gauss
 
 ## FBIRN Dataset
 
-The FBIRN dataset was trained in the exact same manner as the as the simulated Guassian dataset. First, the supervised 
+The FBIRN dataset was trained in the exact same manner as the simulated Guassian dataset. First, the supervised 
 models were trained without clustering or beta feature generation. As expected, the classifiers failed to consistently
 achieve AUC scores outside of the 0.40-0.60 range suggesting that all the models produced random diagnoses.
 The baseline results are displayed below.
@@ -263,7 +263,7 @@ were generated to reduce the dimensionality of the training dataset. The results
 
 The results indicated that is was possible for some of the clustering algorithms to lift the AUC scores to an average
 of 0.70 for most supervised models with the exclusion the Voting learner. The one exception was DBSCAN which failed to
-move the AUC from 0.50. Regardless, none of these models achieved a high enough score to be used a clinical environment.
+move the AUC from 0.50. Regardless, none of these models achieved a high enough score to be used in a clinical environment.
 It was surmised the number of features in the datasets had to be reduced from cluster assignments over time to beta
 features in order for the supervised learning models to accurately diagnose patients.
 
@@ -281,7 +281,7 @@ are displayed below.
 <img width="86%" src="results/fbirn_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" />
 
 As expected, the reduced number of training features increased the accuracy of all the learners with Support Vector Machines
-acheiveing the highest accuracy acrocc all clustering algorithms. Only DBCAN failed to get above an average AUC score of 0.90
+acheiveing the highest accuracy across all clustering algorithms. Only DBCAN failed to get above an average AUC score of 0.90
 for support vector machines and Hierarchical clusterting obtained this highest score of 0.957.
 
 ## FBIRN Data Visualizations
@@ -329,7 +329,7 @@ Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn
 ## UCLA Dataset
 
 The UCAL Dataset was similarly trained. Firstly, it was trained using unclustered data to establish a baseline to compare
-against. The results are displayed below and as expected the supervised mdoels failed to obtain suitable AUC scores.
+against. The results are displayed below and as expected the supervised models failed to obtain suitable AUC scores.
 
 
 ![](images/ucla_pre_clustering_AUC.png?raw=true)
