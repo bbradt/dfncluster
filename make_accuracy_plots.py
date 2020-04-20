@@ -11,14 +11,14 @@ parser.add_argument("--betas", default=False, action="store_true")
 args = parser.parse_args()
 plt.close()
 exclude = [
-    'Nearest Neighbors',
-    'Ada Boost',
-    'Gradient Boost',
-    'Bernoulli Naive Bayes',
-    'Voting',
-    'Gaussian Process',
-    'Decision Tree',
-    'Bagging'
+#    'Nearest Neighbors',
+#    'Ada Boost',
+#    'Gradient Boost',
+#    'Bernoulli Naive Bayes',
+#    'Voting',
+#    'Gaussian Process',
+#    'Decision Tree',
+#    'Bagging'
 ]
 ROOT_DIR = 'results'
 DATASET = args.dataset.lower()

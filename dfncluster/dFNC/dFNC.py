@@ -14,7 +14,9 @@ def corr_wrapper(x):
 
 
 class dFNC:
-    def __init__(self, dataset=None, first_stage_algorithm=None, second_stage_algorithm=None, time_index=0, metric=corr_wrapper, window_size=22, **kwargs):
+    def __init__(self, dataset=None, first_stage_algorithm=None, second_stage_algorithm=None,
+                 time_index=0, metric=corr_wrapper, window_size=22, save_features=True,
+                 **kwargs):
         """kwargs:
             dataset     FNCDataset  Some FNC Dataset
             clusterer   Clusterer   KMeansClusterer
@@ -28,10 +30,13 @@ class dFNC:
         self.results = []
         self.subjects = None
         self.exemplars = None
+        self.cluster_assignments_over_time = None
+        self.betas = None
         self.metric = metric
         self.time_index = time_index
         self.window_size = window_size
         self.bad_indices = []
+        self.save_features = save_features
 
     def compute_windows(self, **kwargs):
         """
@@ -268,7 +273,7 @@ class dFNC:
         """
         print("Computing FNC Windows")
         fnc_features, fnc_labels = self.compute_windows()
-
+        self.visualize_clusters(fnc_features, fnc_labels, kwargs['name'], vis_filename.replace('visualization', 'features'),None)
         if self.first_stage_algorithm is not None:
             print("Performing exemplar clustering")
             exemplar_clusterer = self.first_stage_algorithm(X=self.exemplars['x'], Y=self.exemplars['y'], param_grid=grid_params, **kwargs)
@@ -305,6 +310,7 @@ class dFNC:
             print("Reassigning states to subjects")
             assignments = self.reassign_to_subjects(
                 cluster_instance.assignments, self.subjects)
+            self.cluster_assignments_over_time = assignments.copy()
             subject_windows = self.reassign_to_subjects(
                 fnc_features, self.subjects
             )
@@ -313,6 +319,7 @@ class dFNC:
             print("Collecting state statistics")
             class_centroids, beta_features, class_partitions, nc = self.collect_states(assignments, classes=self.dataset.labels,
                                                                                        subject_data=subject_windows, time_index=self.time_index)
+            self.betas = beta_features.copy()
             print("Visualizing States")
             self.visualize_states(assignments, class_centroids, class_partitions, nc, filename=state_filename,
                                   ttest_fileprefix=ttest_fileprefix, networks=networks)
@@ -470,3 +477,8 @@ class dFNC:
         package['exemplars'] = self.exemplars
         package['subjects'] = self.subjects
         np.save(filename, package, allow_pickle=True)
+        if self.save_features:
+            np.savez(filename + "_features",
+                     assignments=self.cluster_assignments_over_time,
+                     betas=self.betas,
+                     subjects=self.subjects)
