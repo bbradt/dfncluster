@@ -90,7 +90,10 @@ class HierarchicalClusterer(Clusterer):
             samples = self.X[self.assignments == k, :]
             centroids.append(np.mean(samples, 0))
         self.centroids = np.vstack(centroids)
-        plot_dendrogram(self, truncate_mode='level', p=self.n_clusters_)
+        try:
+            plot_dendrogram(self, truncate_mode='level', p=self.n_clusters_)
+        except AttributeError:
+            pass
         
 
     def evaluate(self):
