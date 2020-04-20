@@ -184,6 +184,7 @@ if __name__ == '__main__':
                                                state_filename="%s/%s_states.png" %
                                                (result_dir, cluster_prefix),
                                                ttest_fileprefix="%s/%s_ttest" % (result_dir, cluster_prefix),
+                                               dendogram_filename="%s/%s_dendogram.png" % (result_dir, cluster_prefix),
                                                **params)
 
         subject_data, subject_labels = dfnc.get_subjects()
