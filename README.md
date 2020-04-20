@@ -95,18 +95,17 @@ participants with a diagnosis of schizophrenia (50 subjects). Subject participan
 
 ### Sliding Window Analysis
 
-For all data-sets we chose a sliding window of size $W=22$, following the precedent in Damaraju et al. 2014 []. Time-Series data $X$ with size $M \times T$, where $M$ is the number of independent components, and $T$ is the number 
+For all data-sets we chose a sliding window of size $W=22$, following the precedent in Damaraju et al. 2014 []. Time-Series data <img src="https://render.githubusercontent.com/render/math?math=X">. with size <img src="https://render.githubusercontent.com/render/math?math=M \times T">, where <img src="https://render.githubusercontent.com/render/math?math=M"> is the number of independent components, and <img src="https://render.githubusercontent.com/render/math?math=T"> is the number 
 of timepoints are used. 
 Time series were normalized and convolved with a gaussian window with a kernel of size 0.015, again following the precedent in Damaraju et al. 2014. 
 For each window on each time-series a number of exemplar data-points were selected by taking the local maximum of the variance from the smoothed time-series. 
 
-We computed correlation coefficients across the components, within each time series window to form the FNC matrix with entries $i$ and $j$ given as 
+We computed correlation coefficients across the components, within each time series window to form the FNC matrix with entries <img src="https://render.githubusercontent.com/render/math?math=i"> and <img src="https://render.githubusercontent.com/render/math?math=k"> given as 
 
-$$
-  FNC_{i,j} = \frac{1}{W}  \frac{\sum_{w=1}^{W} X_i X_j - (\sum_{w=1}^{W}X_i)(\sum_{w=1}^{W}X_j)  }{W \sqrt{(\sum X_i^2 - (\sum X_i)^2)(\sum X_j^2 - (\sum X_j)^2)}}
-$$
 
-Through this process, we generat a total of $N\times(T-W)$ window instances, which are used as the input for clustering.
+<img src="https://render.githubusercontent.com/render/math?math= FNC_{i,j} %3D \frac{1}{W}  \frac{\sum_{w %3D 1}^{W} X_i X_j %2D (\sum_{w %3D 1}^{W}X_i)(\sum_{w %3D 1}^{W}X_j)  }{W \sqrt{(\sum X_i^2 - (\sum X_i)^2)(\sum X_j^2 - (\sum X_j)^2)}}">.
+
+Through this process, we generate a total of <img src="https://render.githubusercontent.com/render/math?math=N\times(T-W)"> window instances, which are used as the input for clustering.
 
 ## Clustering Details
 
