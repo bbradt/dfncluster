@@ -7,7 +7,7 @@ to characterize time-varying connectivity between functional networks to identif
 clustering technique. In this project, we study how modifying the clustering technique in the dFNC pipeline
 can yield dynamic states from fMRI data that impact the accuracy of classifying schizophrenia.
 
-We experiment with DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian Mixture Models clustering methods on subject connectivity matrices produced from fMRI data, and each algorithm's cluster assignments as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to classify schizophrenia. 
+We experimented with DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian Mixture Models clustering methods on subject connectivity matrices produced from fMRI data, and each algorithm's cluster assignments as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to classify schizophrenia.
 
 Section II describes the fMRI data used in our experimentation, while Section III summarizes the aforementioned clustering and classification algorithms used in the pipeline. Section IV compares the accuracy of these classifiers, along with presenting a series of charts that analyze the cluster assignments produced on the fMRI data.
 
@@ -17,7 +17,9 @@ Section II describes the fMRI data used in our experimentation, while Section II
 
 <img width="50%" src="results/dfnc_pipeline(1).png?raw=True" />
 
+
 # Section IV: Results & Discussion
+
 
 ## Gaussian Simulated Dataset 
 
@@ -29,10 +31,8 @@ Section II describes the fMRI data used in our experimentation, while Section II
 | dbscan               | 0.971 ± 0.024         | 0.952 ± 0.025     | 0.972 ± 0.022   | 0.961 ± 0.024 | 0.965 ± 0.023 | 0.962 ± 0.022   | 0.967 ± 0.025       | 0.968 ± 0.026                 | 0.957 ± 0.035   | 0.96 ± 0.032     | 0.967 ± 0.028     | 0.913 ± 0.034     | 0.93 ± 0.031          | 0.93 ± 0.036      | 0.943 ± 0.022     |
 | hierarchical         | **1.0 ± 0.0**         | **1.0 ± 0.0**     | **1.0 ± 0.0**   | **1.0 ± 0.0** | **1.0 ± 0.0** | **1.0 ± 0.001** | **1.0 ± 0.0**       | **1.0 ± 0.0**                 | **1.0 ± 0.0**   | **1.0 ± 0.001**  | **0.999 ± 0.002** | **0.993 ± 0.014** | **0.991 ± 0.009**     | **0.983 ± 0.016** | **0.969 ± 0.035** |
 
-![](images/sim_pre_clustering_AUC.png?raw=true)
 
-<img width="79%" src="results/gauss_betas_accuracy.png?raw=True" />
-<img width="20%" src="results/accuracy_legend.png?raw=true" />
+![](images/sim_pre_clustering_AUC.png?raw=true)
 
 
 ## FBIRN Dataset 
@@ -45,9 +45,13 @@ Section II describes the fMRI data used in our experimentation, while Section II
 | dbscan               | 0.883 ± 0.027     | 0.893 ± 0.031         | 0.892 ± 0.033       | 0.884 ± 0.027                 | 0.828 ± 0.064     | 0.805 ± 0.064     | 0.806 ± 0.058     |
 | hierarchical         | **0.957 ± 0.032** | **0.954 ± 0.038**     | **0.953 ± 0.038**   | **0.951 ± 0.032**             | *0.891 ± 0.098*   | *0.881 ± 0.032*   | *0.872 ± 0.048*   |
 
+
 ![](images/fbirn_pre_clustering_AUC.png?raw=true)
 
+
 <img width="79%" src="results/fbirn_betas_accuracy.png?raw=True" />
+
+
 <img width="20%" src="results/accuracy_legend.png?raw=true" />
 
 
@@ -61,10 +65,50 @@ Section II describes the fMRI data used in our experimentation, while Section II
 | dbscan               | 0.409 ± 0.118    | 0.467 ± 0.131         | 0.69 ± 0.096        | 0.667 ± 0.122                 | 0.5 ± 0.0         | 0.643 ± 0.171     | 0.649 ± 0.125     |
 | hierarchical         | *0.886 ± 0.054*  | *0.889 ± 0.07*        | *0.9 ± 0.069*       | *0.883 ± 0.071*               | *0.826 ± 0.122*   | **0.829 ± 0.099** | **0.792 ± 0.114** |
 
+
 ![](images/ucla_pre_clustering_AUC.png?raw=true)
 
+
 <img width="79%" src="results/ucla_betas_accuracy.png?raw=True" />
+
+
 <img width="20%" src="results/accuracy_legend.png?raw=true" />
+
+
+### Initial UCLA Significant Comparisons
+
+In order to evaluate the predictive capacities of the features produced by each clustering algorithm,
+two-tailed t-test were performed to measure the statistical difference between the healthy control and the
+schizophrenic patients.
+
+The first t-test comparision was performed using the distribution of cluster assignments for each patient across
+the time domain. For each time window, the average cluster assignment for all the healthy control patients was
+compared to the average cluster assignment for all the schizophrenic patients. The corresponding p-values were then
+tested at a significance level of 0.10.
+
+The results displayed below highlight the points in time when there were less that a 10% chance that the observed
+difference in a healthy control's cluster assignment and a schizophrenic's cluster assignment was due to normal
+random variation. In theory, the more points of significance across time, the more likely a trained mode would be
+able to correctly diagnose a subject. The results indicated that both k-means and gaussian mixture models failed to
+produce statistically different cluster assignments over time. The Bayesian produced a few significant differences while
+the hierarchical clustering algorithm was significant at every point in time. These results initially suggested that the
+hierarchical clustering algorithm should outperform all the other clustering algorithms, but the subsequent results from
+the trained supervised models refuted this hypothesis.
+
+![](images/assignment_t_test_visualization.png?raw=true)
+
+Given the lack of improvement in accuracy across all clustering algorithms, it was believed that training supervised
+models using cluster assignment over time as input features was impracticable and would require much more data for
+successful training. For each subject, there would be 130 time slots or features. To reduce the dimensionality of
+the while maintaining relevant information, the beta coefficients were used in lieu of the time windows. The results
+are displayed below.
+
+![](images/beta_t_test_visualization.png?raw=true)
+
+Each clustering algorithm found statistically different beta coefficients. The reduced feature space
+(10 features for 267 patients for the UCLA data set) facilitated the correct classification of healthy and
+schizophrenic patients across all clustering algorithms for all of the supervised learning algorithms.
+
 
 # Section V: Conclusion
 

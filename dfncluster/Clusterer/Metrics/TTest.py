@@ -35,5 +35,5 @@ def t_test(features, labels, p_level=None):
             equal_var=True)[1]
     if p_level is None:
         return pvalues
-    return abs(pvalues) < p_level
+    return np.abs(pvalues) < p_level
 
