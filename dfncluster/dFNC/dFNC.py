@@ -427,14 +427,18 @@ class dFNC:
                 Z[np.triu_indices(nc)] = centroid_k
                 if num_states == 1:
                     ax[ck].imshow(Z, cmap='jet', vmin=state_min, vmax=state_max)
-                    ax[ck].set_title("State %d" % k)
+                    ax[ck].set_title("State %d" % k, fontsize=32)
                     ax[ck].set_xticks(())
                     ax[ck].set_yticks(())
+                    if k == 0:
+                        ax[ck].set_ylabel('Class %d' % ck, fontsize=32)
                 else:
                     ax[ck, k].imshow(Z, cmap='jet', vmin=state_min, vmax=state_max)
-                    ax[ck, k].set_title("State %d" % k)
+                    ax[ck, k].set_title("State %d" % k, fontsize=32)
                     ax[ck, k].set_xticks(())
                     ax[ck, k].set_yticks(())
+                    if k == 0:
+                        ax[ck, k].set_ylabel('Class %d' % ck, fontsize=32)
         plt.savefig(filename, bbox_inches='tight')
         vmin = float("inf")
         vmax = -float("inf")

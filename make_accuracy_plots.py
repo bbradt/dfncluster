@@ -1,10 +1,15 @@
 import os
 import pickle as pkl
 import matplotlib.pyplot as plt
+import matplotlib
 import seaborn as sb
 import pandas as pd
 import numpy as np
 import argparse
+font = {'family' : 'normal',
+        'weight' : 'bold',
+        'size'   : 36}
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataset", default="fbirn", type=str)
 parser.add_argument("--betas", default=False, action="store_true")
@@ -84,14 +89,23 @@ for i in range(num_rows):
         sb.boxplot(data=dfc, x='classifier',  y='AUC', ax=ax[i])
     except ValueError:
         continue
-    ax[i].set_title(CLUSTERERS[i])
-    ax[i].set_ylim([0.0, 1.0])
+    ax[i].set_title(CLUSTERERS[i],fontsize=24)
+    ax[i].set_ylim([0.3, 1.0])
     ax[i].set_xticks(())
+
+    ax[i].set_xlabel('Classifier', fontsize=32)
+    if i != 0:
+        ax[i].set_ylabel('')
+        ax[i].set_yticks(())
+    else:
+        ax[i].set_ylabel('AUC', fontsize=32)
+        for tick in ax[i].yaxis.get_major_ticks():
+                    tick.label.set_fontsize(18) 
 if args.betas:
-    plt.suptitle('AUC using Beta-Features')
+    plt.suptitle('AUC using Beta-Features', fontsize=32)
     filename = 'results/%s_betas_accuracy.png' % DATASET
 else:
-    plt.suptitle('AUC usign Cluster-Assignments')
+    plt.suptitle('AUC using Subject State-Vectors', fontsize=32)
     filename = 'results/%s_assignments_accuracy.png' % DATASET
 
 new_std_rows = []
@@ -115,7 +129,7 @@ new_std_df = new_std_df.set_index('Clustering Algorithm')
 new_std_df = new_std_df[mean_df.max().sort_values(ascending=False).index]
 
 
-
+matplotlib.rc('font', **font)
 plt.savefig(filename, bbox_inches='tight')
 sb.boxplot(data=dfc, x='classifier', y='AUC', hue='classifier', ax=ax[-1])
 axc = plt.gca()
