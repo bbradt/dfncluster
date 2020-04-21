@@ -88,6 +88,12 @@
       such as Functional Network Connectivity states can be used for diagnosis.
     </p>
 
+    <figure>
+      <img src="https://i.stack.imgur.com/lkXDb.png" />
+      <figcaption><b>Figure 1:</b> Visualization of a functional MRI time-series volume. Image from Chapter 2 of
+        Lindquist et al. []</figcaption>
+    </figure>
+
     <h3 id="gaussian-simulated-dataset">Gaussian Simulated Dataset</h3>
     <p>We derive our own synthetic dataset in order to test out our clusterers and classifiers on a simulated dataset
       for
@@ -197,7 +203,7 @@
       </thead>
       <tbody>
         <tr class="odd">
-          <td><span class="math inline"><em>P</em><sub>(</sub><em>c</em> = 0, <em>k</em>)</span></td>
+          <td><span class="math inline"><em>P</em><sub><em>c</em> = 0, <em>k</em></sub></span></td>
           <td>0.4</td>
           <td>0.1</td>
           <td>0.1</td>
@@ -205,7 +211,7 @@
           <td>0.1</td>
         </tr>
         <tr class="even">
-          <td>$P_(c=1,k)%</td>
+          <td>$P_{c=1,k}$</td>
           <td>0.1</td>
           <td>0.1</td>
           <td>0.3</td>
@@ -227,7 +233,13 @@
       to 50 years</p>
     <h1 id="section-iii-methods">Section III: Methods</h1>
     <h2 id="overview">Overview</h2>
-    <p><img width="50%" src="results/dfnc_pipeline(1).png?raw=True" /></p>
+    <p>
+      <figure>
+        <img width="50%" src="results/dfnc_pipeline(1).png?raw=True" />
+        <figcaption><b>Fig 2:</b> Pipeline overview of the full dFNC classification framework. In our analysis, we
+          are interested in evaluating the role of the Clustering algorithm on the results.</figcaption>
+      </figure>
+    </p>
     <h2 id="preprocessing">Preprocessing</h2>
     <p>As is standard in Dynamic Functional Network Connectivity, Group Independent Component Analysis of subject images
       is used to compute a set of <span class="math inline"><em>M</em></span> statistically independent spatial maps
@@ -310,52 +322,64 @@
         which is an established result for the Fbirn data set, and which is a common number of clusters chosen elswhere
         in
         the literature.</p>
-      <table>
-        <thead>
-          <tr class="header">
-            <th style="text-align: center;">Gaussian</th>
-            <th style="text-align: center;">Fbirn</th>
-            <th style="text-align: center;">UCLA</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="odd">
-            <td style="text-align: center;"><img width="50%"
-                src="results/kmeans_gauss_betas/kmeans_gauss_elbow.png?raw=True" /></td>
-            <td style="text-align: center;"><img width="50%"
-                src="results/kmeans_fbirn_betas/kmeans_fbirn_elbow.png?raw=True" /></td>
-            <td style="text-align: center;"><img width="50%"
-                src="results/kmeans_ucla_betas/kmeans_ucla_elbow.png?raw=True" /></td>
-          </tr>
-          <tr class="even">
-            <td style="text-align: center;"><img width="50%"
-                src="results/gmm_gauss_betas/gmm_gauss_elbow.png?raw=True" />
-            </td>
-            <td style="text-align: center;"><img width="50%"
-                src="results/gmm_fbirn_betas/gmm_fbirn_elbow.png?raw=True" />
-            </td>
-            <td style="text-align: center;"><img width="50%" src="results/gmm_ucla_betas/gmm_ucla_elbow.png?raw=True" />
-            </td>
-          </tr>
-          <tr class="odd">
-            <td style="text-align: center;"><img width="50%"
-                src="results/bgmm_gauss_betas/bgmm_gauss_elbow.png?raw=True" /></td>
-            <td style="text-align: center;"><img width="50%"
-                src="results/bgmm_fbirn_betas/bgmm_fbirn_elbow.png?raw=True" /></td>
-            <td style="text-align: center;"><img width="50%"
-                src="results/bgmm_ucla_betas/bgmm_ucla_elbow.png?raw=True" />
-            </td>
-          </tr>
-          <tr class="even">
-            <td style="text-align: center;"><img width="50%"
-                src="results/hierarchical_gauss_betas/hierarchical_gauss_elbow.png?raw=True" /></td>
-            <td style="text-align: center;"><img width="50%"
-                src="results/hierarchical_fbirn_betas/hierarchical_fbirn_elbow.png?raw=True" /></td>
-            <td style="text-align: center;"><img width="50%"
-                src="results/hierarchical_ucla_betas/hierarchical_ucla_elbow.png?raw=True" /></td>
-          </tr>
-        </tbody>
-      </table>
+      <figure>
+        <table>
+          <thead>
+            <tr class="header">
+              <th style="text-align: center;">Clustering Algorithm/
+                Data Set</th>
+              <th style="text-align: center;">Gaussian</th>
+              <th style="text-align: center;">Fbirn</th>
+              <th style="text-align: center;">UCLA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="odd">
+              <td style="text-align: center;">KMeans</td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/kmeans_gauss_betas/kmeans_gauss_elbow.png?raw=True" /></td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/kmeans_fbirn_betas/kmeans_fbirn_elbow.png?raw=True" /></td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/kmeans_ucla_betas/kmeans_ucla_elbow.png?raw=True" /></td>
+            </tr>
+            <tr class="even">
+              <td style="text-align: center;">GMM</td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/gmm_gauss_betas/gmm_gauss_elbow.png?raw=True" />
+              </td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/gmm_fbirn_betas/gmm_fbirn_elbow.png?raw=True" />
+              </td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/gmm_ucla_betas/gmm_ucla_elbow.png?raw=True" />
+              </td>
+            </tr>
+            <tr class="odd">
+              <td style="text-align: center;">bGMM</td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/bgmm_gauss_betas/bgmm_gauss_elbow.png?raw=True" /></td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/bgmm_fbirn_betas/bgmm_fbirn_elbow.png?raw=True" /></td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/bgmm_ucla_betas/bgmm_ucla_elbow.png?raw=True" />
+              </td>
+            </tr>
+            <tr class="even">
+              <td style="text-align: center;">Agglomerative</td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/hierarchical_gauss_betas/hierarchical_gauss_elbow.png?raw=True" /></td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/hierarchical_fbirn_betas/hierarchical_fbirn_elbow.png?raw=True" /></td>
+              <td style="text-align: center;"><img width="50%"
+                  src="results/hierarchical_ucla_betas/hierarchical_ucla_elbow.png?raw=True" /></td>
+            </tr>
+          </tbody>
+        </table>
+        <figcaption><b>Fig 3:</b> Table of elbow-criterion evaluations for all clustering algorithms using the
+          correlation distance distortion, and the silhouette coefficients. In general, we see either no clear
+          elbow, or multiple elbows, depending on the choice of clustering algorithm or data set.</figcaption>
+      </figure>
       <h2 id="classification-details">Classification Details</h2>
 
       <h3>Task Formulation</h3>
