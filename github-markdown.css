@@ -21,6 +21,24 @@ body{
   margin-right: 1em;
 }
 
+.markdown-body h1{
+  font-size: 5em;
+}
+
+.markdown-body h2{
+  font-size: 4em;
+}
+
+.markdown-body h3{
+  font-size: 4em;
+}
+.markdown-body h4{
+  font-size: 3em;
+}
+.markdown-body h5{
+  font-size: 2em;
+}
+
 .markdown-body .octicon {
   display: inline-block;
   fill: currentColor;
