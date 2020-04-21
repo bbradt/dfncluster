@@ -4,8 +4,12 @@
  margin-right: auto;
  width: 50%; 
 }
+body{
+  background-color: #959da5;
+}
 
 .markdown-body{
+  background-color: #e1e4e8;
   margin: 14em;
 }
 .markdown-body p{
@@ -221,7 +225,7 @@
 }
 
 .markdown-body h1 {
-  font-size: 32px;
+  font-size: 5em;
 }
 
 .markdown-body h1,
@@ -230,11 +234,11 @@
 }
 
 .markdown-body h2 {
-  font-size: 24px;
+  font-size: 4em;
 }
 
 .markdown-body h3 {
-  font-size: 20px;
+  font-size: 3em;
 }
 
 .markdown-body h3,
@@ -243,11 +247,11 @@
 }
 
 .markdown-body h4 {
-  font-size: 16px;
+  font-size: 2em;
 }
 
 .markdown-body h5 {
-  font-size: 14px;
+  font-size: 1.8em;
 }
 
 .markdown-body h5,
