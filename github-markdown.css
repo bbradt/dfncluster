@@ -4,6 +4,13 @@
  margin-right: auto;
  width: 50%; 
 }
+
+.markdown-body table {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 body{
 background-color:bisque;
 margin-top: 0;
