@@ -859,39 +859,51 @@
       </table>
       <p><img width="86%" src="results/ucla_betas_accuracy.png?raw=True" /> <img width="12%"
           src="results/accuracy_legend.png?raw=true" /></p>
-      <h2 id="ucla-data-visualisations">UCLA Data Visualisations</h2>
-      <p><img width="98%" src="results/kmeans_ucla_betas/kmeans_ucla_states.png?raw=true" /> Visualization of states
+
+      <hr />
+      <h2 id="ucla-data-visualisations">UCLA FNC State Analysis</h2>
+
+      <h3> KMeans Clustering </h3>
+      <figure><img width="98%" src="results/kmeans_ucla_betas/kmeans_ucla_states.png?raw=true" /> Visualization of
+        states
         with
-        KMeans clustering with UCLA Data</p>
-      <p><img width="49%" src="results/kmeans_ucla_betas/kmeans_ucla_visualization_3d.png?raw=true" /> <img width="49%"
-          src="results/kmeans_ucla_betas/kmeans_ucla_visualization.png?raw=true" /><br />
-        Visualization of clusters with KMeans clustering in 2-d and 3-d with UCLA Data</p>
+        KMeans clustering with UCLA Data</figure>
+      <figure><img width="49%" src="results/kmeans_ucla_betas/kmeans_ucla_visualization_3d.png?raw=true" /> <img
+          width="49%" src="results/kmeans_ucla_betas/kmeans_ucla_visualization.png?raw=true" /><br />
+        Visualization of clusters with KMeans clustering in 2-d and 3-d with UCLA Data</figure>
+      <hr />
+      <h3> GMM Clustering </h3>
       <p><img width="98%" src="results/gmm_ucla_betas/gmm_ucla_states.png?raw=true" /> Visualization of states with
         GMM
         clustering with UCLA Data</p>
       <p><img width="49%" src="results/gmm_ucla_betas/gmm_ucla_visualization_3d.png?raw=true" /> <img width="49%"
           src="results/gmm_ucla_betas/gmm_ucla_visualization.png?raw=true" /><br />
         Visualization of clusters with GMM clustering in 2-d and 3-d with UCLA Data</p>
+      <hr />
+      <h3> Bayesian GMM Clustering </h3>
       <p><img width="98%" src="results/bgmm_ucla_betas/bgmm_ucla_states.png?raw=true" /> Visualization of states with
         BGMM
         clustering with UCLA Data</p>
       <p><img width="49%" src="results/bgmm_ucla_betas/bgmm_ucla_visualization_3d.png?raw=true" /> <img width="49%"
           src="results/bgmm_ucla_betas/bgmm_ucla_visualization.png?raw=true" /><br />
         Visualization of clusters with BGMM clustering in 2-d and 3-d with UCLA Data</p>
-      <p><img width="98%" src="results/dbscan_ucla_betas/dbscan_ucla_states.png?raw=true" /> Visualization of states
-        with
-        DBSCAN clustering with UCLA Data</p>
+      <hr />
+      <h3> DBSCAN Clustering </h3>
       <p><img width="49%" src="results/dbscan_ucla_betas/dbscan_ucla_visualization_3d.png?raw=true" /> <img width="49%"
           src="results/dbscan_ucla_betas/dbscan_ucla_visualization.png?raw=true" /><br />
         Visualization of clusters with DBSCAN clustering in 2-d and 3-d with UCLA Data</p>
+      <hr />
+      <h3> Agglomerative Hierarchical Clustering </h3>
       <p><img width="98%" src="results/hierarchical_ucla_betas/hierarchical_ucla_states.png?raw=true" /> Visualization
         of
         states with Hierarchical clustering with UCLA Data</p>
       <p><img width="49%" src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization_3d.png?raw=true" />
         <img width="49%" src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization.png?raw=true" /><br />
         Visualization of clusters with Hierarchical clustering in 2-d and 3-d with UCLA Data</p>
-
+      <hr />
+      <hr />
       <h2 id="gaussian-simulated-dataset-1">Gaussian Simulated Dataset</h2>
+
       <p>We initially trained the supervised learning algorithms using simulated Gaussian datasets since we did not
         have
         access to the real patient data until later in the semester. We first trained the supervised learning models
@@ -1082,59 +1094,82 @@
         the number of features we trained our models on. These initial results using simulated data helped us
         tremendously
         when deploying our models on real patient data.</p>
-      <h2 id="simulated-visualizations">Simulated Visualizations</h2>
-      <p><img width="98%" src="results/kmeans_fbirn_betas/kmeans_fbirn_states.png?raw=true" /> Visualization of states
-        with KMeans clustering with Gaussian Simulated Data</p>
-      <p><img width="49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization_3d.png?raw=true" /> <img
+      <h2 id="simulated-visualizations">Simulated State Analysis</h2>
+      <h3>Kmeans Clustering</h3>
+      <figure><img width="98%" src="results/kmeans_gauss_betas/kmeans_gauss_states.png?raw=true" /> Visualization of
+        states
+        with KMeans clustering with Gaussian Simulated Data</figure>
+      <figure><img width="49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization_3d.png?raw=true" /> <img
           width="29%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization.png?raw=true" /><br />
-        Visualization of clusters with KMeans clustering in 2-d and 3-d with Gaussian Simulated Data</p>
-      <p><img width="98%" src="results/gmm_gauss_betas/gmm_gauss_states.png?raw=true" /> Visualization of states with
-        GMM
-        clustering with Gaussian Simulated Data</p>
-      <p><img width="49%" src="results/gmm_gauss_betas/gmm_gauss_visualization_3d.png?raw=true" /> <img width="29%"
-          src="results/gmm_gauss_betas/gmm_gauss_visualization.png?raw=true" /><br />
-        Visualization of clusters with GMM clustering in 2-d and 3-d with Gaussian Simulated Data</p>
-      <p><img width="98%" src="results/bgmm_gauss_betas/bgmm_gauss_states.png?raw=true" /> Visualization of states
+        Visualization of clusters with KMeans clustering in 2-d and 3-d with Gaussian Simulated Data</figure>
+      <hr />
+      <h3>GMM Clustering</h3>
+      <figure><img width="98%" src="results/gmm_gauss_betas/gmm_gauss_states.png?raw=true" /> Visualization of states
         with
-        BGMM clustering with Gaussian Simulated Data</p>
-      <p><img width="49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization_3d.png?raw=true" /> <img width="29%"
-          src="results/bgmm_gauss_betas/bgmm_gauss_visualization.png?raw=true" /><br />
-        Visualization of clusters with BGMM clustering in 2-d and 3-d with Gaussian Simulated Data</p>
-      <p><img width="98%" src="results/dbscan_gauss_betas/dbscan_gauss_states.png?raw=true" /> Visualization of states
-        with DBSCAN clustering with Gaussian Simulated Data</p>
-      <p><img width="49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization_3d.png?raw=true" /> <img
+        GMM
+        clustering with Gaussian Simulated Data</figure>
+      <figure><img width="49%" src="results/gmm_gauss_betas/gmm_gauss_visualization_3d.png?raw=true" /> <img width="29%"
+          src="results/gmm_gauss_betas/gmm_gauss_visualization.png?raw=true" /><br />
+        Visualization of clusters with GMM clustering in 2-d and 3-d with Gaussian Simulated Data</figure>
+      <hr />
+      <h3>Bayesian GMM Clustering</h3>
+      <figure><img width="98%" src="results/bgmm_gauss_betas/bgmm_gauss_states.png?raw=true" /> Visualization of
+        states
+        with
+        BGMM clustering with Gaussian Simulated Data</figure>
+      <figure><img width="49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization_3d.png?raw=true" /> <img
+          width="29%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization.png?raw=true" /><br />
+        Visualization of clusters with BGMM clustering in 2-d and 3-d with Gaussian Simulated Data</figure>
+      <hr />
+      <h3>DBSCAN Clustering</h3>
+      <figure><img width="98%" src="results/dbscan_gauss_betas/dbscan_gauss_states.png?raw=true" /> Visualization of
+        states
+        with DBSCAN clustering with Gaussian Simulated Data</figure>
+      <figure><img width="49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization_3d.png?raw=true" /> <img
           width="29%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization.png?raw=true" /><br />
-        Visualization of clusters with DBSCAN clustering in 2-d and 3-d with Gaussian Simulated Data</p>
-      <p><img width="98%" src="results/hierarchical_gauss_betas/hierarchical_gauss_states.png?raw=true" />
+        Visualization of clusters with DBSCAN clustering in 2-d and 3-d with Gaussian Simulated Data</figure>
+      <hr />
+      <h3>Agglomerative Hierarchical Clustering</h3>
+      <figure><img width="98%" src="results/hierarchical_gauss_betas/hierarchical_gauss_states.png?raw=true" />
         Visualization
-        of states with Hierarchical clustering with Gaussian Simulated Data</p>
-      <p><img width="49%" src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization_3d.png?raw=true" />
+        of states with Hierarchical clustering with Gaussian Simulated Data</figure>
+      <figure><img width="49%"
+          src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization_3d.png?raw=true" />
         <img width="49%" src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization.png?raw=true" /><br />
-        Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gaussian Simulated Data</p>
+        Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gaussian Simulated Data
+      </figure>
 
       <h1 id="section-v-conclusion">Section V: Conclusion</h1>
 
       <ul>
         <li>
-          Classification of dFNC states performs comporably when using GMM, Bayesian GMM, Hierarchical Clustering, and
-          KMeans
+          Classification of dFNC states <b>performs comporably when using GMM, Bayesian GMM, Hierarchical Clustering,
+            and
+            KMeans</b>
+        </li>
+        <li><b>>GMM, bGMM, and Hierarchical clustering all detect states not detected with KMeans</b>, which provide
+          either comparable or better classification of schizophrenia, indicating these states may have
+          biological significance for diagnosis.
         </li>
         <li>
-          Hierarchical Clustering provides the highest classification results for Fbirn, and GMM/bGMM provide the
+          <b>Hierarchical Clustering provides the highest classification results</b> for Fbirn, and GMM/bGMM provide the
           highest results for
-          UCLA data, while also providing slightly different states than are detected with KMeans. These states may be
+          UCLA data, while also providing slightly different states than are detected with KMeans. These states
+          may be
           useful for further
           neurological analysis.
         </li>
         <li>
-          DBSCAN's sensitivity to parameters requires exhaustive hyper-parameter searching, without clear improvements
+          DBSCAN's sensitivity to parameters requires exhaustive hyper-parameter searching, without clear
+          improvements
           in performance, but because states collected by DBSCAN in Fbirn data provided decent results (~80%
           accuracy),
           they may provide
           some biological insight.
         </li>
         <li>
-          As established in literature, SVM classifiers perform most reliably for classifying dFNC states, which is
+          As established in literature, SVM classifiers perform most reliably for classifying dFNC states, which
+          is
           consistent for both real data sets, and all clustering algorithms.
         </li>
       </ul>
@@ -1142,11 +1177,14 @@
       <h2>Further Work</h2>
 
       <ul>
-        <li>Further neurological analysis of detected states is required for more thorough interpretation of results
+        <li>Further neurological analysis of detected states is required for more thorough interpretation of
+          results
         </li>
         <li>
-          Elbow criterion for different clustering algorithms revealed some inconsistency in the use of $k=5$ for the
-          number of states. Applying the full classification pipeline to other numbers of states may provide further
+          Elbow criterion for different clustering algorithms revealed some inconsistency in the use of $k=5$ for
+          the
+          number of states. Applying the full classification pipeline to other numbers of states may provide
+          further
           insight
           into states, and improve classification even further.
         </li>
@@ -1159,20 +1197,24 @@
       </ul>
 
       <h2 id="references">References</h2>
-      <p><a name="ref1"></a> [1]. Eswar Damaraju et al. “Dynamic functional connectivity analysis reveals transient
+      <p><a name="ref1"></a> [1]. Eswar Damaraju et al. “Dynamic functional connectivity analysis reveals
+        transient
         states
         of dyscon-nectivity in schizophrenia”. In:NeuroImage: Clinical5 (2014), pp. 298–308.<br></p>
       <p><a name="ref2"></a> [2]. Mustafa S Salman et al. “Group ICA for identifying biomarkers in
-        schizophrenia:‘Adaptive’networks viaspatially constrained ICA show more sensitivity to group differences than
+        schizophrenia:‘Adaptive’networks viaspatially constrained ICA show more sensitivity to group differences
+        than
         spatio-temporal regression”.In:NeuroImage: Clinical22 (2019), p. 101747.<br></p>
       <p><a name="ref3"></a> [3]. Elena A Allen et al. “Tracking whole-brain connectivity dynamics in the resting
         state”.
         In:Cerebralcortex24.3 (2014), pp. 663–676.<br></p>
       <p><a name="ref4"></a> [4]. D. Zhi et al., “Abnormal Dynamic Functional Network Connectivity and Graph
         Theoretical
-        Analysis in Major Depressive Disorder,” 2018 40th Annual International Conference of the IEEE Engineering in
+        Analysis in Major Depressive Disorder,” 2018 40th Annual International Conference of the IEEE Engineering
+        in
         Medicine and Biology Society (EMBC), Honolulu, HI, 2018, pp. 558-561.<br></p>
-      <p><a name="ref5"></a> [5]. U Sakoglu, AM Michael, and VD Calhoun. “Classification of schizophrenia patients vs
+      <p><a name="ref5"></a> [5]. U Sakoglu, AM Michael, and VD Calhoun. “Classification of schizophrenia patients
+        vs
         healthy controlswith dynamic functional network connectivity”. In:Neuroimage47.1 (2009), S39–41.<br></p>
       <p><a name="ref6"></a> [6]. Unal Sako ̆glu et al. “A method for evaluating dynamic functional network
         connectivity
@@ -1180,12 +1222,15 @@
         andMedicine23.5-6 (2010), pp. 351–366.<br></p>
       <p><a name="ref7"></a> [7]. V. M. Vergara, A. Abrol, F. A. Espinoza and V. D. Calhoun, &quot;Selection of
         Efficient
-        Clustering Index to Estimate the Number of Dynamic Brain States from Functional Network Connectivity*,&quot;
+        Clustering Index to Estimate the Number of Dynamic Brain States from Functional Network
+        Connectivity*,&quot;
         2019
-        41st Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), Berlin,
+        41st Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC),
+        Berlin,
         Germany, 2019, pp. 632-635.<br></p>
       <p><a name="ref8"></a> [8]. D. K. Saha, A. Abrol, E. Damaraju, B. Rashid, S. M. Plis and V. D. Calhoun,
-        “Classification As a Criterion to Select Model Order For Dynamic Functional Connectivity States in Rest-fMRI
+        “Classification As a Criterion to Select Model Order For Dynamic Functional Connectivity States in
+        Rest-fMRI
         Data,” 2019 IEEE 16th International Symposium on Biomedical Imaging (ISBI 2019), Venice, Italy, 2019,
         pp. 1602-1605.<br></p>
       <p><a name="ref9"></a> [9]. Pedregosa et al. “2.3. Clustering.” Scikit,
@@ -1194,21 +1239,26 @@
         Using
         Static and Dynamic Resting-State FMRI Brain Connectivity.” NeuroImage, vol. 134, 2016, pp. 645–657.,
         doi:10.1016/j.neuroimage.2016.04.051.</p>
-      <p><a name="ref11"></a> [11]. Bell, Anthony J., and Terrence J. Sejnowski. "An information-maximization approach
+      <p><a name="ref11"></a> [11]. Bell, Anthony J., and Terrence J. Sejnowski. "An information-maximization
+        approach
         to blind separation and blind
         deconvolution." Neural computation 7.6 (1995): 1129-1159.</p>
       <p><a name="ref12"></a>[12]. Du, Yuhui, and Yong Fan. "Group information guided ICA for fMRI data analysis."
         Neuroimage 69 (2013): 157-197.</p>
-      <p><a name="ref13"></a> [13]. Salman, Mustafa S., et al. "Group information guided ICA shows more sensitivity to
+      <p><a name="ref13"></a> [13]. Salman, Mustafa S., et al. "Group information guided ICA shows more
+        sensitivity to
         group differences than
-        dual-regression." 2017 IEEE 14th International Symposium on Biomedical Imaging (ISBI 2017). IEEE, 2017.</p>
+        dual-regression." 2017 IEEE 14th International Symposium on Biomedical Imaging (ISBI 2017). IEEE, 2017.
+      </p>
       <p><a name="ref14"></a> [14]. Rashid, Barnaly, et al. "Classification of schizophrenia and bipolar patients
         using
         static and dynamic resting-state
         fMRI brain connectivity." Neuroimage 134 (2016): 645-657.</p>
-      <p><a name="ref15"></a> [15]. Rachakonda, Srinivas, et al. "Group ICA of fMRI toolbox (GIFT) manual." Dostupnez
+      <p><a name="ref15"></a> [15]. Rachakonda, Srinivas, et al. "Group ICA of fMRI toolbox (GIFT) manual."
+        Dostupnez
         [cit 2011-11-5] (2007).</p>
-      <p><a name="ref16"></a>[16]. Du, Yuhui, et al. "NeuroMark: an adaptive independent component analysis framework
+      <p><a name="ref16"></a>[16]. Du, Yuhui, et al. "NeuroMark: an adaptive independent component analysis
+        framework
         for estimating reproducible and
         comparable fMRI biomarkers among brain disorders." medRxiv (2019): 19008631.</p>
       <p><a name="random_forests"> </a>[17]. Breiman, “Random Forests”, Machine Learning, 45(1), 5-32, 2001.
@@ -1222,11 +1272,13 @@
         an Application to Boosting”,
         1997.
       </p>
-      <p><a name="bagging"></a>[20]. Breiman, Leo. "Bagging predictors." Machine learning 24.2 (1996): 123-140.</p>
+      <p><a name="bagging"></a>[20]. Breiman, Leo. "Bagging predictors." Machine learning 24.2 (1996): 123-140.
+      </p>
       <p><a name="gradient_boost"></a>[21]. Friedman, Jerome H. "Stochastic gradient boosting." Computational
         statistics
         & data analysis 38.4 (2002): 367-378.</p>
-      <p><a name="passive_aggressive"></a>[22] “Online Passive-Aggressive Algorithms” K. Crammer, O. Dekel, J. Keshat,
+      <p><a name="passive_aggressive"></a>[22] “Online Passive-Aggressive Algorithms” K. Crammer, O. Dekel, J.
+        Keshat,
         S. Shalev-Shwartz, Y. Singer - JMLR 7 (2006)</p>
   </div>
 </body>
