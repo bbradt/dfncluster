@@ -9,6 +9,24 @@ background-color:bisque;
 margin-top: 0;
 }
 
+.my-title{
+  font-size: 10em;
+  font-weight: 800;
+  margin-bottom: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.authors{
+  font-size: 6em;
+  font-weight: 600;
+  margin-bottom: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 .markdown-body{
   background-color: white;
   margin-left: 14em;

@@ -48,6 +48,12 @@
 </head>
 
 <body>
+  <div class="my-title">
+    The Role of Clustering in Dynamic Functional Network Connectivity for Schizophrenia Diagnosis
+  </div>
+  <div class="authors">
+    Bradley Baker, Dahim Choi, Anish Khazane, Jitendra Khumar, Eric Martin
+  </div>
   <div class="markdown-body">
     <h1 id="introduction">Introduction</h1>
     <figure>
@@ -234,26 +240,28 @@
         <li><b>Agglomerative Hierarchical Clustering</b></li>
       </ul>
 
-      For each of these algorithms, we used them for both exemplar clustering, and clustering on the full data. In the
-      case of KMeans,
-      Gaussian Mixture Models, and Bayesian Gaussian Mixture Models, exemplar cluster-centers were used as input for
-      initialization
-      in the second stage of clustering using the same algorithm. In the case of DBSCAN and Agglomerative clustering,
-      the exemplar stage was only used for elbow criterion, and other hyper-parameter tuning.
+      <p>For each of these algorithms, we used them for both exemplar clustering, and clustering on the full data. In
+        the
+        case of KMeans,
+        Gaussian Mixture Models, and Bayesian Gaussian Mixture Models, exemplar cluster-centers were used as input for
+        initialization
+        in the second stage of clustering using the same algorithm. In the case of DBSCAN and Agglomerative clustering,
+        the exemplar stage was only used for elbow criterion, and other hyper-parameter tuning.</p>
 
-      For GMMs and Bayesian GMMs, we elected to use hard-assignment for determining cluster membership, because it
-      lent to simpler integration with other steps in the pipeline. In future work, we would like to try to use the
-      more rich information provided by soft-assignment to somehow improve feature generation, which is further
-      discussed below.
+      <p>For GMMs and Bayesian GMMs, we elected to use hard-assignment for determining cluster membership, because it
+        lent to simpler integration with other steps in the pipeline. In future work, we would like to try to use the
+        more rich information provided by soft-assignment to somehow improve feature generation, which is further
+        discussed below.</p>
 
       <h2 id="classification-details">Classification Details</h2>
 
       <h3>Task Formulation</h3>
 
-      Our chosen task is the binary classification of Schizophrenic Patients from Healthy Controls using
-      Functional Network Connectivity states. For patients with a schizophrenic diagnosis, we assign the label <b>1</b>,
-      and for all other subjects, we assign the label <b>0</b>. Given the set of FNC features for all subjects, our
-      goal is to find the classifier which provides the most accurate diagnosis.
+      <p>Our chosen task is the binary classification of Schizophrenic Patients from Healthy Controls using
+        Functional Network Connectivity states. For patients with a schizophrenic diagnosis, we assign the label
+        <b>1</b>,
+        and for all other subjects, we assign the label <b>0</b>. Given the set of FNC features for all subjects, our
+        goal is to find the classifier which provides the most accurate diagnosis.</p>
 
       <h3 id="evaluation-metric">Evaluation Metric</h3>
       <p>For our evaluation metric, we used the Area-Under the “Receiving Operating Characteric” (ROC) curve, or
@@ -293,31 +301,33 @@
 
       <h3>Chosen Algorithms</h3>
 
-      <p>For supervised learning, we used a modified version of the [Polyssifier classification
-        toolbox](https://github.com/alvarouc/polyssifier),
+      <p>For supervised learning, we used a modified version of the <a
+          href="(https://github.com/alvarouc/polyssifier">Polyssifier classification
+          toolbox</a>,
         which wraps the majority of the classification algorithms from SKlearn into an end-to-end framework. The
         modified version
-        of the toolbox, which is being maintained by Brad Baker, [can be found
-        here](https://github.com/trendscenter/polyssifier). Within polyssifier, we implemented the following binary
+        of the toolbox, which is being maintained by <a href="https://github.com/trendscenter/polyssifier">Brad
+          Baker</a>, . Within polyssifier, we implemented the following binary
         classifiers:
       </p>
-      <ul>
-        <li>Multilayer Perceptron</li>
-        <li>K-Nearest Neighbors Classifier</li>
-        <li>Support Vector Machines</li>
-        <li>Decision Tree Classifier</li>
-        <li>Random Forests <a href="#random_forests">[17]</a></li>
-        <li>Extra Trees <a href="#extra_trees">[18]</a></li>
-        <li>Ada-Boost Decision Trees <a href="#adaboost">[19]</a></li>
-        <li>Bagging Decision Trees <a href="#bagging">[20]</a></li>
-        <li>Gradient Boosted Decision Trees <a href="#gradient_boost">[21]</a></li>
-        <li>Logistic Regression</li>
-        <li>Passive Aggressive Classifier <a href="#passive_aggresive">[22]</a></li>
-        <li>Perceptron</li>
-        <li>Naive Bayes</li>
-        <li>Voting Classifer</li>
-      </ul>
-
+      <p>
+        <ul>
+          <li>Multilayer Perceptron</li>
+          <li>K-Nearest Neighbors Classifier</li>
+          <li>Support Vector Machines</li>
+          <li>Decision Tree Classifier</li>
+          <li>Random Forests <a href="#random_forests">[17]</a></li>
+          <li>Extra Trees <a href="#extra_trees">[18]</a></li>
+          <li>Ada-Boost Decision Trees <a href="#adaboost">[19]</a></li>
+          <li>Bagging Decision Trees <a href="#bagging">[20]</a></li>
+          <li>Gradient Boosted Decision Trees <a href="#gradient_boost">[21]</a></li>
+          <li>Logistic Regression</li>
+          <li>Passive Aggressive Classifier <a href="#passive_aggresive">[22]</a></li>
+          <li>Perceptron</li>
+          <li>Naive Bayes</li>
+          <li>Voting Classifer</li>
+        </ul>
+      </p>
 
       <h3 id="grid-search">Grid Search</h3>
 
@@ -538,65 +548,67 @@
 
 
       <h1 id="section-v-conclusion">Section V: Conclusion</h1>
-
-      <ul>
-        <li>
-          <b>Cluster-Based features greatly improve classification</b> performance for the
-          schizophrenia classification task.
-        </li>
-        <li>
-          Classification of dFNC states <b>performs comporably when using GMM, Bayesian GMM, Hierarchical Clustering,
-            and
-            KMeans</b>
-        </li>
-        <li><b>GMM, bGMM, and Hierarchical clustering all detect states not detected with KMeans</b>, which provide
-          either comparable or better classification of schizophrenia, indicating these states may have
-          biological significance for diagnosis.
-        </li>
-        <li>
-          <b>Hierarchical Clustering provides the highest classification results</b> for Fbirn, and GMM/bGMM provide the
-          highest results for
-          UCLA data, while also providing slightly different states than are detected with KMeans. These states
-          may be
-          useful for further
-          neurological analysis.
-        </li>
-        <li>
-          DBSCAN's sensitivity to parameters requires exhaustive hyper-parameter searching, without clear
-          improvements
-          in performance, but because states collected by DBSCAN in Fbirn data provided decent results (~80%
-          accuracy),
-          they may provide
-          some biological insight.
-        </li>
-        <li>
-          As established in literature, SVM classifiers perform most reliably for classifying dFNC states, which
-          is
-          consistent for both real data sets, and all clustering algorithms.
-        </li>
-      </ul>
-
+      <p>
+        <ul>
+          <li>
+            <b>Cluster-Based features greatly improve classification</b> performance for the
+            schizophrenia classification task.
+          </li>
+          <li>
+            Classification of dFNC states <b>performs comporably when using GMM, Bayesian GMM, Hierarchical Clustering,
+              and
+              KMeans</b>
+          </li>
+          <li><b>GMM, bGMM, and Hierarchical clustering all detect states not detected with KMeans</b>, which provide
+            either comparable or better classification of schizophrenia, indicating these states may have
+            biological significance for diagnosis.
+          </li>
+          <li>
+            <b>Hierarchical Clustering provides the highest classification results</b> for Fbirn, and GMM/bGMM provide
+            the
+            highest results for
+            UCLA data, while also providing slightly different states than are detected with KMeans. These states
+            may be
+            useful for further
+            neurological analysis.
+          </li>
+          <li>
+            DBSCAN's sensitivity to parameters requires exhaustive hyper-parameter searching, without clear
+            improvements
+            in performance, but because states collected by DBSCAN in Fbirn data provided decent results (~80%
+            accuracy),
+            they may provide
+            some biological insight.
+          </li>
+          <li>
+            As established in literature, SVM classifiers perform most reliably for classifying dFNC states, which
+            is
+            consistent for both real data sets, and all clustering algorithms.
+          </li>
+        </ul>
+      </p>
       <h2>Further Work</h2>
-
-      <ul>
-        <li>Further neurological analysis of detected states is required for more thorough interpretation of
-          results
-        </li>
-        <li>
-          Elbow criterion for different clustering algorithms revealed some inconsistency in the use of $k=5$ for
-          the
-          number of states. Applying the full classification pipeline to other numbers of states may provide
-          further
-          insight
-          into states, and improve classification even further.
-        </li>
-        <li>
-          More advanced clustering and classification algorithms using Deep Learning may provide significant lifts
-          classification. Particularly the use of Variational AutoEncoders for clustering seems a particularly
-          promising
-          avenue of future investigation.
-        </li>
-      </ul>
+      <p>
+        <ul>
+          <li>Further neurological analysis of detected states is required for more thorough interpretation of
+            results
+          </li>
+          <li>
+            Elbow criterion for different clustering algorithms revealed some inconsistency in the use of $k=5$ for
+            the
+            number of states. Applying the full classification pipeline to other numbers of states may provide
+            further
+            insight
+            into states, and improve classification even further.
+          </li>
+          <li>
+            More advanced clustering and classification algorithms using Deep Learning may provide significant lifts
+            classification. Particularly the use of Variational AutoEncoders for clustering seems a particularly
+            promising
+            avenue of future investigation.
+          </li>
+        </ul>
+      </p>
 
       <h2 id="references">References</h2>
       <p><a name="ref1"></a> [1]. Eswar Damaraju et al. “Dynamic functional connectivity analysis reveals
