@@ -435,12 +435,16 @@
       </p>
 
       <h2 id="fbirn-dataset-1">FBIRN Dataset</h2>
-      <p>The FBIRN dataset was trained in the exact same manner as the simulated Guassian dataset. First, the
-        supervised
-        models were trained without clustering or beta feature generation. As expected, the classifiers failed to
-        consistently achieve AUC scores outside of the 0.40-0.60 range suggesting that all the models produced
-        random
-        diagnoses. The baseline results are displayed below.</p>
+
+    <p>
+      We initially trained the supervised learning model on the unclustered FBIRN FNC matrices produced
+      in order to establish a baseline accuracy to compare our clustering algorithms an our beta feature generations
+      against. All the classifiers failed to consistently achieve AUC scores outside of the 0.40-0.60 range suggesting
+      that all the models produced random diagnoses. This confimed our hypothesis that clustering and feature
+      reduction was paramount to succesful classfication of healthy and schizoprhenic patients. The baseline results
+      are displayed below.
+    </p>
+
       <figure>
         <img src="images/fbirn_pre_clus_accuracy.png?raw=true" width="25%"/>
         <figcaption><b>Figure: </b>AUC scores for 10-fold cross-validation of multiple classifiers using only the
@@ -448,11 +452,11 @@
           matrices as features. The y axis is the AUC metric for each classifier, and the x-axis separates the
           classifiers.</figcaption>
       </figure>
-      <p>Next we trained the models on the FBIRN data after clustering and using only cluster assignments. No beta
-        features were generated to reduce the dimensionality of the training dataset. The results are displayed
-        below.
-      </p>
-
+    <p>
+      After establishing our baseline resutls we trained the models on the FBIRN using only cluster assignments.
+      No beta features were generated to reduce the dimensionality of the training dataset. The results are displayed
+      below.
+    </p>
       <figure>
         <img width="100%" src="results/fbirn_assignments_accuracy.png?raw=true" />
         <img style="width:30%" src="results/accuracy_legend.png?raw=true" />
@@ -471,10 +475,12 @@
         in a clinical environment. It was surmised the number of features in the datasets had to be reduced from
         cluster
         assignments over time to beta features in order for the supervised learning models to accurately diagnose
-        patients.</p>
-      <p>After performing beta features generation with clustering, the final results for the FBIRN dataset were
-        obtained
-        and are displayed below.</p>
+        patients.
+      </p>
+    <p>
+      After performing beta features generation with clustering, the final results for the FBIRN dataset were
+      obtained and are displayed below.
+    </p>
       <table style="width:50%;">
         <colgroup>
           <col style="width: 12%" />
@@ -560,14 +566,12 @@
           and the x-axis separates the scores obtained over 10-fold cross-validation for each classifier.
         </figcaption>
       </figure>
-      <p>As expected, the reduced number of training features increased the accuracy of all the learners with
-        Support
-        Vector Machines acheiveing the highest accuracy across all clustering algorithms. Only DBCAN failed to get
-        above
-        an average AUC score of 0.90 for support vector machines and Hierarchical clusterting obtained this
-        highest
-        score
-        of 0.957.</p>
+    <p>
+      The reduced number of training features increased the accuracy of all the learners with Support
+      Vector Machines acheiveing the highest accuracy across all clustering algorithms. Only DBCAN failed to get
+      above an average AUC score of 0.90 for support vector machines and Hierarchical clusterting obtained this
+      highest scoreof 0.957.
+    </p>
       <hr />
       <h2 id="fbirn-data-visualizations">FNC State Analysis</h2>
       <h3> Kmeans Clustering </h3>
@@ -1059,26 +1063,22 @@
       </p>
 
       <h2 id="ucla-dataset-1">Appendix C: UCLA Dataset Results</h2>
-      <p>The UCAL Dataset was similarly trained. Firstly, it was trained using unclustered data to establish a
-        baseline
-        to
-        compare against. The results are displayed below and as expected the supervised models failed to obtain
-        suitable
-        AUC scores.</p>
+    <p>
+      We initially trained the UCLA data on unclustered FNC data to establish an accuracy baseline
+      The results are displayed below.
+    </p>
       <p><img src="images/ucla_pre_clus_accuracy.png?raw=true" width="75%" /></p>
-      <p>The below plot shows “Accuracy” of various classifiers such as KMeans, Gaussian Mixture Model(GMM),
-        Bayesian
-        Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and
-        Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a
-        lot in
-        comparison to the previous case above without clusterer and without using beta feature say for example
-        from
-        0.7
-        to
-        0.9 for KMeans with “Multi Layer Perceptron” and likewise for other clusterer. Almost all the classifiers
-        in
-        all
-        the clusterer shows improvement over KMeans clustering.</p>
+    <p>
+      Surprisingly, the UCLA was much easier to classify without any clustering nor beta feature generation.
+      The AUC scores were within 0.70 and 0.80 range for most classifiers which meant that using FNC matrices
+      alone enabled supervised learning models to classify healthy and schizophrenic patients with some efficacy.
+      We noticed that the PCA feature space of the UCLA dataset was much more separable than the FBIRN dataset
+      which be believed led to the relatively high baseline AUC scores.
+
+      After analyzing the relatively high AUC scores of the UCLA datasets, we performed our usual analysis.
+      We applied our clustering algorithms and trained our supervised learning models on the beat features.
+      The final results are displayed below.
+    </p>
       <table style="width:50%;">
         <colgroup>
           <col style="width: 12%" />
@@ -1155,8 +1155,19 @@
           </tr>
         </tbody>
       </table>
-      <p><img width="86%" src="results/ucla_betas_accuracy.png?raw=True" /> <img width="12%"
-          src="results/accuracy_legend.png?raw=true" /></p>
+    <p><img width="86%" src="results/ucla_betas_accuracy.png?raw=True" /> <img width="12%" src="results/accuracy_legend.png?raw=true" /></p>
+    <p>
+      Accuracy from the baseline cases with AUC scores on average increasing from 0.70. to 0.90 for multiple learners such as
+      Support Vector Machines and Multilayer Perceptron. Interestingly not all learners improved their AUC scores even after
+      performing the clustering and beta feature generation. For instance, the DBSCAN reduced the
+      AUC scores from the baseline 0.70 to 0.50. We believe that the DBSCAN's sensitivity to hyperparameter changes led it
+      to over classify different clusters leading to poor classification results. Furthermore, there was increased
+      variability in the AUC scores especially for Decision Tree, Random Forest, and Bagging.
+
+      In brief, all the clustering algorithms with the exclusion of DBSCAN showed improvement over KMeans clustering and the
+      baseline case of no clustering. The Gaussian Mixture Model had the highest accuracy beating out Hierarchical Clustering
+      which performed the best on the FBIRN dataset.
+    </p>
 
       <hr />
       <h3 id="ucla-data-visualisations">UCLA FNC State Analysis</h3>
@@ -1206,30 +1217,25 @@
 
       <h2 id="gaussian-simulated-dataset-1">Appendix D: Gaussian Simulated Dataset Results</h2>
 
-      <p>We initially trained the supervised learning algorithms using simulated Gaussian datasets since we did
-        not
-        have
-        access to the real patient data until later in the semester. We first trained the supervised learning
-        models
-        without any clustering in order to establish a baseline AUC scores for our clustering algorithms to impove
-        upon.
-        These baseline results are displayed below.</p>
+    <p>
+      We initially trained the supervised learning algorithms using simulated Gaussian datasets since we did not
+      have access to the real patient data until later in the semester. We first trained the supervised learning models
+      without any clustering in order to establish a baseline AUC scores for our clustering algorithms to improve upon.
+      These baseline results are displayed below.
+    </p>
       <p><img src="images/gauss_pre_clus_accuracy.png?raw=true" width="75%" /></p>
-      <p>The key result from this experiment was that without any clustering, no supervised learning algorithm
-        could
-        consistently achieve AUC score above 0.60. Some learners such as the Multilayer Perceptron, Passive
-        Aggressive
-        Classifier, and Bernoulli Naive Bayes surprisingly scored below 0.40 suggesting that they consistently
-        misdiagnose
-        patients. This result was attributed to being due to random error, and was disregarded.</p>
-      <p>After establishing the baseline AUC scores, we performed clustering and beta feature generation for the
-        simulated
-        Gaussian datasets. Using these clustered and reduced datasets, we trained across the same classifiers to
-        for
-        each
-        clustering algorithm (K-Means, Gaussian Mixture Model, Bayesian Gaussian Mixture Model, DBSCAN, and
-        Hierarchical)
-        to generate the results below.</p>
+    <p>
+      The key result from this experiment was that without any clustering, no supervised learning algorithm could consistently
+      achieve AUC score above 0.60. Some learners such as the Multilayer Perceptron, Passive Aggressive Classifier,
+      and Bernoulli Naive Bayes surprisingly scored below 0.40 suggesting that they consistently misdiagnose patients.
+      We attributed these results as being due to random error.
+    </p>
+    <p>
+      After establishing the baseline AUC scores, we performed clustering and beta feature generation for the simulated
+      Gaussian datasets. Using these clustered and reduced datasets, we trained across the same classifiers to for each
+      clustering algorithm (K-Means, Gaussian Mixture Model, Bayesian Gaussian Mixture Model, DBSCAN, and Hierarchical).
+      The results are displayed below.
+    </p>
       <table>
         <colgroup>
           <col style="width: 12%" />
@@ -1391,17 +1397,14 @@
       </table>
       <p><img width="86%" src="results/gauss_betas_accuracy.png?raw=True" /> <img width="12%"
           src="results/accuracy_legend.png?raw=true" /></p>
-      <p>The clustering combined with the beta feature generation dramatically improved the AUC scores on the
-        simulated
-        Gaussian datasets. All clustering algorithms produced AUC scores above 0.90 with standard deviations below
-        0.05
-        across all supervised models. The hierarchical clustering even produced perfect predictions. These results
-        confirmed our suspicions that in order to accurately diagnose patients, we needed to perform clustering
-        and
-        reduce
-        the number of features we trained our models on. These initial results using simulated data helped us
-        tremendously
-        when deploying our models on real patient data.</p>
+    <p>
+      The clustering combined with the beta feature generation dramatically improved the AUC scores on the simulated
+      Gaussian datasets. All clustering algorithms produced AUC scores above 0.90 with standard deviations below 0.05 across
+      all supervised models. The hierarchical clustering even produced perfect predictions. These results confirmed our
+      suspicions that in order to accurately diagnose patients, we needed to perform clustering and reduce the number
+      of features we trained our models on. These initial results using simulated data helped us tremendously when deploying
+      our models on real patient data.
+    </p>
       <h3 id="simulated-visualizations">Simulated State Analysis</h3>
       <h3>Kmeans Clustering</h3>
       <figure><img width="98%" src="results/kmeans_gauss_betas/kmeans_gauss_states.png?raw=true" /> Visualization
