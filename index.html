@@ -74,9 +74,20 @@
       clustering and classification algorithms used in the pipeline. Section IV compares the accuracy of these
       classifiers, along with presenting a series of charts that analyze the cluster assignments produced on the fMRI
       data.</p>
+
     <h1 id="section-ii-data">Section II: Data</h1>
     <p>All datasets used in this project are derivatives of fMRI data (functional magnetic resonance imaging), which is
       data measuring brain activity to track a patient’s thought processs over a predefined time period.</p>
+    <p> The BOLD signal in fMRI data tracks the movement of blood throughout a subject's brain during the scan period.
+      These
+      changes in blood flow can be further analyzed to make conclusions about flow between different regions, regions of
+      concentrated activity, and other conclusions, which can be useful for the diagnosis of mental disorders, among
+      other
+      applications. The full 4-Dimensional volumes are often not used for classification in their raw form, and instead
+      derivatives
+      such as Functional Network Connectivity states can be used for diagnosis.
+    </p>
+
     <h3 id="gaussian-simulated-dataset">Gaussian Simulated Dataset</h3>
     <p>We derive our own synthetic dataset in order to test out our clusterers and classifiers on a simulated dataset
       for
@@ -264,9 +275,27 @@
         input
         for clustering.</p>
       <h2 id="clustering-details">Clustering Details</h2>
-      <p>We implemented 5 different clustering algorithms as part of the dFNC pipeline: K-Means, DBSCAN, Gaussian
-        Mixture
-        Models, Bayesian Gaussian Mixture Models, and Agglomerative Hierarchical Clustering.</p>
+      <p>We implemented 5 different clustering algorithms as part of the dFNC pipeline:</p>
+      <ul>
+        <li><b>KMeans</b></li>
+        <li><b>DBSCAN</b></li>
+        <li><b>Gaussian Mixture Models</b></li>
+        <li><b>Bayesian Gaussian Mixture Models</b></li>
+        <li><b>Agglomerative Hierarchical Clustering</b></li>
+      </ul>
+
+      For each of these algorithms, we used them for both exemplar clustering, and clustering on the full data. In the
+      case of KMeans,
+      Gaussian Mixture Models, and Bayesian Gaussian Mixture Models, exemplar cluster-centers were used as input for
+      initialization
+      in the second stage of clustering using the same algorithm. In the case of DBSCAN and Agglomerative clustering,
+      the exemplar stage was only used for elbow criterion, and other hyper-parameter tuning.
+
+      For GMMs and Bayesian GMMs, we elected to use hard-assignment for determining cluster membership, because it
+      lent to simpler integration with other steps in the pipeline. In future work, we would like to try to use the
+      more rich information provided by soft-assignment to somehow improve feature generation, which is further
+      discussed below.
+
       <h3 id="elbow-criterion">Elbow Criterion</h3>
       <p>For K-Means, GMM, bGMM, and Agglomerative clustering, we measured the elbow criterion on a range of 2-9
         components. We measured both the correlation-distance dispersion, as is recommended in Damaraju et al. 2014 <a
@@ -328,23 +357,90 @@
         </tbody>
       </table>
       <h2 id="classification-details">Classification Details</h2>
+
+      <h3>Task Formulation</h3>
+
+      Our chosen task is the binary classification of Schizophrenic Patients from Healthy Controls using
+      Functional Network Connectivity states. For patients with a schizophrenic diagnosis, we assign the label <b>1</b>,
+      and for all other subjects, we assign the label <b>0</b>. Given the set of FNC features for all subjects, our
+      goal is to find the classifier which provides the most accurate diagnosis.
+
+      <h3 id="evaluation-metric">Evaluation Metric</h3>
+      <p>For our evaluation metric, we used the Area-Under the “Receiving Operating Characteric” (ROC) curve, or
+        <b>ROC-AUC</b>.
+        This metric, which is often used for binary classifiers, describes the probability that a given classifier will
+        rank a randomly chosen positive instance higher than a randomly chosen negative instance.
+        The curve is creative by plotting the fraction of true positive out of the positive vs the fraction of
+        false pasitive out of the negatives over various thresholds $T$. In general, a higher AUC indicates a better
+        binary classification performance.
+
+      </p>
+
       <h3 id="feature-generation">Feature Generation</h3>
-      <p>As features for generation, we follow the precedent in <a href="#ref1">[14]</a>, and compute means of clusters
+      <p>Classification over raw dynamic FNC states is often poor, and further feature generation is required.</p>
+
+      <p>We first experimented with the use of subject state-vectors for classification. Because each time point for
+        each subject is assigned a state during clustering, we can generate a vector of $T-W$ state assignments for Each
+        subject to be used as features.
+      </p>
+
+      <p>Secondly, we follow the precedent in <a href="#ref14">[14]</a>, and compute means of clusters
         for each class, and
         use
         these centers to form a regression matrix of size <span
-          class="math inline">2<em>k</em> × (<em>T</em> − <em>W</em>)</span>. For each subject, we then regress out
+          class="math inline">2<em>k</em> × (<em>T</em> − <em>W</em>)</span>. For each subject, we then linearly regress
+        out
         these
         cluster centers from each FNC window, and collect the beta coefficients. The mean of the <span
           class="math inline"><em>β</em></span>-coefficients over all timepoints are then used as features for the final
         classification.</p>
-      <h3 id="evaluation-metric">Evaluation Metric</h3>
-      <p>For our evaluation metric, we used the Area-Under the “Receiving Operating Characteric” (ROC) curve, or AUC.
+
+      <p>
+        We computed two-tailed T-Tests over each of the feature spaces used for classification, and also
+        over the centroids for each class prior to regression, in order to visualize statistically significant
+        features which may or may not improve the performance of the classifiers.
       </p>
+
+      <h3>Chosen Algorithms</h3>
+
+      <p>For supervised learning, we used a modified version of the [Polyssifier classification
+        toolbox](https://github.com/alvarouc/polyssifier),
+        which wraps the majority of the classification algorithms from SKlearn into an end-to-end framework. The
+        modified version
+        of the toolbox, which is being maintained by Brad Baker, [can be found
+        here](https://github.com/trendscenter/polyssifier). Within polyssifier, we implemented the following binary
+        classifiers:
+      </p>
+      <ul>
+        <li>Multilayer Perceptron</li>
+        <li>K-Nearest Neighbors Classifier</li>
+        <li>Support Vector Machines</li>
+        <li>Decision Tree Classifier</li>
+        <li>Random Forests <a href="#random_forests">[17]</a></li>
+        <li>Extra Trees <a href="#extra_trees">[18]</a></li>
+        <li>Ada-Boost Decision Trees <a href="#adaboost">[19]</a></li>
+        <li>Bagging Decision Trees <a href="#bagging">[20]</a></li>
+        <li>Gradient Boosted Decision Trees <a href="#gradient_boost">[21]</a></li>
+        <li>Logistic Regression</li>
+        <li>Passive Aggressive Classifier <a href="#passive_aggresive">[22]</a></li>
+        <li>Perceptron</li>
+        <li>Naive Bayes</li>
+        <li>Voting Classifer</li>
+      </ul>
+
+
       <h3 id="grid-search">Grid Search</h3>
+
       <p>We performed a Grid-Search over all available parameters for each of the classifiers available in Polyssifier.
         For each set of training data used for cross-validation, we trained the grid-search separately, and took the
         parameters with the highest AUC.</p>
+
+      <p>For the sake of space, we have ommitted the details of the grid-search, but the results have been included in
+        the
+        results section of the repo. Particularly, [the best parameters for each classification algorithm are saved
+        here]().
+      </p>
+
       <h1 id="section-iv-results-discussion">Section IV: Results &amp; Discussion</h1>
       <h2 id="initial-ucla-significant-comparisons">Initial UCLA Significant Comparisons</h2>
       <p>In order to evaluate the predictive capacities of the features produced by each clustering algorithm, a
@@ -945,6 +1041,22 @@
       <p><a name="ref16"></a>[16]. Du, Yuhui, et al. "NeuroMark: an adaptive independent component analysis framework
         for estimating reproducible and
         comparable fMRI biomarkers among brain disorders." medRxiv (2019): 19008631.</p>
+      <p><a name="random_forests"> </a>[17]. Breiman, “Random Forests”, Machine Learning, 45(1), 5-32, 2001.
+      </p>
+      <p><a name="extra_trees"></a>[18]. Simm J, de Abril I and Sugiyama M (2014). Tree-Based Ensemble Multi-Task
+        Learning
+        Method for Classification and
+        Regression, volume 97 number 6</p>
+      <p><a name="adaboost"></a>[19]. Y. Freund, and R. Schapire, “A Decision-Theoretic Generalization of On-Line
+        Learning and
+        an Application to Boosting”,
+        1997.
+      </p>
+      <p><a name="bagging"></a>[20]. Breiman, Leo. "Bagging predictors." Machine learning 24.2 (1996): 123-140.</p>
+      <p><a name="gradient_boost"></a>[21]. Friedman, Jerome H. "Stochastic gradient boosting." Computational statistics
+        & data analysis 38.4 (2002): 367-378.</p>
+      <p><a name="passive_aggressive"></a>[22] “Online Passive-Aggressive Algorithms” K. Crammer, O. Dekel, J. Keshat,
+        S. Shalev-Shwartz, Y. Singer - JMLR 7 (2006)</p>
   </div>
 </body>
 
