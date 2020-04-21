@@ -460,7 +460,7 @@
       <figure>
         <img width="100%" src="results/fbirn_assignments_accuracy.png?raw=true" />
         <img style="width:30%" src="results/accuracy_legend.png?raw=true" />
-        <figcaption><b>Figure: </b> Fbirn Schizophrenia Classification AUC scores using subject state-vectors as
+        <figcaption><b>Figure: </b> FBIRN Schizophrenia Classification AUC scores using subject state-vectors as
           features. The y-axis
           provides the AUC metric
           and the x-axis separates the scores obtained over 10-fold cross-validation for each classifier.
@@ -612,7 +612,7 @@
           windows in
           2-D
           and 3-D. Each color corresponds to one of the <span class="math inline"><em>k</em> = 5</span> states. We see that cluster 4 here is
-          not detected by KMeans, perhaps indicating that the GMM has detected a new state in the Fbirn
+          not detected by KMeans, perhaps indicating that the GMM has detected a new state in the FBIRN
           data, which is still useful for schizophrenia diagnosis.
         </figcaption>
       </figure>
@@ -630,7 +630,7 @@
       <figure><img width="98%" src="results/dbscan_fbirn_betas/dbscan_fbirn_states.png?raw=true" /> Visualization
         of
         states
-        with DBSCAN clustering with FBirn Data</figure>
+        with DBSCAN clustering with FBIRN Data</figure>
       <figure><img width="49%" src="results/dbscan_fbirn_betas/dbscan_fbirn_visualization_3d.png?raw=true" /> <img
           width="49%" src="results/dbscan_fbirn_betas/dbscan_fbirn_visualization.png?raw=true" /><br />
         <b>Figure: </b> Visualization of clusters with DBSCAN clustering in 2-d and 3-d with FBIRN Data. As seen 
@@ -671,7 +671,7 @@
             biological significance for diagnosis.
           </li>
           <li>
-            <b>Hierarchical Clustering provides the highest classification results</b> for Fbirn, and GMM/bGMM
+            <b>Hierarchical Clustering provides the highest classification results</b> for FBIRN, and GMM/bGMM
             provide
             the
             highest results for
@@ -683,7 +683,7 @@
           <li>
             DBSCAN's sensitivity to parameters requires exhaustive hyper-parameter searching, without clear
             improvements
-            in performance, but because states collected by DBSCAN in Fbirn data provided decent results (~80%
+            in performance, but because states collected by DBSCAN in FBIRN data provided decent results (~80%
             accuracy),
             they may provide
             some biological insight.
@@ -999,7 +999,7 @@
         decided to compromise, and use the choice of <span class="math inline"><em>K</em> = 5</span> from Damaraju
         et
         al.,
-        which is an established result for the Fbirn data set, and which is a common number of clusters chosen
+        which is an established result for the FBIRN data set, and which is a common number of clusters chosen
         elswhere
         in
         the literature.</p>
@@ -1010,7 +1010,7 @@
             <th style="text-align: center;">Clustering Algorithm/
               Data Set</th>
             <th style="text-align: center;">Gaussian</th>
-            <th style="text-align: center;">Fbirn</th>
+            <th style="text-align: center;">FBIRN</th>
             <th style="text-align: center;">UCLA</th>
           </tr>
         </thead>
