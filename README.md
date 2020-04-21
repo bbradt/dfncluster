@@ -347,7 +347,7 @@ scores were within 0.70 and 0.80 region which meant that using dFNC alone enable
 somewhat classify healthy and schizophrenic patients. To uncover why this was the case, we decided to plot PCAs for the
 dFNC windows and label the points according to whether a patient had schizophrenia or not.
 
-<img width="49%" src="results/kmeans_fbirn_betas/kmeans_fbirn_features_3d.png?raw=true" /> <img width="49%" src="results/kmeans_ucla_features/kmeans_ucla_features_3d?raw=true" />
+<img width="49%" src="results/kmeans_fbirn_betas/kmeans_fbirn_features_3d.png?raw=true" /> <img width="49%" src="results/kmeans_ucla_betas/kmeans_ucla_features_3d?raw=true" />
 Visualisation of dFNC before clustering for FBIRN and UCLA datasets.
 
 We noticed that the PCA feature space of the UCLA dataset was much more separable than the FBIRN dataset. Note how the
