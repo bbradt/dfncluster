@@ -160,8 +160,8 @@
     </table>
 
     <h3 id="gaussian-simulated-dataset">Gaussian Simulated Dataset</h3>
-    <p>We generated synthetic FNC data which were used for debugging code, and evaluating
-      our method. The details of the simulation are described in the appendix.</p>
+    We generated synthetic FNC data which were used for debugging code, and evaluating
+    our method. The details of the simulation are described in the appendix.
     <h3 id="fbirn-dataset">FBIRN Dataset</h3>
     <p>We use derivatives from the Phase 3 Dataset of FBIRN (Functional Biomedical Infromatics Research Network Data
       Repository), which specifically focuses on brain activity maps from patients with schizophrenia. This dataset
@@ -920,7 +920,7 @@
     compare against. The results are displayed below and as expected the supervised models failed to obtain
     suitable
     AUC scores.</p>
-  <p><img src="images/ucla_pre_clustering_AUC.png?raw=true" width="75%" /></p>
+  <p><img src="images/ucla_pre_accuracy.png?raw=true" width="75%" /></p>
   <p>The below plot shows “Accuracy” of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian
     Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and
     Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in
@@ -1060,7 +1060,7 @@
     without any clustering in order to establish a baseline AUC scores for our clustering algorithms to impove
     upon.
     These baseline results are displayed below.</p>
-  <p><img src="images/sim_pre_clustering_AUC.png?raw=true" width="75%" /></p>
+  <p><img src="images/gauss_pre_accuracy.png?raw=true" width="75%" /></p>
   <p>The key result from this experiment was that without any clustering, no supervised learning algorithm could
     consistently achieve AUC score above 0.60. Some learners such as the Multilayer Perceptron, Passive Aggressive
     Classifier, and Bernoulli Naive Bayes surprisingly scored below 0.40 suggesting that they consistently
