@@ -224,21 +224,28 @@
       the data, along with a set of <span class="math inline"><em>M</em></span> time-courses, which are used for the
       dFNC
       analysis. For the Fbirn data, we used pre-computed ICA timecourses provided by Damaraju et al. 2014. These
-      timecourses were computed using Infomax ICA [] with 100 components, which were then manually selected based on
-      biological relevance for a total of 47 remaining components. For the UCLA data, because no ICA derivatives were
-      readily available, we used Group Information Guided ICA [] which is included as part of the GIFT NeuroImaging
-      Analysis Toolbox []. As a template for GIG-ICA, we used the NeuroMark template [], which has been shown to provide
-      reliable estimations of components in many different settings. This provides us with 53 independent components for
+      timecourses were computed using Infomax ICA <a href="#ref11">[11]</a> with 100 components, which were then
+      manually selected based on biological relevance for a total of 47 remaining components.</p>
+    <p>For the UCLA data, because
+      no ICA derivatives were
+      readily available, we used Group Information Guided ICA <a href="#ref12">[12]</a> which is included as part of the
+      GIFT NeuroImaging
+      Analysis Toolbox <a href="#ref15">[15]</a>. As a template for GIG-ICA, we used the NeuroMark template <a
+        href="#ref16">[16]</a>, which has been shown to provide
+      reliable estimations of components in many different settings <a href="#ref13">[13]</a>. This provides us with 53
+      independent components for
       Uhe UCLA data.</p>
     <h3 id="sliding-window-analysis">Sliding Window Analysis</h3>
     <p>For all data-sets we chose a sliding window of size <span class="math inline"><em>W</em> = 22</span>, following
       the
-      precedent in Damaraju et al. 2014 []. Time-Series data <span class="math inline"><em>X</em></span> with size <span
-        class="math inline"><em>M</em> × <em>T</em></span>, where <span class="math inline"><em>M</em></span> is the
+      precedent in Damaraju et al. 2014 <a href="#ref1">[1]</a>. Time-Series data <span
+        class="math inline"><em>X</em></span> with size <span class="math inline"><em>M</em> × <em>T</em></span>, where
+      <span class="math inline"><em>M</em></span> is the
       number of independent components, and <span class="math inline"><em>T</em></span> is the number of timepoints are
       used. Time series were normalized and convolved with a gaussian window with a kernel of size 0.015, again
       following
-      the precedent in Damaraju et al. 2014. For each window on each time-series a number of exemplar data-points were
+      the precedent in Damaraju et al. 2014 <a href="#ref1">[1]</a>. For each window on each time-series a number of
+      exemplar data-points were
       selected by taking the local maximum of the variance from the smoothed time-series.</p>
     <p>We computed correlation coefficients across the components, within each time series window to form the FNC matrix
       with entries <span class="math inline"><em>i</em></span> and
@@ -262,7 +269,8 @@
         Models, Bayesian Gaussian Mixture Models, and Agglomerative Hierarchical Clustering.</p>
       <h3 id="elbow-criterion">Elbow Criterion</h3>
       <p>For K-Means, GMM, bGMM, and Agglomerative clustering, we measured the elbow criterion on a range of 2-9
-        components. We measured both the correlation-distance dispersion, as is recommended in Damaraju et al. 2014 [],
+        components. We measured both the correlation-distance dispersion, as is recommended in Damaraju et al. 2014 <a
+          href="#ref1">[1]</a>,
         as
         well as the silhouette measure. The results from this analysis are included below. In general, we found either
         unclear or multiple elbows in the range <span class="math inline"><em>K</em> = 3, 4, 5, 6</span> for each data
@@ -321,7 +329,8 @@
       </table>
       <h2 id="classification-details">Classification Details</h2>
       <h3 id="feature-generation">Feature Generation</h3>
-      <p>As features for generation, we follow the precedent in [], and compute means of clusters for each class, and
+      <p>As features for generation, we follow the precedent in <a href="#ref1">[14]</a>, and compute means of clusters
+        for each class, and
         use
         these centers to form a regression matrix of size <span
           class="math inline">2<em>k</em> × (<em>T</em> − <em>W</em>)</span>. For each subject, we then regress out
@@ -844,102 +853,49 @@
           width="49%" src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization.png?raw=true" /><br />
         Visualization of clusters with Hierarchical clustering in 2-d and 3-d with UCLA Data</p>
       <h1 id="section-v-conclusion">Section V: Conclusion</h1>
-      <h1 id="dfncluster">dFNCluster</h1>
-      <p>dFNCluster implements Dynamic Functional Network Connectivity (dFNC) with several clustering algorithms, and
-        actively compares the performance of classification under different clustering algorithms and hyper-parameters.
-      </p>
-      <h2 id="prerequisites">Prerequisites</h2>
-      <p>First, install git submodules</p>
-      <pre><code>git submodule update --init --recursive</code></pre>
-      <p>This project has been tested in Python 3.6+</p>
-      <p>It is recommended you use a conda virtual environment.</p>
-      <pre><code>conda create -y --name dfncluster</code></pre>
-      <p>and install requirements via pip</p>
-      <pre><code>pip install -r requirements.txt</code></pre>
-      <h2 id="running-the-code">Running the Code</h2>
-      <p>You can run <code>main.py</code> with the arguments given below, or look at them by running
-        <code>python main.py --help</code></p>
-      <pre><code>usage: main.py [-h] [--dataset DATASET] [--remake_data REMAKE_DATA]
-               [--clusterer CLUSTERER] [--window_size WINDOW_SIZE]
-               [--time_index TIME_INDEX] [--clusterer_params CLUSTERER_PARAMS]
-               [--classifier_params CLASSIFIER_PARAMS] [--outdir OUTDIR]
-               [--dfnc DFNC] [--classify CLASSIFY] [--subset_size SUBSET_SIZE]
-               [--dfnc_outfile DFNC_OUTFILE] [--seed SEED] [--k K]
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --dataset DATASET     &lt;str&gt; the data set to use. Options are fbirn, simtb,
-                        gaussian; DEFAULT=fbirn
-  --remake_data REMAKE_DATA
-                        &lt;bool&gt; whether or not to remake the data set;
-                        DEFAULT=False
-  --clusterer CLUSTERER
-                        &lt;str&gt; the clusterer to use. Options are kmeans, bgmm,
-                        gmm, dbscan; DEFAULT=kmeans
-  --window_size WINDOW_SIZE
-                        &lt;int&gt; the size of the dFNC window; DEFAULT=22
-  --time_index TIME_INDEX
-                        &lt;int&gt; the dimension in which dFNC windows will be
-                        computed; DEFAULT=1
-  --clusterer_params CLUSTERER_PARAMS
-                        &lt;str(dict)&gt; dict to be loaded for classifier
-                        params(JSON); DEFAULT=&quot;{}&quot;
-  --classifier_params CLASSIFIER_PARAMS
-                        &lt;str(dict)&gt; dict to be loaded for classifier params
-                        (JSON); DEFAULT=&quot;{}&quot;
-  --outdir OUTDIR       &lt;str&gt; Name of the results directory. Saving hierarchy
-                        is: results/&lt;outdir&gt;; DEFAULT=FNCOnly
-  --dfnc DFNC           &lt;bool&gt; Do or do not run dFNC; DEFAULT=True
-  --classify CLASSIFY   &lt;bool&gt; Do or do not do classification; DEFAULT=True
-  --subset_size SUBSET_SIZE
-                        &lt;float [0,1]&gt; percentage of data to use; DEFAULT=1.0
-                        (all data)
-  --dfnc_outfile DFNC_OUTFILE
-                        &lt;str&gt; The filename for saving dFNC results;
-                        DEFAULT=dfnc.npy
-  --seed SEED           &lt;int&gt; Seed for numpy RNG. Used for random generation
-                        of the data set, or for controlling randomness in
-                        Clusterings.; DEFAULT=None (do not use seed)
-  --k K                 &lt;int&gt; number of folds for k-fold cross-validation</code></pre>
-      <h2 id="examples">Examples</h2>
-      <h2 id="sklearn-datasets">Sklearn Datasets</h2>
-      <p>To generate a data set from SKlearn for testing purposes, you can generate one of the datasets in
-        <code>data/SklearnDatasets</code>.</p>
-      <p>For example, the moons data set can be generated as follows:</p>
-      <pre><code>PYTHONPATH=. python data/SklearnDatasets/Moons/Moons.py</code></pre>
-      <p>which will save <code>moons.npy</code> in the <code>data/SklearnDatasets/Moons</code> directory.</p>
-      <p>The following datasets have been included as examples:</p>
       <ul>
-        <li>Moons</li>
-        <li>Classification (sklearn.datasets.make_classification)</li>
-        <li>Blobs (sklearn.datasets.make_blobs)</li>
-        <li>MNIST (sklearn.datasets.fetch_openml(name=’mnist_…)</li>
-        <li>Iris (sklearn.datasets.load_iris)</li>
+        <li>
+          Classification of dFNC states performs comporably when using GMM, Bayesian GMM, Hierarchical Clustering, and
+          KMeans
+        </li>
+        <li>
+          Hierarchical Clustering provides the highest classification results for Fbirn, and GMM/bGMM provide the
+          highest results for
+          UCLA data, while also providing slightly different states than are detected with KMeans. These states may be
+          useful for further
+          neurological analysis.
+        </li>
+        <li>
+          DBSCAN's sensitivity to parameters requires exhaustive hyper-parameter searching, without clear improvements
+          in performance, but because states collected by DBSCAN in Fbirn data provided decent results (~80% accuracy),
+          they may provide
+          some biological insight.
+        </li>
+        <li>
+          As established in literature, SVM classifiers perform most reliably for classifying dFNC states, which is
+          consistent for both real data sets, and all clustering algorithms.
+        </li>
       </ul>
-      <h2 id="fbirn-data">Fbirn Data</h2>
-      <p>To run with the pre-computed ICA Timecourses from real data, run the following</p>
-      <p>first, untar the data</p>
-      <pre><code>cd data/MatDatasets/FbirnTC
-tar -xzf subjects.tar.gz</code></pre>
-      <p>back in the dfncluster directory, build the data set, which serializes the data set object as a pickled npy
-        file
-      </p>
-      <pre><code>PYTHONPATH=. python data/MatDatasets/FbirnTC/FbirnTC.py</code></pre>
-      <p>And run the main function, which performs dFNC analysis, and classification using cluster assignments, and raw
-        states for comparison</p>
-      <pre><code>PYTHONPATH=. python main.py</code></pre>
-      <h2 id="simtb-data">SIMTB Data</h2>
-      <p>To run with the pre-computed ICA Timecourses, run the following</p>
-      <p>first, untar the simulated data</p>
-      <pre><code>cd data/MatDatasets/OmegaSim
-tar -xzf subjects.tar.gz</code></pre>
-      <p>back in the dfncluster directory, build the simulations data set, which serializes the data set object as a
-        pickled npy file</p>
-      <pre><code>PYTHONPATH=. python data/MatDatasets/OmegaSim/OmegaSim.py</code></pre>
-      <h3 id="running-on-subsets">Running on Subsets</h3>
-      <p>To run on a subset of the simulated data set, you can either edit data.csv in the data directory, and rebuild,
-        or
-        copy that directory under a new name, edit, rebuild and point main.py to the new data set.</p>
+
+      <h2>Further Work</h2>
+
+      <ul>
+        <li>Further neurological analysis of detected states is required for more thorough interpretation of results
+        </li>
+        <li>
+          Elbow criterion for different clustering algorithms revealed some inconsistency in the use of $k=5$ for the
+          number of states. Applying the full classification pipeline to other numbers of states may provide further
+          insight
+          into states, and improve classification even further.
+        </li>
+        <li>
+          More advanced clustering and classification algorithms using Deep Learning may provide significant lifts
+          classification. Particularly the use of Variational AutoEncoders for clustering seems a particularly promising
+          avenue of future investigation.
+        </li>
+      </ul>
+
       <h2 id="references">References</h2>
       <p><a name="ref1"></a> [1]. Eswar Damaraju et al. “Dynamic functional connectivity analysis reveals transient
         states
@@ -973,6 +929,22 @@ tar -xzf subjects.tar.gz</code></pre>
       <p><a name="ref10"></a> [10]. Rashid, Barnaly, et al. “Classification of Schizophrenia and Bipolar Patients Using
         Static and Dynamic Resting-State FMRI Brain Connectivity.” NeuroImage, vol. 134, 2016, pp. 645–657.,
         doi:10.1016/j.neuroimage.2016.04.051.</p>
+      <p><a name="ref11"></a> [11]. Bell, Anthony J., and Terrence J. Sejnowski. "An information-maximization approach
+        to blind separation and blind
+        deconvolution." Neural computation 7.6 (1995): 1129-1159.</p>
+      <p><a name="ref12"></a>[12]. Du, Yuhui, and Yong Fan. "Group information guided ICA for fMRI data analysis."
+        Neuroimage 69 (2013): 157-197.</p>
+      <p><a name="ref13"></a> [13]. Salman, Mustafa S., et al. "Group information guided ICA shows more sensitivity to
+        group differences than
+        dual-regression." 2017 IEEE 14th International Symposium on Biomedical Imaging (ISBI 2017). IEEE, 2017.</p>
+      <p><a name="ref14"></a> [14]. Rashid, Barnaly, et al. "Classification of schizophrenia and bipolar patients using
+        static and dynamic resting-state
+        fMRI brain connectivity." Neuroimage 134 (2016): 645-657.</p>
+      <p><a name="ref15"></a> [15]. Rachakonda, Srinivas, et al. "Group ICA of fMRI toolbox (GIFT) manual." Dostupnez
+        [cit 2011-11-5] (2007).</p>
+      <p><a name="ref16"></a>[16]. Du, Yuhui, et al. "NeuroMark: an adaptive independent component analysis framework
+        for estimating reproducible and
+        comparable fMRI biomarkers among brain disorders." medRxiv (2019): 19008631.</p>
   </div>
 </body>
 
