@@ -364,7 +364,7 @@
         consistently achieve AUC scores outside of the 0.40-0.60 range suggesting that all the models produced random
         diagnoses. The baseline results are displayed below.</p>
       <figure>
-        <img src="images/fbirn_pre_accuracy.png?raw=true" />
+        <img src="images/fbirn_pre_clus_accuracy.png?raw=true" />
         <figcaption><b>Figure: </b>AUC scores for 10-fold cross-validation of multiple classifiers using only the
           concatenated FNC
           matrices as features. The y axis is the AUC metric for each classifier, and the x-axis separates the
@@ -920,7 +920,7 @@
     compare against. The results are displayed below and as expected the supervised models failed to obtain
     suitable
     AUC scores.</p>
-  <p><img src="images/ucla_pre_accuracy.png?raw=true" width="75%" /></p>
+  <p><img src="images/ucla_pre_clus_accuracy.png?raw=true" width="75%" /></p>
   <p>The below plot shows “Accuracy” of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian
     Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and
     Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in
@@ -1060,7 +1060,7 @@
     without any clustering in order to establish a baseline AUC scores for our clustering algorithms to impove
     upon.
     These baseline results are displayed below.</p>
-  <p><img src="images/gauss_pre_accuracy.png?raw=true" width="75%" /></p>
+  <p><img src="images/gauss_pre_clus_accuracy.png?raw=true" width="75%" /></p>
   <p>The key result from this experiment was that without any clustering, no supervised learning algorithm could
     consistently achieve AUC score above 0.60. Some learners such as the Multilayer Perceptron, Passive Aggressive
     Classifier, and Bernoulli Naive Bayes surprisingly scored below 0.40 suggesting that they consistently
