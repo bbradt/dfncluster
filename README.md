@@ -248,10 +248,9 @@ Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gauss
 
 ## FBIRN Dataset
 
-We trained the FBIRN dataset in same manner as the simulated Guassian dataset. First, we trained the the supervised 
-learning models without any clustering or beta feature generation to establish a baseline accuracy. As expected, the classifiers
-failed to consistently achieve AUC scores outside of the 0.40-0.60 range suggesting that all the models produced random diagnoses.
-The baseline results are displayed below.
+We initially trained the the supervised learning models without any clustering or beta feature generation to establish
++a baseline accuracy. All the classifiers failed to consistently achieve AUC scores outside of the 0.40-0.60 range
++suggesting that all the models produced random diagnoses. The baseline results are displayed below.
 
 ![](images/fbirn_pre_clustering_AUC.png?raw=true)
 
