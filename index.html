@@ -98,9 +98,9 @@
       neuroscientists have yet to determine a set of corresponding neurological biomarkers for this disorder. A
       functional
       magnetic resonance imaging (fMRI) can help determine non-invasive biomarkers for schizophrenia in brain
-      function<a href="#ref1">[1]</a><a href="#ref2">[2]</a> and one such fMRI analysis technique called, dynamic
+      function<a href="#ref1">[1]</a><a href="#ref2">[2]</a> and one such fMRI analysis technique called dynamic
       functional
-      network connectivity (dFNC)<a href="#ref3">[3]</a><a href="#ref4">[4]</a><a href="#ref10">[10]</a>, uses
+      network connectivity (dFNC)<a href="#ref3">[3]</a><a href="#ref4">[4]</a><a href="#ref10">[10]</a> uses
       K-Means
       clustering to characterize time-varying connectivity between functional networks. Researchers have worked on
       finding
@@ -132,7 +132,7 @@
     <p>We experimented with DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian
       Mixture
       Models
-      clustering methods on subject connectivity matrices produced from fMRI data, and each algorithm’s cluster
+      clustering methods on subject connectivity matrices produced from fMRI data, and use each algorithm’s cluster
       assignments as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to
       classify
       schizophrenia.</p>
@@ -201,8 +201,8 @@
     </table>
 
     <h3 id="gaussian-simulated-dataset">Gaussian Simulated Dataset</h3>
-    We generated synthetic FNC data which were used for debugging code, and evaluating
-    our method. The details of the simulation are described in the appendix.
+    <p> We generated synthetic FNC data which were used for debugging code, and evaluating
+      our method. The details of the simulation are described in the appendix. </p>
     <h3 id="fbirn-dataset">FBIRN Dataset</h3>
     <p>We use derivatives from the Phase 3 Dataset of FBIRN (Functional Biomedical Infromatics Research Network
       Data
@@ -239,7 +239,7 @@
       the data, along with a set of <span class="math inline"><em>M</em></span> time-courses, which are used for
       the
       dFNC
-      analysis. For the Fbirn data, we used pre-computed ICA timecourses provided by Damaraju et al. 2014. These
+      analysis. For the FBIRN dataset, we used pre-computed ICA timecourses provided by Damaraju et al. 2014. These
       timecourses were computed using Infomax ICA <a href="#ref11">[11]</a> with 100 components, which were then
       manually selected based on biological relevance for a total of 47 remaining components.</p>
     <p>For the UCLA data, because
@@ -252,7 +252,7 @@
       reliable estimations of components in many different settings <a href="#ref13">[13]</a>. This provides us
       with 53
       independent components for
-      Uhe UCLA data.</p>
+      the UCLA dataset.</p>
     <h3 id="sliding-window-analysis">Sliding Window Analysis</h3>
     <p>For all data-sets we chose a sliding window of size <span class="math inline"><em>W</em> = 22</span>,
       following
@@ -280,8 +280,6 @@
 
       <h2 style="clear:left;"></h2>
 
-      <!-- <img align="left" width="40%"gi src="results/centered_equation_1.png?raw=True" />
- -->
       <p>Through this process, we generate a total of <span
           class="math inline"><em>N</em> × (<em>T</em> − <em>W</em>)</span> window instances, which are used as
         the
@@ -333,7 +331,8 @@
         will
         rank a randomly chosen positive instance higher than a randomly chosen negative instance.
         The curve is creative by plotting the fraction of true positive out of the positive vs the fraction of
-        false pasitive out of the negatives over various thresholds $T$. In general, a higher AUC indicates a
+        false pasitive out of the negatives over various thresholds <span
+          class="math inline"><em>T</em></span>. In general, a higher AUC indicates a
         better
         binary classification performance.
 
@@ -344,8 +343,9 @@
 
       <p>We first experimented with the use of subject state-vectors for classification. Because each time point
         for
-        each subject is assigned a state during clustering, we can generate a vector of $T-W$ state assignments
-        for Each
+        each subject is assigned a state during clustering, we can generate a vector of <span
+          class="math inline"><em>T-W</em></span> state assignments
+        for each
         subject to be used as features.
       </p>
 
@@ -409,9 +409,7 @@
       <p>For the sake of space, we have ommitted the details of the grid-search, but the results have been
         included in
         the
-        results section of the repo. Particularly, [the best parameters for each classification algorithm are
-        saved
-        here]().
+        results section of the repo.
       </p>
 
       <h1 id="section-iv-results-discussion">Section IV: Results &amp; Discussion</h1>
@@ -423,10 +421,10 @@
         models
         randomly diagnosed patients as healthy or schizophrenic. This represented the worst possible outcome. Any
         model
-        with and AUC scores between 0.40 and 0.60 was deemed a failed model. AUC scores near 1.0 meant that
+        with AUC scores between 0.40 and 0.60 was deemed a failed model. AUC scores near 1.0 meant that
         diagnoses
         were
-        accurate with few false positives (high specificiy) and few false negatives (high recall). There were no
+        accurate with few false positives (high specificity) and few false negatives (high recall). There were no
         observed
         models that completely reversed the diagnoses with AUC scores near 0.0.</p>
 
@@ -437,9 +435,9 @@
       <h2 id="fbirn-dataset-1">FBIRN Dataset</h2>
 
       <p>
-        We initially trained the supervised learning model on the unclustered FBIRN FNC matrices produced
-        in order to establish a baseline accuracy to compare our clustering algorithms an our beta feature generations
-        against. All the classifiers failed to consistently achieve AUC scores outside of the 0.40-0.60 range suggesting
+        We initially trained the supervised learning model on the unclustered FBIRN FNC matrices
+        in order to establish a baseline accuracy that we could compare our beta feature generation approach against.
+        All the classifiers failed to consistently achieve AUC scores outside of the 0.40-0.60 range suggesting
         that all the models produced random diagnoses. This confimed our hypothesis that clustering and feature
         reduction was paramount to succesful classfication of healthy and schizoprhenic patients. The baseline results
         are displayed below.
@@ -453,7 +451,7 @@
           classifiers.</figcaption>
       </figure>
       <p>
-        After establishing our baseline resutls we trained the models on the FBIRN using only cluster assignments.
+        After establishing our baseline results we trained the models on the FBIRN dataset using only cluster assignments.
         No beta features were generated to reduce the dimensionality of the training dataset. The results are displayed
         below.
       </p>
@@ -466,13 +464,13 @@
           and the x-axis separates the scores obtained over 10-fold cross-validation for each classifier.
         </figcaption>
       </figure>
-      <p>The results indicated that is was possible for some of the clustering algorithms to lift the AUC scores
+      <p>The results indicated that it was possible for some of the clustering algorithms to lift the AUC scores
         to an
-        average of 0.70 for most supervised models with the exclusion the Voting learner. The one exception was
+        average of 0.70 for most supervised models with the exclusion of the Voting learner. The one exception was
         DBSCAN
         which failed to move the AUC from 0.50. Regardless, none of these models achieved a high enough score to
         be used
-        in a clinical environment. It was surmised the number of features in the datasets had to be reduced from
+        in a clinical environment. It was surmised that the number of features in the datasets had to be reduced from
         cluster
         assignments over time to beta features in order for the supervised learning models to accurately diagnose
         patients.
@@ -560,7 +558,8 @@
       <figure>
         <img width="100%" src="results/fbirn_betas_accuracy.png?raw=True" />
         <img style="width:30%" src="results/accuracy_legend.png?raw=true" />
-        <figcaption><b>Figure: </b> Fbirn Schizophrenia classification AUC scores using $\beta$-coefficients as
+        <figcaption><b>Figure: </b> FBIRN Schizophrenia classification AUC scores using <span
+          class="math inline">\beta</span>-coefficients as
           features. The y-axis
           provides the AUC metric
           and the x-axis separates the scores obtained over 10-fold cross-validation for each classifier.
@@ -568,9 +567,9 @@
       </figure>
       <p>
         The reduced number of training features increased the accuracy of all the learners with Support
-        Vector Machines acheiveing the highest accuracy across all clustering algorithms. Only DBCAN failed to get
+        Vector Machines achieving the highest accuracy across all clustering algorithms. Only DBCAN failed to get
         above an average AUC score of 0.90 for support vector machines and Hierarchical clusterting obtained this
-        highest scoreof 0.957.
+        highest score of 0.957.
       </p>
       <hr />
       <h2 id="fbirn-data-visualizations">FNC State Analysis</h2>
@@ -590,14 +589,12 @@
         <figcaption><b>Figure: </b>Visualization of FBIRN cluster-assignments to FNC windows for PCA-reduced
           windows in
           2-D
-          and 3-D. Each color corresponds to one of the $k=5$ states.
+          and 3-D. Each color corresponds to one of the <span class="math inline"><em>k</em> = 5</span> states.
         </figcaption>
       </figure>
       <hr />
       <h3> GMM Clustering </h3>
-      <figure><img width="98%" src="results/gmm_fbirn_betas/gmm_fbirn_states.png?raw=true" /> Visualization of
-        states
-        with
+      <figure><img width="98%" src="results/gmm_fbirn_betas/gmm_fbirn_states.png?raw=true" /> 
         <figcaption><b>Figure: </b> the FBIRN FNC states detected for each class using GMM clustering. The top row
           are
           the states for healthy controls, and the bottom row are states for schizophrenic patients. We notice
@@ -612,8 +609,8 @@
         <figcaption><b>Figure: </b>Visualization of FBIRN cluster-assignments to FNC windows for PCA-reduced
           windows in
           2-D
-          and 3-D. Each color corresponds to one of the $k=5$ states. We see that cluster 4 here is
-          not detected by KMeans, perhaps indicating that the GMM has detected a enw state in the Fbirn
+          and 3-D. Each color corresponds to one of the <span class="math inline"><em>k</em> = 5</span> states. We see that cluster 4 here is
+          not detected by KMeans, perhaps indicating that the GMM has detected a new state in the Fbirn
           data, which is still useful for schizophrenia diagnosis.
         </figcaption>
       </figure>
@@ -699,7 +696,7 @@
             results
           </li>
           <li>
-            Elbow criterion for different clustering algorithms revealed some inconsistency in the use of $k=5$
+            Elbow criterion for different clustering algorithms revealed some inconsistency in the use of <span class="math inline"><em>k</em> = 5</span>
             for
             the
             number of states. Applying the full classification pipeline to other numbers of states may provide
@@ -981,7 +978,7 @@
         </tbody>
       </table>
 
-      <h2 id="elbow-criterion">AppendAppendix B: Elbow Criterion</h2>
+      <h2 id="elbow-criterion">Appendix B: Elbow Criterion</h2>
       <p>For K-Means, GMM, bGMM, and Agglomerative clustering, we measured the elbow criterion on a range of 2-9
         components. We measured both the correlation-distance dispersion, as is recommended in Damaraju et
         al. 2014 <a href="#ref1">[1]</a>,
