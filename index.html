@@ -64,19 +64,19 @@
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">0</td>
-<td style="text-align: center;"><img width="100%" src="data/examples/gauss/class0_state0.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="data/examples/gauss/class0_state1.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="data/examples/gauss/class0_state2.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="data/examples/gauss/class0_state3.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="data/examples/gauss/class0_state4.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="data/examples/gauss/class0_state0.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="data/examples/gauss/class0_state1.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="data/examples/gauss/class0_state2.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="data/examples/gauss/class0_state3.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="data/examples/gauss/class0_state4.png?raw=True" /></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">1</td>
-<td style="text-align: center;"><img width="100%" src="data/examples/gauss/class1_state0.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="data/examples/gauss/class1_state1.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="data/examples/gauss/class1_state2.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="data/examples/gauss/class1_state3.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="data/examples/gauss/class1_state4.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="data/examples/gauss/class1_state0.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="data/examples/gauss/class1_state1.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="data/examples/gauss/class1_state2.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="data/examples/gauss/class1_state3.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="data/examples/gauss/class1_state4.png?raw=True" /></td>
 </tr>
 </tbody>
 </table>
@@ -118,7 +118,7 @@
 <p>We also use derivatives from the UCLA Consortium for Neuropsychiatric Phenomics archives, which includes neuroimages for roughly 272 participants. The subject population consists of roughly 272 healthy controls, as well as participants with a diagnosis of schizophrenia (50 subjects). Subject participants in this dataset range from 21 to 50 years</p>
 <h1 id="section-iii-methods">Section III: Methods</h1>
 <h2 id="overview">Overview</h2>
-<p><img width="100%" src="results/dfnc_pipeline(1).png?raw=True" /></p>
+<p><img width="50%" src="results/dfnc_pipeline(1).png?raw=True" /></p>
 <h2 id="preprocessing">Preprocessing</h2>
 <p>As is standard in Dynamic Functional Network Connectivity, Group Independent Component Analysis of subject images is used to compute a set of <span class="math inline"><em>M</em></span> statistically independent spatial maps from the data, along with a set of <span class="math inline"><em>M</em></span> time-courses, which are used for the dFNC analysis. For the Fbirn data, we used pre-computed ICA timecourses provided by Damaraju et al. 2014. These timecourses were computed using Infomax ICA [] with 100 components, which were then manually selected based on biological relevance for a total of 47 remaining components. For the UCLA data, because no ICA derivatives were readily available, we used Group Information Guided ICA [] which is included as part of the GIFT NeuroImaging Analysis Toolbox []. As a template for GIG-ICA, we used the NeuroMark template [], which has been shown to provide reliable estimations of components in many different settings. This provides us with 53 independent components for Uhe UCLA data.</p>
 <h3 id="sliding-window-analysis">Sliding Window Analysis</h3>
@@ -130,11 +130,11 @@
          src="results/centered_equation_1.png?raw=True" alt="Image" width="20%"/>
 </div>
 
-<h2 style="clear:left;">This text should left align</h2>
+<h2 style="clear:left;"></h2>
 
-<!-- <img align="left" width="40%" src="results/centered_equation_1.png?raw=True" />
+<!-- <img align="left" width="40%"gi src="results/centered_equation_1.png?raw=True" />
  -->
-<p>Through this process, we generat a total of <span class="math inline"><em>N</em> × (<em>T</em> − <em>W</em>)</span> window instances, which are used as the input for clustering.</p>
+<p>Through this process, we generate a total of <span class="math inline"><em>N</em> × (<em>T</em> − <em>W</em>)</span> window instances, which are used as the input for clustering.</p>
 <h2 id="clustering-details">Clustering Details</h2>
 <p>We implemented 5 different clustering algorithms as part of the dFNC pipeline: K-Means, DBSCAN, Gaussian Mixture Models, Bayesian Gaussian Mixture Models, and Agglomerative Hierarchical Clustering.</p>
 <h3 id="elbow-criterion">Elbow Criterion</h3>
@@ -149,24 +149,24 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><img width="100%" src="results/kmeans_gauss_betas/kmeans_gauss_elbow.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="results/kmeans_fbirn_betas/kmeans_fbirn_elbow.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="results/kmeans_ucla_betas/kmeans_ucla_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/kmeans_gauss_betas/kmeans_gauss_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/kmeans_fbirn_betas/kmeans_fbirn_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/kmeans_ucla_betas/kmeans_ucla_elbow.png?raw=True" /></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><img width="100%" src="results/gmm_gauss_betas/gmm_gauss_elbow.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="results/gmm_fbirn_betas/gmm_fbirn_elbow.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="results/gmm_ucla_betas/gmm_ucla_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/gmm_gauss_betas/gmm_gauss_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/gmm_fbirn_betas/gmm_fbirn_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/gmm_ucla_betas/gmm_ucla_elbow.png?raw=True" /></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><img width="100%" src="results/bgmm_gauss_betas/bgmm_gauss_elbow.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="results/bgmm_fbirn_betas/bgmm_fbirn_elbow.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="results/bgmm_ucla_betas/bgmm_ucla_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/bgmm_gauss_betas/bgmm_gauss_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/bgmm_fbirn_betas/bgmm_fbirn_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/bgmm_ucla_betas/bgmm_ucla_elbow.png?raw=True" /></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><img width="100%" src="results/hierarchical_gauss_betas/hierarchical_gauss_elbow.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_elbow.png?raw=True" /></td>
-<td style="text-align: center;"><img width="100%" src="results/hierarchical_ucla_betas/hierarchical_ucla_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/hierarchical_gauss_betas/hierarchical_gauss_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_elbow.png?raw=True" /></td>
+<td style="text-align: center;"><img width="50%" src="results/hierarchical_ucla_betas/hierarchical_ucla_elbow.png?raw=True" /></td>
 </tr>
 </tbody>
 </table>
@@ -183,15 +183,15 @@
 <p>The first t-test comparision was performed using the cluster assignments for each patient across the time domain where each time slot represented a feature of the training data. For each time slot (feature), the average cluster assignment for all the healthy control patients was compared to the average cluster assignment for all the schizophrenic patients. The corresponding p-values were then tested at a significance level of 0.10.</p>
 <p>The results displayed below highlight the points in time when there was less that a 10% chance that the observed difference in a healthy control’s cluster assignment and a schizophrenic’s cluster assignment was due to normal random variation. In theory, the more points of significance across time the more likely a trained model would accurately diagnose a subject. The results indicated that both K-Means and Gaussian Mixture Models failed to produce statistically different cluster assignments across time. The Bayesian Gaussian Mixture Model produced some significant differences while the Hierarchical clustering was significant at every time point.</p>
 <p>These results initially suggested that Hierarchical clustering would outperform all the other clustering algorithms, but the subsequent testing disporved this hypothesis.</p>
-<p><img src="images/assignment_t_test_visualization.png?raw=true" /></p>
+<p><img src="images/assignment_t_test_visualization.png?raw=true" width="75%"/></p>
 <p>Given the lack of improvement in accuracy across all clustering algorithms, it was believed that training supervised models using time points as features would require much more data for successful classification. Using time slots as features meant that there were 130 features in the data. Since there were only 267 patients in the UCLA data set, it was surmised that the dimensionality of the data was too high. To reduce the dimensionality of the datasets, the beta coefficients were calculated reducing the number of training features form 130 to 10.</p>
-<p><img src="images/beta_t_test_visualization.png?raw=true" /></p>
+<p><img src="images/beta_t_test_visualization.png?raw=true" width="75%" /></p>
 <p>Each clustering algorithm produced statistically different beta coefficients between the health control and schizophrenic patients. With the reduced dimenstionality of the data, we successfully improved the accuracy of out diagnoses across all supervised learning algorithms for each clustering algorithm. These results are discussed later in the report.</p>
 <h2 id="reporting-results">Reporting Results</h2>
 <p>For all results, the Area Under Curve (AUC) metric was used since we were trying to classify two possible outcomes. Patients were with either healthy or had schizophrenia. AUC scores near 0.50 meant that the models randomly diagnosed patients as healthy or schizophrenic. This represented the worst possible outcome. Any model with and AUC scores between 0.40 and 0.60 was deemed a failed model. AUC scores near 1.0 meant that diagnoses were accurate with few false positives (high specificiy) and few false negatives (high recall). There were no observed models that completely reversed the diagnoses with AUC scores near 0.0.</p>
 <h2 id="gaussian-simulated-dataset-1">Gaussian Simulated Dataset</h2>
 <p>We initially trained the supervised learning algorithms using simulated Gaussian datasets since we did not have access to the real patient data until later in the semester. We first trained the supervised learning models without any clustering in order to establish a baseline AUC scores for our clustering algorithms to impove upon. These baseline results are displayed below.</p>
-<p><img src="images/sim_pre_clustering_AUC.png?raw=true" /></p>
+<p><img src="images/sim_pre_clustering_AUC.png?raw=true" width="75%" /></p>
 <p>The key result from this experiment was that without any clustering, no supervised learning algorithm could consistently achieve AUC score above 0.60. Some learners such as the Multilayer Perceptron, Passive Aggressive Classifier, and Bernoulli Naive Bayes surprisingly scored below 0.40 suggesting that they consistently misdiagnose patients. This result was attributed to being due to random error, and was disregarded.</p>
 <p>After establishing the baseline AUC scores, we performed clustering and beta feature generation for the simulated Gaussian datasets. Using these clustered and reduced datasets, we trained across the same classifiers to for each clustering algorithm (K-Means, Gaussian Mixture Model, Bayesian Gaussian Mixture Model, DBSCAN, and Hierarchical) to generate the results below.</p>
 <table>
@@ -357,16 +357,16 @@
 <p>The clustering combined with the beta feature generation dramatically improved the AUC scores on the simulated Gaussian datasets. All clustering algorithms produced AUC scores above 0.90 with standard deviations below 0.05 across all supervised models. The hierarchical clustering even produced perfect predictions. These results confirmed our suspicions that in order to accurately diagnose patients, we needed to perform clustering and reduce the number of features we trained our models on. These initial results using simulated data helped us tremendously when deploying our models on real patient data.</p>
 <h2 id="simulated-visualizations">Simulated Visualizations</h2>
 <p><img width="98%" src="results/kmeans_fbirn_betas/kmeans_fbirn_states.png?raw=true" /> Visualization of states with KMeans clustering with Gaussian Simulated Data</p>
-<p><img width="49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization.png?raw=true" /><br />
+<p><img width="49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization_3d.png?raw=true" /> <img width="29%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization.png?raw=true" /><br />
 Visualization of clusters with KMeans clustering in 2-d and 3-d with Gaussian Simulated Data</p>
 <p><img width="98%" src="results/gmm_gauss_betas/gmm_gauss_states.png?raw=true" /> Visualization of states with GMM clustering with Gaussian Simulated Data</p>
-<p><img width="49%" src="results/gmm_gauss_betas/gmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/gmm_gauss_betas/gmm_gauss_visualization.png?raw=true" /><br />
+<p><img width="49%" src="results/gmm_gauss_betas/gmm_gauss_visualization_3d.png?raw=true" /> <img width="29%" src="results/gmm_gauss_betas/gmm_gauss_visualization.png?raw=true" /><br />
 Visualization of clusters with GMM clustering in 2-d and 3-d with Gaussian Simulated Data</p>
 <p><img width="98%" src="results/bgmm_gauss_betas/bgmm_gauss_states.png?raw=true" /> Visualization of states with BGMM clustering with Gaussian Simulated Data</p>
-<p><img width="49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization.png?raw=true" /><br />
+<p><img width="49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization_3d.png?raw=true" /> <img width="29%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization.png?raw=true" /><br />
 Visualization of clusters with BGMM clustering in 2-d and 3-d with Gaussian Simulated Data</p>
 <p><img width="98%" src="results/dbscan_gauss_betas/dbscan_gauss_states.png?raw=true" /> Visualization of states with DBSCAN clustering with Gaussian Simulated Data</p>
-<p><img width="49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization.png?raw=true" /><br />
+<p><img width="49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization_3d.png?raw=true" /> <img width="29%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization.png?raw=true" /><br />
 Visualization of clusters with DBSCAN clustering in 2-d and 3-d with Gaussian Simulated Data</p>
 <p><img width="98%" src="results/hierarchical_gauss_betas/hierarchical_gauss_states.png?raw=true" /> Visualization of states with Hierarchical clustering with Gaussian Simulated Data</p>
 <p><img width="49%" src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization_3d.png?raw=true" /> <img width="49%" src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization.png?raw=true" /><br />
@@ -378,7 +378,7 @@ Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gauss
 <p><img width="86%" src="results/fbirn_assignments_accuracy.png?raw=true" /> <img width="12%" src="results/accuracy_legend.png?raw=true" /></p>
 <p>The results indicated that is was possible for some of the clustering algorithms to lift the AUC scores to an average of 0.70 for most supervised models with the exclusion the Voting learner. The one exception was DBSCAN which failed to move the AUC from 0.50. Regardless, none of these models achieved a high enough score to be used in a clinical environment. It was surmised the number of features in the datasets had to be reduced from cluster assignments over time to beta features in order for the supervised learning models to accurately diagnose patients.</p>
 <p>After performing beta features generation with clustering, the final results for the FBIRN dataset were obtained and are displayed below.</p>
-<table style="width:100%;">
+<table style="width:50%;">
 <colgroup>
 <col style="width: 12%" />
 <col style="width: 10%" />
@@ -474,9 +474,9 @@ Visualization of clusters with DBSCAN clustering in 2-d and 3-d with FBirn Data<
 Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn Data</p>
 <h2 id="ucla-dataset-1">UCLA Dataset</h2>
 <p>The UCAL Dataset was similarly trained. Firstly, it was trained using unclustered data to establish a baseline to compare against. The results are displayed below and as expected the supervised models failed to obtain suitable AUC scores.</p>
-<p><img src="images/ucla_pre_clustering_AUC.png?raw=true" /></p>
+<p><img src="images/ucla_pre_clustering_AUC.png?raw=true" width="75%"/></p>
 <p>The below plot shows “Accuracy” of various classifiers such as KMeans, Gaussian Mixture Model(GMM), Bayesian Gaussian Mixture Model(BGMM), Density-Based Spatial Clustering of Applications with Noise (DBSCAN) and Hierarchical clustering methods on Simulated Gaussian Data using beta features. Accuracy has improved a lot in comparison to the previous case above without clusterer and without using beta feature say for example from 0.7 to 0.9 for KMeans with “Multi Layer Perceptron” and likewise for other clusterer. Almost all the classifiers in all the clusterer shows improvement over KMeans clustering.</p>
-<table style="width:100%;">
+<table style="width:50%;">
 <colgroup>
 <col style="width: 12%" />
 <col style="width: 10%" />
