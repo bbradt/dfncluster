@@ -14,9 +14,12 @@
 
   <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js"],
     tex2jax: {
       inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
+      processEscapes: true,
+      displayMath: [ ['$$','$$'] ]
     }
   });
 </script>
@@ -122,7 +125,7 @@
 <p>For all data-sets we chose a sliding window of size <span class="math inline"><em>W</em> = 22</span>, following the precedent in Damaraju et al. 2014 []. Time-Series data <span class="math inline"><em>X</em></span> with size <span class="math inline"><em>M</em> × <em>T</em></span>, where <span class="math inline"><em>M</em></span> is the number of independent components, and <span class="math inline"><em>T</em></span> is the number of timepoints are used. Time series were normalized and convolved with a gaussian window with a kernel of size 0.015, again following the precedent in Damaraju et al. 2014. For each window on each time-series a number of exemplar data-points were selected by taking the local maximum of the variance from the smoothed time-series.</p>
 <p>We computed correlation coefficients across the components, within each time series window to form the FNC matrix with entries <span class="math inline"><em>i</em></span> and <span class="math inline"><em>j</em></span> given as</p>
 $$
-  x^2 + 2
+  FNC_{i,j} = \frac{1}{W}  \frac{\sum_{w=1}^{W} X_i X_j - (\sum_{w=1}^{W}X_i)(\sum_{w=1}^{W}X_j)  }{W \sqrt{(\sum X_i^2 - (\sum X_i)^2)(\sum X_j^2 - (\sum X_j)^2)}}
 $$
 <p>Through this process, we generat a total of <span class="math inline"><em>N</em> × (<em>T</em> − <em>W</em>)</span> window instances, which are used as the input for clustering.</p>
 <h2 id="clustering-details">Clustering Details</h2>
