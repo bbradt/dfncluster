@@ -5,12 +5,15 @@
  width: 50%; 
 }
 body{
-  background-color: #959da5;
+  background-color: #e1e4e8;
 }
 
 .markdown-body{
-  background-color: #e1e4e8;
-  margin: 14em;
+  background-color: #f0fff4;
+  margin-left: 14em;
+  margin-right: 14em;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .markdown-body p{
   font-size: 1.5em;
