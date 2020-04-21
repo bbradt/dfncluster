@@ -123,10 +123,17 @@
 <p>As is standard in Dynamic Functional Network Connectivity, Group Independent Component Analysis of subject images is used to compute a set of <span class="math inline"><em>M</em></span> statistically independent spatial maps from the data, along with a set of <span class="math inline"><em>M</em></span> time-courses, which are used for the dFNC analysis. For the Fbirn data, we used pre-computed ICA timecourses provided by Damaraju et al. 2014. These timecourses were computed using Infomax ICA [] with 100 components, which were then manually selected based on biological relevance for a total of 47 remaining components. For the UCLA data, because no ICA derivatives were readily available, we used Group Information Guided ICA [] which is included as part of the GIFT NeuroImaging Analysis Toolbox []. As a template for GIG-ICA, we used the NeuroMark template [], which has been shown to provide reliable estimations of components in many different settings. This provides us with 53 independent components for Uhe UCLA data.</p>
 <h3 id="sliding-window-analysis">Sliding Window Analysis</h3>
 <p>For all data-sets we chose a sliding window of size <span class="math inline"><em>W</em> = 22</span>, following the precedent in Damaraju et al. 2014 []. Time-Series data <span class="math inline"><em>X</em></span> with size <span class="math inline"><em>M</em> × <em>T</em></span>, where <span class="math inline"><em>M</em></span> is the number of independent components, and <span class="math inline"><em>T</em></span> is the number of timepoints are used. Time series were normalized and convolved with a gaussian window with a kernel of size 0.015, again following the precedent in Damaraju et al. 2014. For each window on each time-series a number of exemplar data-points were selected by taking the local maximum of the variance from the smoothed time-series.</p>
-<p>We computed correlation coefficients across the components, within each time series window to form the FNC matrix with entries <span class="math inline"><em>i</em></span> and <span class="math display"><em>j</em></span> given as</p>
-$
-  FNC_{i,j} = \frac{1}{W}  \frac{\sum_{w=1}^{W} X_i X_j - (\sum_{w=1}^{W}X_i)(\sum_{w=1}^{W}X_j)  }{W \sqrt{(\sum X_i^2 - (\sum X_i)^2)(\sum X_j^2 - (\sum X_j)^2)}}
-$</span><br /></p>
+<p>We computed correlation coefficients across the components, within each time series window to form the FNC matrix with entries <span class="math inline"><em>i</em></span> and 
+<span class="math inline"><em>j</em></span> given as
+<div>
+    <img style="float:left;padding-right:10px;padding-bottom:10px;" 
+         src="results/centered_equation_1.png?raw=True" alt="Image" width="20%"/>
+</div>
+
+<h2 style="clear:left;">This text should left align</h2>
+
+<!-- <img align="left" width="40%" src="results/centered_equation_1.png?raw=True" />
+ -->
 <p>Through this process, we generat a total of <span class="math inline"><em>N</em> × (<em>T</em> − <em>W</em>)</span> window instances, which are used as the input for clustering.</p>
 <h2 id="clustering-details">Clustering Details</h2>
 <p>We implemented 5 different clustering algorithms as part of the dFNC pipeline: K-Means, DBSCAN, Gaussian Mixture Models, Bayesian Gaussian Mixture Models, and Agglomerative Hierarchical Clustering.</p>
