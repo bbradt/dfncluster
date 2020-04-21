@@ -33,7 +33,7 @@
   <![endif]-->
 </head>
 <body>
-<h1 id="introduction">Test</h1>
+<h1 id="introduction">Introduction</h1>
 <p>Schizophrenia is a chronic and serious mental disorder which affects how a person thinks, feels, and behaves. Although there have been many studies about psychological and behavioral manifestations of schizophrenia, neuroscientists have yet to determine a set of corresponding neurological biomarkers for this disorder. A functional magnetic resonance imaging (fMRI) can help determine non-invasive biomarkers for schizophrenia in brain function<a href="#ref1">[1]</a><a href="#ref2">[2]</a> and one such fMRI analysis technique called, dynamic functional network connectivity (dFNC)<a href="#ref3">[3]</a><a href="#ref4">[4]</a><a href="#ref10">[10]</a>, uses K-Means clustering to characterize time-varying connectivity between functional networks. Researchers have worked on finding correlation between schizophrenia and dFNC<a href="#ref1">[1]</a><a href="#ref2">[2]</a><a href="#ref5">[5]</a><a href="#ref6">[6]</a>, but little work has been done with the choice of clustering algorithm<a href="#ref7">[7]</a><a href="#ref9">[9]</a>. Therefore, in this project, we have studied how modifying the clustering technique in the dFNC pipeline can yield dynamic states from fMRI data that impact the accuracy of classifying schizophrenia<a href="#ref8">[8]</a>.</p>
 <p>We experimented with DBSCAN, Hiearcharial Clustering, Gaussian Mixture Models, and Bayesian Gaussian Mixture Models clustering methods on subject connectivity matrices produced from fMRI data, and each algorithm’s cluster assignments as features for SVMs, MLP, Nearest Neighbor, and other supervised classification algorithms to classify schizophrenia.</p>
 <p>Section II describes the fMRI data used in our experimentation, while Section III summarizes the aforementioned clustering and classification algorithms used in the pipeline. Section IV compares the accuracy of these classifiers, along with presenting a series of charts that analyze the cluster assignments produced on the fMRI data.</p>
@@ -95,7 +95,7 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline"><em>P<sub>(c=0,k)</sub></em></span></td>
+<td><span class="math inline"><em>P</em><sub>(</sub><em>c</em> = 0, <em>k</em>)</span></td>
 <td>0.4</td>
 <td>0.1</td>
 <td>0.1</td>
@@ -103,7 +103,7 @@
 <td>0.1</td>
 </tr>
 <tr class="even">
-<td><span class="math inline"><em>P<sub>(c=1,k)</sub></em></span></td>
+<td>$P_(c=1,k)%</td>
 <td>0.1</td>
 <td>0.1</td>
 <td>0.3</td>
@@ -123,10 +123,10 @@
 <p>As is standard in Dynamic Functional Network Connectivity, Group Independent Component Analysis of subject images is used to compute a set of <span class="math inline"><em>M</em></span> statistically independent spatial maps from the data, along with a set of <span class="math inline"><em>M</em></span> time-courses, which are used for the dFNC analysis. For the Fbirn data, we used pre-computed ICA timecourses provided by Damaraju et al. 2014. These timecourses were computed using Infomax ICA [] with 100 components, which were then manually selected based on biological relevance for a total of 47 remaining components. For the UCLA data, because no ICA derivatives were readily available, we used Group Information Guided ICA [] which is included as part of the GIFT NeuroImaging Analysis Toolbox []. As a template for GIG-ICA, we used the NeuroMark template [], which has been shown to provide reliable estimations of components in many different settings. This provides us with 53 independent components for Uhe UCLA data.</p>
 <h3 id="sliding-window-analysis">Sliding Window Analysis</h3>
 <p>For all data-sets we chose a sliding window of size <span class="math inline"><em>W</em> = 22</span>, following the precedent in Damaraju et al. 2014 []. Time-Series data <span class="math inline"><em>X</em></span> with size <span class="math inline"><em>M</em> × <em>T</em></span>, where <span class="math inline"><em>M</em></span> is the number of independent components, and <span class="math inline"><em>T</em></span> is the number of timepoints are used. Time series were normalized and convolved with a gaussian window with a kernel of size 0.015, again following the precedent in Damaraju et al. 2014. For each window on each time-series a number of exemplar data-points were selected by taking the local maximum of the variance from the smoothed time-series.</p>
-<p>We computed correlation coefficients across the components, within each time series window to form the FNC matrix with entries <span class="math inline"><em>i</em></span> and <span class="math inline"><em>j</em></span> given as</p>
+<p>We computed correlation coefficients across the components, within each time series window to form the FNC matrix with entries <span class="math inline"><em>i</em></span> and <span class="math display"><em>j</em></span> given as</p>
 $
   FNC_{i,j} = \frac{1}{W}  \frac{\sum_{w=1}^{W} X_i X_j - (\sum_{w=1}^{W}X_i)(\sum_{w=1}^{W}X_j)  }{W \sqrt{(\sum X_i^2 - (\sum X_i)^2)(\sum X_j^2 - (\sum X_j)^2)}}
-$
+$</span><br /></p>
 <p>Through this process, we generat a total of <span class="math inline"><em>N</em> × (<em>T</em> − <em>W</em>)</span> window instances, which are used as the input for clustering.</p>
 <h2 id="clustering-details">Clustering Details</h2>
 <p>We implemented 5 different clustering algorithms as part of the dFNC pipeline: K-Means, DBSCAN, Gaussian Mixture Models, Bayesian Gaussian Mixture Models, and Agglomerative Hierarchical Clustering.</p>
