@@ -5,6 +5,10 @@
  width: 50%; 
 }
 
+.markdown-body{
+  margin: 1em;
+}
+
 .markdown-body .octicon {
   display: inline-block;
   fill: currentColor;
@@ -102,6 +106,9 @@
 
 .markdown-body img {
   border-style: none;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 .markdown-body code,
