@@ -202,7 +202,7 @@
     <h3 id="gaussian-simulated-dataset">Gaussian Simulated Dataset</h3>
     <p> We generated synthetic FNC data which were used for debugging code, and evaluating
       our method. The details of the simulation are described in the appendix. </p>
-    <h3 id="fbirn-dataset">FBIRN Dataset</h3>
+    <h3 id="fbirn-dataset">Quantitative Analysis: AUC Analysis on FBIRN Dataset</h3>
     <p>We use derivatives from the Phase 3 Dataset of FBIRN (Functional Biomedical Infromatics Research Network
       Data
       Repository), which specifically focuses on brain activity maps from patients with schizophrenia. This
@@ -615,7 +615,19 @@
     highest score of 0.957.
   </p>
   <hr />
-  <h2 id="fbirn-data-visualizations">FNC State Analysis</h2>
+  <h2 id="fbirn-data-visualizations">Qualitative Analysis: FNC State and Clustering Visualization Analysis</h2>
+  <p> In the following section, we display both 2D and 3D clustering visualizations for KMeans, GMMs, BGMMs,
+    DBSCAN, and Hiearcharial Clustering after performing PCA on the
+    FBIRN dataset. We mark the centroids of each clustering algorithm with a bolded <b> X </b>, and take the average
+    of points of each cluster in the DBSCAN visualizations to represent its cluster's centers. </p>
+    
+  <p> We also present FNC state diagrams that analyze how each clustering method clustered data related to healthy
+    patients and schizophrenic patients differently. We hope these diagrams can help neuroscience researchers find
+    interesting biomarkers for further work. </p>
+    
+  <p> Lastly, we present clustering visualizations and FNC State diagrams for the UCLA and gaussian simulated dataset in 
+    Appendix C and D respectively. </p>
+    
   <h3> Kmeans Clustering </h3>
   <figure>
     <img width="98%" src="results/kmeans_fbirn_betas/kmeans_fbirn_states.png?raw=true" />
