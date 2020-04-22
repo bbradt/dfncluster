@@ -389,6 +389,7 @@
         classifiers:
       </p>
       <p>
+<<<<<<< HEAD
         <div style="column-count: 2;">
           <ul>
             <li>
@@ -434,6 +435,614 @@
               <p>Voting Classifer</p>
             </li>
           </ul>
+=======
+        <ul>
+          <li><b>Multilayer Perceptron</b></li>
+          <li><b>K-Nearest Neighbors Classifier</b></li>
+          <li><b>Support Vector Machines</b></li>
+          <li><b>Decision Tree Classifier</b></li>
+          <li><b>Random Forests <a href="#random_forests">[17]</a><</b>/li>
+            <li><b>Extra Trees <a href="#extra_trees">[18]</a></b></li>
+            <li><b>Ada-Boost Decision Trees <a href="#adaboost">[19]</a></b></li>
+            <li><b>Bagging Decision Trees <a href="#bagging">[20]</a></b></li>
+            <li><b>Gradient Boosted Decision Trees <a href="#gradient_boost">[21]</a></b></li>
+            <li><b>Logistic Regression</b></li>
+            <li><b>Passive Aggressive Classifier <a href="#passive_aggresive">[22]</a></b></li>
+            <li><b>Perceptron</b></li>
+            <li><b>Naive Bayes</b></li>
+            <li><b>Voting Classifer</b></li>
+        </ul>
+      </p>
+
+      <h3 id="grid-search">Grid Search</h3>
+
+      <p>We performed a Grid-Search over all available parameters for each of the classifiers available in
+        Polyssifier.
+        For each set of training data used for cross-validation, we trained the grid-search separately, and took
+        the
+        parameters with the highest AUC.</p>
+
+      <p>For the sake of space, we have ommitted the details of the grid-search, but the results have been
+        included in
+        the
+        results section of the repo.
+      </p>
+
+      <h1 id="section-iv-results-discussion">Section IV: Results &amp; Discussion</h1>
+      <p> For brevity, we only present results from modifying the dFNC pipeline with the aforementioned clustering
+        and classification algorithms on the FBIRN dataset in this section. We leave our results on the gaussian
+        simulated
+        and UCLA datasets in Appendix A and C respectively, if the reader is interested in viewing them. </p>
+
+      <h2 id="reporting-results">Classification Results</h2>
+      <p>For all results, the Area Under Curve (AUC) metric was used since we were trying to classify two possible
+        outcomes. Patients were with either healthy or had schizophrenia. AUC scores near 0.50 meant that the
+        models
+        randomly diagnosed patients as healthy or schizophrenic. This represented the worst possible outcome. Any
+        model
+        with AUC scores between 0.40 and 0.60 was deemed a failed model. AUC scores near 1.0 meant that
+        diagnoses
+        were
+        accurate with few false positives (high specificity) and few false negatives (high recall). There were no
+        observed
+        models that completely reversed the diagnoses with AUC scores near 0.0.</p>
+
+      <p>Each classification algorithm was evaluated with <b>10-fold cross-validation</b>, with a grid-search
+        for classifier parameters performed separately on each validation set.
+      </p>
+
+      <h2 id="fbirn-dataset-1">FBIRN Dataset</h2>
+
+      <p>
+        We initially trained the supervised learning model on the unclustered FBIRN FNC matrices
+        in order to establish a baseline accuracy that we could compare our beta feature generation approach against.
+        All the classifiers failed to consistently achieve AUC scores outside of the 0.40-0.60 range suggesting
+        that all the models produced random diagnoses. This confimed our hypothesis that clustering and feature
+        reduction was paramount to succesful classfication of healthy and schizoprhenic patients. The baseline results
+        are displayed below.
+      </p>
+
+      <figure>
+        <img src="images/fbirn_pre_clus_accuracy.png?raw=true" width="25%" />
+        <figcaption><b>Figure: </b>AUC scores for 10-fold cross-validation of multiple classifiers using only the
+          concatenated FNC
+          matrices as features. The y axis is the AUC metric for each classifier, and the x-axis separates the
+          classifiers.</figcaption>
+      </figure>
+      <p>
+        After establishing our baseline results we trained the models on the FBIRN dataset using only cluster
+        assignments.
+        No beta features were generated to reduce the dimensionality of the training dataset. The results are displayed
+        below.
+      </p>
+      <figure>
+        <img width="100%" src="results/fbirn_assignments_accuracy.png?raw=true" />
+        <img style="width:30%" src="results/accuracy_legend.png?raw=true" />
+        <figcaption><b>Figure: </b> FBIRN Schizophrenia Classification AUC scores using subject state-vectors as
+          features. The y-axis
+          provides the AUC metric
+          and the x-axis separates the scores obtained over 10-fold cross-validation for each classifier.
+        </figcaption>
+      </figure>
+      <p>The results indicated that it was possible for some of the clustering algorithms to lift the AUC scores
+        to an
+        average of 0.70 for most supervised models with the exclusion of the Voting learner. The one exception was
+        DBSCAN
+        which failed to move the AUC from 0.50. Regardless, none of these models achieved a high enough score to
+        be used
+        in a clinical environment. It was surmised that the number of features in the datasets had to be reduced from
+        cluster
+        assignments over time to beta features in order for the supervised learning models to accurately diagnose
+        patients.
+      </p>
+      <p>
+        After performing beta features generation with clustering, the final results for the FBIRN dataset were
+        obtained and are displayed below.
+      </p>
+      <table style="width:50%;">
+        <colgroup>
+          <col style="width: 12%" />
+          <col style="width: 10%" />
+          <col style="width: 13%" />
+          <col style="width: 12%" />
+          <col style="width: 18%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+        </colgroup>
+        <thead>
+          <tr class="header">
+            <th>Clustering Algorithm</th>
+            <th>SVM</th>
+            <th>Multilayer Perceptron</th>
+            <th>Logistic Regression</th>
+            <th>Passive Aggressive Classifier</th>
+            <th>Perceptron</th>
+            <th>Random Forest</th>
+            <th>Extra Trees</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="odd">
+            <td>kmeans</td>
+            <td><em>0.952 ± 0.036</em></td>
+            <td><em>0.92 ± 0.065</em></td>
+            <td><em>0.944 ± 0.039</em></td>
+            <td><em>0.945 ± 0.035</em></td>
+            <td><strong>0.902 ± 0.043</strong></td>
+            <td><em>0.871 ± 0.038</em></td>
+            <td><em>0.853 ± 0.04</em></td>
+          </tr>
+          <tr class="even">
+            <td>gmm</td>
+            <td><em>0.936 ± 0.054</em></td>
+            <td><em>0.946 ± 0.038</em></td>
+            <td><em>0.943 ± 0.038</em></td>
+            <td><em>0.929 ± 0.031</em></td>
+            <td><em>0.882 ± 0.04</em></td>
+            <td><strong>0.885 ± 0.022</strong></td>
+            <td><strong>0.874 ± 0.026</strong></td>
+          </tr>
+          <tr class="odd">
+            <td>bgmm</td>
+            <td><em>0.955 ± 0.037</em></td>
+            <td><em>0.932 ± 0.042</em></td>
+            <td><em>0.945 ± 0.038</em></td>
+            <td><em>0.939 ± 0.038</em></td>
+            <td><em>0.896 ± 0.074</em></td>
+            <td><em>0.86 ± 0.039</em></td>
+            <td><em>0.87 ± 0.056</em></td>
+          </tr>
+          <tr class="even">
+            <td>dbscan</td>
+            <td>0.883 ± 0.027</td>
+            <td>0.893 ± 0.031</td>
+            <td>0.892 ± 0.033</td>
+            <td>0.884 ± 0.027</td>
+            <td>0.828 ± 0.064</td>
+            <td>0.805 ± 0.064</td>
+            <td>0.806 ± 0.058</td>
+          </tr>
+          <tr class="odd">
+            <td>hierarchical</td>
+            <td><strong>0.957 ± 0.032</strong></td>
+            <td><strong>0.954 ± 0.038</strong></td>
+            <td><strong>0.953 ± 0.038</strong></td>
+            <td><strong>0.951 ± 0.032</strong></td>
+            <td><em>0.891 ± 0.098</em></td>
+            <td><em>0.881 ± 0.032</em></td>
+            <td><em>0.872 ± 0.048</em></td>
+          </tr>
+        </tbody>
+      </table>
+      <figure>
+        <img width="100%" src="results/fbirn_betas_accuracy.png?raw=True" />
+        <img style="width:30%" src="results/accuracy_legend.png?raw=true" />
+        <figcaption><b>Figure: </b> FBIRN Schizophrenia classification AUC scores using <span
+            class="math inline">\beta</span>-coefficients as
+          features. The y-axis
+          provides the AUC metric
+          and the x-axis separates the scores obtained over 10-fold cross-validation for each classifier.
+        </figcaption>
+      </figure>
+      <p>
+        The reduced number of training features increased the accuracy of all the learners with Support
+        Vector Machines achieving the highest accuracy across all clustering algorithms. Only DBCAN failed to get
+        above an average AUC score of 0.90 for support vector machines and Hierarchical clusterting obtained this
+        highest score of 0.957.
+      </p>
+      <hr />
+      <h2 id="fbirn-data-visualizations">FNC State Analysis</h2>
+      <p> In this section, we present a series of diagrams that show the quality of each clustering algorithm's 
+        assignment outputs. We show both 2D and 3D PCA visualizations of the FBIRN data, along with cluster labels per point,
+        along with centroids per cluster marked as <b> X </b> in each diagram. </p>.
+        
+      <p> We also display FNC state diagrams that reveal how DBSCAN, Hiearcharial Clustering, BGMM, and GMM clusters data differently
+        for healthy versus schizophrenic patients. We display clustering visualizations and FNC diagrams for the UCLA
+        and gaussian simulated datasets in Appendix C and A respectively. </p>
+      
+      <h3> Kmeans Clustering </h3>
+      <figure>
+        <img width="98%" src="results/kmeans_fbirn_betas/kmeans_fbirn_states.png?raw=true" />
+        <figcaption><b>Figure: </b> the FBIRN FNC states detected for each class using K-Means clustering. The top
+          row
+          are the
+          states for healthy controls, and the bottom row are states for schizophrenic patients. These results
+          follow
+          closely with the results from Damaraju et al. 2014 [14], which indicates our pipeline works.
+        </figcaption>
+      </figure>
+      <figure><img width="49%" src="results/kmeans_fbirn_betas/kmeans_fbirn_visualization_3d.png?raw=true" /> <img
+          width="49%" src="results/kmeans_fbirn_betas/kmeans_fbirn_visualization.png?raw=true" /><br />
+        <figcaption><b>Figure: </b>Visualization of FBIRN cluster-assignments to FNC windows for PCA-reduced
+          windows in
+          2-D
+          and 3-D. Each color corresponds to one of the <span class="math inline"><em>k</em> = 5</span> states.
+        </figcaption>
+      </figure>
+      <hr />
+      <h3> GMM Clustering </h3>
+      <figure><img width="98%" src="results/gmm_fbirn_betas/gmm_fbirn_states.png?raw=true" />
+        <figcaption><b>Figure: </b> the FBIRN FNC states detected for each class using GMM clustering. The top row
+          are
+          the states for healthy controls, and the bottom row are states for schizophrenic patients. We notice
+          that
+          states 2 and
+          3 resemble states 3 and 4 from KMeans, and state 1 resembles state 2 from kmeans. State 0 and State 4
+          most closely resemble state 0 from KMeans; however, both show greater negative connectivity in modules
+          where it is not detected by KMeans.</figcaption>
+      </figure>
+      <figure><img width="49%" src="results/gmm_fbirn_betas/gmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%"
+          src="results/gmm_fbirn_betas/gmm_fbirn_visualization.png?raw=true" /><br />
+        <figcaption><b>Figure: </b>Visualization of FBIRN cluster-assignments to FNC windows for PCA-reduced
+          windows in
+          2-D
+          and 3-D. Each color corresponds to one of the <span class="math inline"><em>k</em> = 5</span> states. We see
+          that cluster 4 here is
+          not detected by KMeans, perhaps indicating that the GMM has detected a new state in the FBIRN
+          data, which is still useful for schizophrenia diagnosis.
+        </figcaption>
+      </figure>
+      <hr />
+      <h3> Bayesian GMM </h3>
+      <figure><img width="98%" src="results/bgmm_fbirn_betas/bgmm_fbirn_states.png?raw=true" />
+        <figcaption>The Fbirn FNC states detected for each class using Bayesian GMM clustering. The states closely
+          resemble those detected with
+          standard GMM clustering.
+        </figcaption>
+      </figure>
+      <figure><img width="49%" src="results/bgmm_fbirn_betas/bgmm_fbirn_visualization_3d.png?raw=true" /> <img
+          width="49%" src="results/bgmm_fbirn_betas/bgmm_fbirn_visualization.png?raw=true" /><br />
+        <b>Figure: </b>Visualization of clusters with BGMM clustering in 2-d and 3-d with FBirn Data. We notice that a
+        similar clustering
+        partition occurs for the Bayesian GMM as for the standard GMM.</figure>
+      <hr />
+      <h3> DBSCAN Clustering </h3>
+      <figure><img width="98%" src="results/dbscan_fbirn_betas/dbscan_fbirn_states.png?raw=true" />
+        <figcaption><b>Figure: </b>The two states detected by DBSCAN
+          clustering on the FBIRN data. Although the resulting classification performance using these states is quite
+          low (~0.80 AUC), we notice that patterns of
+          connectivity detected do closely resemble other states detected with KMeans, GMM, and bGMM, indicating that
+          these may represent "super"-clusters,
+          which alone do not provide a good characterization of classes, but which still may be useful for further
+          analysis.</figcaption>
+      </figure>
+      <figure><img width="49%" src="results/dbscan_fbirn_betas/dbscan_fbirn_visualization_3d.png?raw=true" /> <img
+          width="49%" src="results/dbscan_fbirn_betas/dbscan_fbirn_visualization.png?raw=true" /><br />
+        <b>Figure: </b> Visualization of clusters with DBSCAN clustering in 2-d and 3-d with FBIRN Data. As seen
+        in the plots above, DBSCAN fails to find more than 2 clusters, even labeling a large majority of the data
+        labels as "noise" (-1 label). Accordingly, the clusterer performs poorly on FBIRN data, but
+        does receive a lift after beta coefficient features are created for its clustering assignments.
+      </figure>
+      <hr />
+      <h3>Agglomerative Hierarchical Clustering</h3>
+      <figure><img width="98%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_states.png?raw=true" />
+        <figcaption><b>Figure: </b>The FNC states detected for the FBIRN data using hierarchical clustering.
+          We observe that although some similarity in connectivity is shared between these states and the states
+          resulted from KMeans, the centers are still quite different than the standard states detected for this data
+          set. Since the
+          resulting states provide the best classification of the data, further neurological interpretation may confirm
+          that these
+          connectivity patterns are useful biomarkers for schizophrenia diagnosis.</figcaption>
+      </figure>
+      <figure><img width="49%"
+          src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" />
+        <img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization.png?raw=true" /><br />
+        <figcaption><b>Figure: </b>Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn
+          Data. We observe that the
+          partitioning of the clusters is not clear under PCA reduction, like it is for the other clustering algorithms.
+          Because hierarchical
+          clustering provides the best states for producing classification features, this may mean it is better
+          partitioning distinctive
+          states in the higher-dimensional space.</figcaption>
+      </figure>
+
+      <p> As a summary of the results posted above, we see that 4 out of 5 tested clustering methods (KMeans,
+        Hiearcharial
+        Clustering, GMM, BGMM) are able to find 4-5 distinct clusters within the FBIRN data, as evidence by their
+        respective 2D and 3D
+        visualizations shown in this section. DBSCAN only appears to find 2 clusters, with one of them being marked
+        as "noise," and accordingly produces features that perform worse in comparison to other clustering algorithms
+        on the Schizophrenia prediction task. </p>
+
+      <p> In terms of the Schizophrenia prediction task, Hiearcharial Clustering appears to produce assignments that
+        give
+        the greatest lift to all classifiers, with SVMs benefitting the most from its cluster assignments. However, the
+        a few of the other clustering algorithms also perform strongly with GMMs and BGMMs performing comparatively,
+        KMeans slightly behind,
+        and DBSCAN performing slightly worse in all experiments. </p>
+
+      <p> More biological analysis is required to make any concrete recommendations based off these results, but our
+        results
+        appear to signal that the <b> choice of clustering and classification algorithm in the dFNC pipeline does make
+          a significant difference in the quality of the output states and diagnosis prediction accuracy. </b> </p>
+
+
+
+      <h1 id="section-v-conclusion">Section V: Conclusion</h1>
+      <p>
+        <ul>
+          <li>
+            <b>Cluster-Based features greatly improve classification</b> performance for the
+            schizophrenia classification task.
+          </li>
+          <li>
+            Classification of dFNC states <b>performs comporably when using GMM, Bayesian GMM, Hierarchical
+              Clustering,
+              and
+              KMeans</b>
+          </li>
+          <li><b>GMM, bGMM, and Hierarchical clustering all detect states not detected with KMeans</b>, which
+            provide
+            either comparable or better classification of schizophrenia, indicating these states may have
+            biological significance for diagnosis.
+          </li>
+          <li>
+            <b>Hierarchical Clustering provides the highest classification results</b> for FBIRN, and GMM/bGMM
+            provide
+            the
+            highest results for
+            UCLA data, while also providing slightly different states than are detected with KMeans. These states
+            may be
+            useful for further
+            neurological analysis.
+          </li>
+          <li>
+            DBSCAN's sensitivity to parameters requires exhaustive hyper-parameter searching, without clear
+            improvements
+            in performance, but because states collected by DBSCAN in FBIRN data provided decent results (~80%
+            accuracy),
+            they may provide
+            some biological insight.
+          </li>
+          <li>
+            As established in literature, SVM classifiers perform most reliably for classifying dFNC states, which
+            is
+            consistent for both real data sets, and all clustering algorithms.
+          </li>
+        </ul>
+      </p>
+      <h2>Further Work</h2>
+      <p>
+        <ul>
+          <li>Further neurological analysis of detected states is required for more thorough interpretation of
+            results
+          </li>
+          <li>
+            Elbow criterion for different clustering algorithms revealed some inconsistency in the use of <span
+              class="math inline"><em>k</em> = 5</span>
+            for
+            the
+            number of states. Applying the full classification pipeline to other numbers of states may provide
+            further
+            insight
+            into states, and improve classification even further.
+          </li>
+          <li>
+            More advanced clustering and classification algorithms using Deep Learning may provide significant
+            lifts
+            classification. Particularly the use of Variational AutoEncoders for clustering seems a particularly
+            promising
+            avenue of future investigation.
+          </li>
+        </ul>
+      </p>
+
+      <h2 id="references">References</h2>
+      <p><a name="ref1"></a> [1]. Eswar Damaraju et al. “Dynamic functional connectivity analysis reveals
+        transient
+        states
+        of dyscon-nectivity in schizophrenia”. In:NeuroImage: Clinical5 (2014), pp. 298–308.<br></p>
+      <p><a name="ref2"></a> [2]. Mustafa S Salman et al. “Group ICA for identifying biomarkers in
+        schizophrenia:‘Adaptive’networks viaspatially constrained ICA show more sensitivity to group differences
+        than
+        spatio-temporal regression”.In:NeuroImage: Clinical22 (2019), p. 101747.<br></p>
+      <p><a name="ref3"></a> [3]. Elena A Allen et al. “Tracking whole-brain connectivity dynamics in the resting
+        state”.
+        In:Cerebralcortex24.3 (2014), pp. 663–676.<br></p>
+      <p><a name="ref4"></a> [4]. D. Zhi et al., “Abnormal Dynamic Functional Network Connectivity and Graph
+        Theoretical
+        Analysis in Major Depressive Disorder,” 2018 40th Annual International Conference of the IEEE Engineering
+        in
+        Medicine and Biology Society (EMBC), Honolulu, HI, 2018, pp. 558-561.<br></p>
+      <p><a name="ref5"></a> [5]. U Sakoglu, AM Michael, and VD Calhoun. “Classification of schizophrenia patients
+        vs
+        healthy controlswith dynamic functional network connectivity”. In:Neuroimage47.1 (2009), S39–41.<br></p>
+      <p><a name="ref6"></a> [6]. Unal Sako ̆glu et al. “A method for evaluating dynamic functional network
+        connectivity
+        and task-modulation: application to schizophrenia”. In:Magnetic Resonance Materials in Physics, Biology
+        andMedicine23.5-6 (2010), pp. 351–366.<br></p>
+      <p><a name="ref7"></a> [7]. V. M. Vergara, A. Abrol, F. A. Espinoza and V. D. Calhoun, &quot;Selection of
+        Efficient
+        Clustering Index to Estimate the Number of Dynamic Brain States from Functional Network
+        Connectivity*,&quot;
+        2019
+        41st Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC),
+        Berlin,
+        Germany, 2019, pp. 632-635.<br></p>
+      <p><a name="ref8"></a> [8]. D. K. Saha, A. Abrol, E. Damaraju, B. Rashid, S. M. Plis and V. D. Calhoun,
+        “Classification As a Criterion to Select Model Order For Dynamic Functional Connectivity States in
+        Rest-fMRI
+        Data,” 2019 IEEE 16th International Symposium on Biomedical Imaging (ISBI 2019), Venice, Italy, 2019,
+        pp. 1602-1605.<br></p>
+      <p><a name="ref9"></a> [9]. Pedregosa et al. “2.3. Clustering.” Scikit,
+        scikit-learn.org/stable/modules/clustering.html.<br></p>
+      <p><a name="ref10"></a> [10]. Rashid, Barnaly, et al. “Classification of Schizophrenia and Bipolar Patients
+        Using
+        Static and Dynamic Resting-State FMRI Brain Connectivity.” NeuroImage, vol. 134, 2016, pp. 645–657.,
+        doi:10.1016/j.neuroimage.2016.04.051.</p>
+      <p><a name="ref11"></a> [11]. Bell, Anthony J., and Terrence J. Sejnowski. "An information-maximization
+        approach
+        to blind separation and blind
+        deconvolution." Neural computation 7.6 (1995): 1129-1159.</p>
+      <p><a name="ref12"></a>[12]. Du, Yuhui, and Yong Fan. "Group information guided ICA for fMRI data analysis."
+        Neuroimage 69 (2013): 157-197.</p>
+      <p><a name="ref13"></a> [13]. Salman, Mustafa S., et al. "Group information guided ICA shows more
+        sensitivity to
+        group differences than
+        dual-regression." 2017 IEEE 14th International Symposium on Biomedical Imaging (ISBI 2017). IEEE, 2017.
+      </p>
+      <p><a name="ref14"></a> [14]. Rashid, Barnaly, et al. "Classification of schizophrenia and bipolar patients
+        using
+        static and dynamic resting-state
+        fMRI brain connectivity." Neuroimage 134 (2016): 645-657.</p>
+      <p><a name="ref15"></a> [15]. Rachakonda, Srinivas, et al. "Group ICA of fMRI toolbox (GIFT) manual."
+        Dostupnez
+        [cit 2011-11-5] (2007).</p>
+      <p><a name="ref16"></a>[16]. Du, Yuhui, et al. "NeuroMark: an adaptive independent component analysis
+        framework
+        for estimating reproducible and
+        comparable fMRI biomarkers among brain disorders." medRxiv (2019): 19008631.</p>
+      <p><a name="random_forests"> </a>[17]. Breiman, “Random Forests”, Machine Learning, 45(1), 5-32, 2001.
+      </p>
+      <p><a name="extra_trees"></a>[18]. Simm J, de Abril I and Sugiyama M (2014). Tree-Based Ensemble Multi-Task
+        Learning
+        Method for Classification and
+        Regression, volume 97 number 6</p>
+      <p><a name="adaboost"></a>[19]. Y. Freund, and R. Schapire, “A Decision-Theoretic Generalization of On-Line
+        Learning and
+        an Application to Boosting”,
+        1997.
+      </p>
+      <p><a name="bagging"></a>[20]. Breiman, Leo. "Bagging predictors." Machine learning 24.2 (1996): 123-140.
+      </p>
+      <p><a name="gradient_boost"></a>[21]. Friedman, Jerome H. "Stochastic gradient boosting." Computational
+        statistics
+        & data analysis 38.4 (2002): 367-378.</p>
+      <p><a name="passive_aggressive"></a>[22] “Online Passive-Aggressive Algorithms” K. Crammer, O. Dekel, J.
+        Keshat,
+        S. Shalev-Shwartz, Y. Singer - JMLR 7 (2006)</p>
+      <p><a name"Lindquist"></a>[23]. Wager, Tor D., and Martin A. Lindquist. "Principles of fMRI." New York:
+        Leanpub
+        (2015).</p>
+
+
+      <h1 id="appendices">Appendices</h1>
+      <h2 id="gaussian_simulations">Appendix A: Gaussian Simulation Details</h2>
+      <p>We derive our own synthetic dataset in order to test out our clusterers and classifiers on a simulated
+        dataset
+        for
+        sanity checking their implementation.</p>
+      <p>The data set was generated by a seed set of <span class="math inline"><em>M</em> = 50</span> source
+        gaussian
+        signals, which were organized into <span class="math inline"><em>k</em> = 5</span> “connectivity states”.
+        Each
+        of
+        the 5 connectivity states is a block-diagonal matrix with a block of size <span
+          class="math inline"><em>M</em>/<em>k</em></span> which is located on the <span
+          class="math inline"><em>i</em> * <em>M</em>/<em>k</em> + <em>M</em>/<em>k</em></span>th entry with a
+        size of
+        <span class="math inline"><em>i</em> * <em>M</em>/<em>k</em></span>. For each state, the set the pairs of
+        relevant
+        source signals to come from the same distribution, so that their correlation without additional additive
+        noise
+        is
+        1.
+      </p>
+      <p>For each subject, we generate a source signal of sime <span
+          class="math inline"><em>M</em> × <em>T</em> − <em>W</em></span> where <span
+          class="math inline"><em>T</em></span>
+        is the length of the time-course, and <span class="math inline"><em>W</em></span> is the size of the
+        sliding
+        window.
+        Over each window, we randomly select which state the window belongs to, drawing from a prior distribution
+        of
+        state
+        probabilities for a subject’s class, <span
+          class="math inline"><em>P</em><sub><em>c</em>, <em>k</em></sub></span>.
+        Additionally, for each class we simulate a transition probability <span
+          class="math inline"><em>Q</em><sub><em>c</em>, <em>k</em></sub></span> for each state, with higher
+        probabilities
+        meaning a higher chance of transitioning out of that state into some other state. Finally, we restrict the
+        simulation such that transitions can only occur after a state has existed for a <span
+          class="math inline"><em>W</em></span>-many timepoints. This restrictions allows us to assert with some
+        certainty
+        that each of the seed states will occur within some window for that subject.</p>
+      <p>For each class, we simulate baseline signal noise from a normal distribution, which the relevant source
+        signal
+        being added to that baseline.</p>
+      <p>Formally a single subjects signal within a window of size W is given as:</p>
+      <p><br /><span
+          class="math display"><em>X</em><sub><em>i</em></sub> = 𝒩(<em>θ</em><sub><em>c</em></sub>) + 𝒩(<em>θ</em><sub><em>k</em></sub>)</span><br />
+      </p>
+      <p>where <span class="math inline"><em>θ</em><sub><em>c</em></sub></span> and <span
+          class="math inline"><em>θ</em><sub><em>k</em></sub></span> are the parameters for the baseline class
+        signal
+        for
+        class <span class="math inline"><em>c</em></span> and the source signal for state <span
+          class="math inline"><em>k</em></span> respectively. Because all source signals for state <span
+          class="math inline"><em>k</em></span> will have the same distribution, their correlation will be high,
+        providing
+        the same block-matrix correlation for the dFNC analysis.</p>
+      <p>The probability for entering from state <span class="math inline"><em>k</em></span> into a new state
+        <span class="math inline"><em>k</em>′</span> at a timepoint <span class="math inline"><em>T</em></span>,
+        given that
+        the
+        last transition occured <span class="math inline"><em>W</em></span> time-points ago, is given as the joint
+        probability of the prior distribution for the class ever entering into state <span
+          class="math inline"><em>k</em>′</span>, as well as the probability of transitioning out of state <span
+          class="math inline"><em>k</em></span>. i.e. <br /><span
+          class="math display"><em>Z</em><sub><em>c</em>, <em>k</em>, <em>k</em>′</sub>(<em>P</em><sub><em>c</em>, <em>k</em>′</sub>, <em>Q</em><sub><em>c</em>, <em>k</em></sub>)</span><br />
+      </p>
+      <p>The addition of noise, and the fact that windows are created with a size <span
+          class="math inline"><em>W</em></span>
+        at each timepoint means that there is a high chance for bleed-over between
+        the actual states detected for an individual subject.</p>
+      <p>For example the following connectivity matrices were computed from randomly selected subjects from each
+        class,
+        for
+        each state:</p>
+      <table>
+        <thead>
+          <tr class="header">
+            <th style="text-align: center;">Class</th>
+            <th style="text-align: center;">State 0</th>
+            <th style="text-align: center;">State 1</th>
+            <th style="text-align: center;">State 2</th>
+            <th style="text-align: center;">State 3</th>
+            <th style="text-align: center;">State 4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="odd">
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;"><img width="100%" src="data/examples/gauss/class0_state0.png?raw=True" />
+            </td>
+            <td style="text-align: center;"><img width="100%" src="data/examples/gauss/class0_state1.png?raw=True" />
+            </td>
+            <td style="text-align: center;"><img width="100%" src="data/examples/gauss/class0_state2.png?raw=True" />
+            </td>
+            <td style="text-align: center;"><img width="100%" src="data/examples/gauss/class0_state3.png?raw=True" />
+            </td>
+            <td style="text-align: center;"><img width="100%" src="data/examples/gauss/class0_state4.png?raw=True" />
+            </td>
+          </tr>
+          <tr class="even">
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;"><img width="100%" src="data/examples/gauss/class1_state0.png?raw=True" />
+            </td>
+            <td style="text-align: center;"><img width="100%" src="data/examples/gauss/class1_state1.png?raw=True" />
+            </td>
+            <td style="text-align: center;"><img width="100%" src="data/examples/gauss/class1_state2.png?raw=True" />
+            </td>
+            <td style="text-align: center;"><img width="100%" src="data/examples/gauss/class1_state3.png?raw=True" />
+            </td>
+            <td style="text-align: center;"><img width="100%" src="data/examples/gauss/class1_state4.png?raw=True" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <figcaption><b>Fig: </b> Examples of the 5 states for our simulated data set. Each of the states is a
+          block
+          matrix, with some mixture from adjacent states depending on the probability for that subject. E.g. in
+          class
+          one
+          state 0 is highly probably, so it tends to appear mixed into other states, while in class 2, state 4 is
+          highly
+          probable,
+          so it tends to mix in with other states.</figcaption>
+>>>>>>> c1a3272b2e953da65e4e749e8a8f0ac24fd471ab
       </p>
   </div>
 
@@ -1611,6 +2220,7 @@
         which features are significant varies with the choice of algorithm. The x axis is the index of the
         feature
         in the
+<<<<<<< HEAD
         <span class="math inline"><em>2 \times k</em></span> <span class="math inline"><em>\beta</em></span>-space.
         The y axis is whether or not a given <span class="math inline"><em>\beta</em></span>-feature was
         significant.
@@ -1626,6 +2236,39 @@
     diagnoses across all supervised learning algorithms for each clustering algorithm. These results are
     discussed
     later in the report.</p>
+=======
+        UCLA data set, it was surmised that the dimensionality of the data was too high. To reduce the
+        dimensionality of
+        the datasets, the beta coefficients were calculated reducing the number of training features form 130 to
+        10.</p>
+
+      <p>
+        <figure>
+          <img src="images/beta_t_test_visualization.png?raw=true" width="100%" />
+          <figcaption><b>Figure: </b> Significance testing on the UCLA dataset using <span
+              class="math inline"><em>\beta</em></span>-coefficients for
+            four of
+            the
+            clustering algorithms. We notice that all clustering algorithms find significant features, though
+            which features are significant varies with the choice of algorithm. The x axis is the index of the
+            feature
+            in the
+            <span class="math inline"><em>2 * k</em></span> <span class="math inline"><em>\beta</em></span>-space.
+            The y axis is whether or not a given <span class="math inline"><em>\beta</em></span>-feature was
+            significant.
+          </figcaption>
+        </figure>
+      </p>
+
+      <p>Each clustering algorithm produced statistically different beta coefficients between the health control
+        and
+        schizophrenic patients. With the reduced dimenstionality of the data, we successfully improved the
+        accuracy of
+        out
+        diagnoses across all supervised learning algorithms for each clustering algorithm. These results are
+        discussed
+        later in the report.</p>
+>>>>>>> c1a3272b2e953da65e4e749e8a8f0ac24fd471ab
   </div>
 </body>
 
