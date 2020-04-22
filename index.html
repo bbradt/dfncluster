@@ -647,9 +647,22 @@
           src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" />
         <img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization.png?raw=true" /><br />
         Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn Data</figure>
-
-      <hr />
-      <hr />
+      
+     <p> As a summary of the results posted above, we see that 4 out of 5 tested clustering methods (KMeans, Hiearcharial
+       Clustering, GMM, BGMM) are able to find 4-5 distinct clusters within the FBIRN data, as evidence by their respective 2D and 3D
+       visualizations shown in this section. DBSCAN only appears to find 2 clusters, with one of them being marked
+       as "noise," and accordingly produces features that perform worse in comparison to other clustering algorithms
+       on the Schizophrenia prediction task. </p>
+      
+      <p> In terms of the Schizophrenia prediction task, Hiearcharial Clustering appears to produce assignments that give
+        the greatest lift to all classifiers, with SVMs benefitting the most from its cluster assignments. However, the
+        a few of the other clustering algorithms also perform strongly with GMMs and BGMMs performing comparatively, KMeans slightly behind,
+        and DBSCAN performing slightly worse in all experiments. </p>.
+      
+      <p> More biological analysis is required to make any concrete recommendations based off these results, but our results
+        appear to signal that the choice of clustering and classification algorithm in the dFNC pipeline **does** make
+        a significant difference in the quality of the output states and diagnosis prediction accuracy. </p>.
+       
 
 
       <h1 id="section-v-conclusion">Section V: Conclusion</h1>
