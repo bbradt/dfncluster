@@ -627,8 +627,8 @@
       closely with the results from Damaraju et al. 2014 [14], which indicates our pipeline works.
     </figcaption>
   </figure>
-  <figure><img width="49%" src="results/kmeans_fbirn_betas/kmeans_fbirn_visualization_3d.png?raw=true" /> <img
-      width="49%" src="results/kmeans_fbirn_betas/kmeans_fbirn_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%" src="results/kmeans_fbirn_betas/kmeans_fbirn_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/kmeans_fbirn_betas/kmeans_fbirn_visualization.png?raw=true" /><br />
     <figcaption><b>Figure: </b>Visualization of FBIRN cluster-assignments to FNC windows for PCA-reduced
       windows in
       2-D
@@ -647,8 +647,8 @@
       most closely resemble state 0 from KMeans; however, both show greater negative connectivity in modules
       where it is not detected by KMeans.</figcaption>
   </figure>
-  <figure><img width="49%" src="results/gmm_fbirn_betas/gmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%"
-      src="results/gmm_fbirn_betas/gmm_fbirn_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%" src="results/gmm_fbirn_betas/gmm_fbirn_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/gmm_fbirn_betas/gmm_fbirn_visualization.png?raw=true" /><br />
     <figcaption><b>Figure: </b>Visualization of FBIRN cluster-assignments to FNC windows for PCA-reduced
       windows in
       2-D
@@ -666,8 +666,8 @@
       standard GMM clustering.
     </figcaption>
   </figure>
-  <figure><img width="49%" src="results/bgmm_fbirn_betas/bgmm_fbirn_visualization_3d.png?raw=true" /> <img width="49%"
-      src="results/bgmm_fbirn_betas/bgmm_fbirn_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%" src="results/bgmm_fbirn_betas/bgmm_fbirn_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/bgmm_fbirn_betas/bgmm_fbirn_visualization.png?raw=true" /><br />
     <b>Figure: </b>Visualization of clusters with BGMM clustering in 2-d and 3-d with FBirn Data. We notice that a
     similar clustering
     partition occurs for the Bayesian GMM as for the standard GMM.</figure>
@@ -682,8 +682,8 @@
       which alone do not provide a good characterization of classes, but which still may be useful for further
       analysis.</figcaption>
   </figure>
-  <figure><img width="49%" src="results/dbscan_fbirn_betas/dbscan_fbirn_visualization_3d.png?raw=true" /> <img
-      width="49%" src="results/dbscan_fbirn_betas/dbscan_fbirn_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%" src="results/dbscan_fbirn_betas/dbscan_fbirn_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/dbscan_fbirn_betas/dbscan_fbirn_visualization.png?raw=true" /><br />
     <b>Figure: </b> Visualization of clusters with DBSCAN clustering in 2-d and 3-d with FBIRN Data. As seen
     in the plots above, DBSCAN fails to find more than 2 clusters, even labeling a large majority of the data
     labels as "noise" (-1 label). Accordingly, the clusterer performs poorly on FBIRN data, but
@@ -700,8 +700,10 @@
       that these
       connectivity patterns are useful biomarkers for schizophrenia diagnosis.</figcaption>
   </figure>
-  <figure><img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" />
-    <img width="49%" src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%"
+      src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization_3d.png?raw=true" />
+    <img style="width: 49%"
+      src="results/hierarchical_fbirn_betas/hierarchical_fbirn_visualization.png?raw=true" /><br />
     <figcaption><b>Figure: </b>Visualization of clusters with Hierarchical clustering in 2-d and 3-d with FBirn
       Data. We observe that the
       partitioning of the clusters is not clear under PCA reduction, like it is for the other clustering algorithms.
@@ -942,7 +944,7 @@
     signal
     being added to that baseline.</p>
   <p>Formally a single subjects signal within a window of size W is given as:</p>
-  <p><br /><span
+  <p align="center"><br /><span
       class="math display"><em>X</em><sub><em>i</em></sub> = 𝒩(<em>θ</em><sub><em>c</em></sub>) + 𝒩(<em>θ</em><sub><em>k</em></sub>)</span><br />
   </p>
   <p>where <span class="math inline"><em>θ</em><sub><em>c</em></sub></span> and <span
@@ -961,8 +963,11 @@
     last transition occured <span class="math inline"><em>W</em></span> time-points ago, is given as the joint
     probability of the prior distribution for the class ever entering into state <span
       class="math inline"><em>k</em>′</span>, as well as the probability of transitioning out of state <span
-      class="math inline"><em>k</em></span>. i.e. <br /><span
-      class="math display"><em>Z</em><sub><em>c</em>, <em>k</em>, <em>k</em>′</sub>(<em>P</em><sub><em>c</em>, <em>k</em>′</sub>, <em>Q</em><sub><em>c</em>, <em>k</em></sub>)</span><br />
+      class="math inline"><em>k</em></span>. i.e. <br />
+    <p align="center">
+      <span
+        class="math display"><em>Z</em><sub><em>c</em>, <em>k</em>, <em>k</em>′</sub>(<em>P</em><sub><em>c</em>, <em>k</em>′</sub>, <em>Q</em><sub><em>c</em>, <em>k</em></sub>)</span>
+    </p><br />
   </p>
   <p>The addition of noise, and the fact that windows are created with a size <span
       class="math inline"><em>W</em></span>
@@ -972,7 +977,7 @@
     class,
     for
     each state:</p>
-  <table>
+  <table style="width: 98%">
     <thead>
       <tr class="header">
         <th style="text-align: center;">Class</th>
@@ -1034,11 +1039,10 @@
     states was equally likely for all classes and states. Baseline noise was set at <span
       class="math inline"><em>σ</em><sub><em>c</em></sub> = 1 × 10<sup> − 2</sup></span> for each class, and
     the
-    <span class="math inline"><em>s</em><em>i</em><em>g</em><em>m</em><em>a</em><sub><em>k</em></sub></span>
+    <span class="math inline"><em>σ</em><sub><em>k</em></sub></span>
     for all
     source
-    signals was set at <span
-      class="math inline"><em>s</em><em>i</em><em>g</em><em>m</em><em>a</em><sub><em>k</em></sub> = 1 × 10<sup> − 1</sup></span>.
+    signals was set at <span class="math inline"><em>σ<sub><em>k</em></sub> = 1 × 10<sup> −1</sup></span>.
   </p>
   <p>The parameters for <span class="math inline"><em>P</em></span> for each class were selected as:</p>
   <table>
@@ -1062,9 +1066,7 @@
         <td>0.1</td>
       </tr>
       <tr class="even">
-        <td>
         <td><span class="math inline"><em>P</em><sub><em>(c</em> = 1, <em>k)</em></sub></span></td>
-        </td>
         <td>0.1</td>
         <td>0.1</td>
         <td>0.3</td>
@@ -1094,7 +1096,7 @@
     in
     the literature.</p>
 
-  <table>
+  <table style="width: 90%">
     <thead>
       <tr class="header">
         <th style="text-align: center;">Clustering Algorithm/
@@ -1107,45 +1109,42 @@
     <tbody>
       <tr class="odd">
         <td style="text-align: center;">KMeans</td>
-        <td style="text-align: center;"><img width="50%"
-            src="results/kmeans_gauss_betas/kmeans_gauss_elbow.png?raw=True" /></td>
-        <td style="text-align: center;"><img width="50%"
-            src="results/kmeans_fbirn_betas/kmeans_fbirn_elbow.png?raw=True" /></td>
-        <td style="text-align: center;"><img width="50%"
-            src="results/kmeans_ucla_betas/kmeans_ucla_elbow.png?raw=True" />
+        <td style="text-align: center;"><img src="results/kmeans_gauss_betas/kmeans_gauss_elbow.png?raw=True" /></td>
+        <td style="text-align: center;"><img src="results/kmeans_fbirn_betas/kmeans_fbirn_elbow.png?raw=True" /></td>
+        <td style="text-align: center;"><img src="results/kmeans_ucla_betas/kmeans_ucla_elbow.png?raw=True" />
         </td>
       </tr>
       <tr class="even">
         <td style="text-align: center;">GMM</td>
-        <td style="text-align: center;"><img width="50%" src="results/gmm_gauss_betas/gmm_gauss_elbow.png?raw=True" />
+        <td style="text-align: center;"><img src="results/gmm_gauss_betas/gmm_gauss_elbow.png?raw=True" />
         </td>
-        <td style="text-align: center;"><img width="50%" src="results/gmm_fbirn_betas/gmm_fbirn_elbow.png?raw=True" />
+        <td style="text-align: center;"><img src="results/gmm_fbirn_betas/gmm_fbirn_elbow.png?raw=True" />
         </td>
-        <td style="text-align: center;"><img width="50%" src="results/gmm_ucla_betas/gmm_ucla_elbow.png?raw=True" />
+        <td style="text-align: center;"><img src="results/gmm_ucla_betas/gmm_ucla_elbow.png?raw=True" />
         </td>
       </tr>
       <tr class="odd">
         <td style="text-align: center;">bGMM</td>
-        <td style="text-align: center;"><img width="50%" src="results/bgmm_gauss_betas/bgmm_gauss_elbow.png?raw=True" />
+        <td style="text-align: center;"><img src="results/bgmm_gauss_betas/bgmm_gauss_elbow.png?raw=True" />
         </td>
-        <td style="text-align: center;"><img width="50%" src="results/bgmm_fbirn_betas/bgmm_fbirn_elbow.png?raw=True" />
+        <td style="text-align: center;"><img src="results/bgmm_fbirn_betas/bgmm_fbirn_elbow.png?raw=True" />
         </td>
-        <td style="text-align: center;"><img width="50%" src="results/bgmm_ucla_betas/bgmm_ucla_elbow.png?raw=True" />
+        <td style="text-align: center;"><img src="results/bgmm_ucla_betas/bgmm_ucla_elbow.png?raw=True" />
         </td>
       </tr>
       <tr class="even">
         <td style="text-align: center;">Agglomerative</td>
-        <td style="text-align: center;"><img width="50%"
+        <td style="text-align: center;"><img
             src="results/hierarchical_gauss_betas/hierarchical_gauss_elbow.png?raw=True" /></td>
-        <td style="text-align: center;"><img width="50%"
+        <td style="text-align: center;"><img
             src="results/hierarchical_fbirn_betas/hierarchical_fbirn_elbow.png?raw=True" /></td>
-        <td style="text-align: center;"><img width="50%"
+        <td style="text-align: center;"><img
             src="results/hierarchical_ucla_betas/hierarchical_ucla_elbow.png?raw=True" /></td>
       </tr>
     </tbody>
   </table>
   <p>
-    <figcaption><b>Fig 3:</b> Table of elbow-criterion evaluations for all clustering algorithms using the
+    <figcaption style="margin-left: 1em;"><b>Fig 3:</b> Table of elbow-criterion evaluations for all clustering algorithms using the
       correlation distance distortion, and the silhouette coefficients. In general, we see either no clear
       elbow, or multiple elbows, depending on the choice of clustering algorithm or data set.</figcaption>
   </p>
@@ -1272,42 +1271,42 @@
     states
     with
     KMeans clustering with UCLA Data</figure>
-  <figure><img width="49%" src="results/kmeans_ucla_betas/kmeans_ucla_visualization_3d.png?raw=true" /> <img width="49%"
-      src="results/kmeans_ucla_betas/kmeans_ucla_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%" src="results/kmeans_ucla_betas/kmeans_ucla_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/kmeans_ucla_betas/kmeans_ucla_visualization.png?raw=true" /><br />
     Visualization of clusters with KMeans clustering in 2-d and 3-d with UCLA Data</figure>
   <hr />
   <h3> GMM Clustering </h3>
-  <p><img width="98%" src="results/gmm_ucla_betas/gmm_ucla_states.png?raw=true" /> Visualization of states
+  <figure><img width="98%" src="results/gmm_ucla_betas/gmm_ucla_states.png?raw=true" /> Visualization of states
     with
     GMM
-    clustering with UCLA Data</p>
-  <p><img width="49%" src="results/gmm_ucla_betas/gmm_ucla_visualization_3d.png?raw=true" /> <img width="49%"
-      src="results/gmm_ucla_betas/gmm_ucla_visualization.png?raw=true" /><br />
-    Visualization of clusters with GMM clustering in 2-d and 3-d with UCLA Data</p>
+    clustering with UCLA Data</figure>
+  <figure><img style="width: 49%" src="results/gmm_ucla_betas/gmm_ucla_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/gmm_ucla_betas/gmm_ucla_visualization.png?raw=true" /><br />
+    Visualization of clusters with GMM clustering in 2-d and 3-d with UCLA Data</figure>
   <hr />
   <h3> Bayesian GMM Clustering </h3>
-  <p><img width="98%" src="results/bgmm_ucla_betas/bgmm_ucla_states.png?raw=true" /> Visualization of states
+  <figure><img width="98%" src="results/bgmm_ucla_betas/bgmm_ucla_states.png?raw=true" /> Visualization of states
     with
     BGMM
-    clustering with UCLA Data</p>
-  <p><img width="49%" src="results/bgmm_ucla_betas/bgmm_ucla_visualization_3d.png?raw=true" /> <img width="49%"
-      src="results/bgmm_ucla_betas/bgmm_ucla_visualization.png?raw=true" /><br />
-    Visualization of clusters with BGMM clustering in 2-d and 3-d with UCLA Data</p>
+    clustering with UCLA Data</figure>
+  <figure><img style="width: 49%" src="results/bgmm_ucla_betas/bgmm_ucla_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/bgmm_ucla_betas/bgmm_ucla_visualization.png?raw=true" /><br />
+    Visualization of clusters with BGMM clustering in 2-d and 3-d with UCLA Data</figure>
   <hr />
   <h3> DBSCAN Clustering </h3>
-  <p><img width="49%" src="results/dbscan_ucla_betas/dbscan_ucla_visualization_3d.png?raw=true" /> <img width="49%"
-      src="results/dbscan_ucla_betas/dbscan_ucla_visualization.png?raw=true" /><br />
-    Visualization of clusters with DBSCAN clustering in 2-d and 3-d with UCLA Data</p>
+  <figure><img style="width: 49%" src="results/dbscan_ucla_betas/dbscan_ucla_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/dbscan_ucla_betas/dbscan_ucla_visualization.png?raw=true" /><br />
+    Visualization of clusters with DBSCAN clustering in 2-d and 3-d with UCLA Data</figure>
   <hr />
   <h3> Agglomerative Hierarchical Clustering </h3>
-  <p><img width="98%" src="results/hierarchical_ucla_betas/hierarchical_ucla_states.png?raw=true" />
+  <figure><img width="98%" src="results/hierarchical_ucla_betas/hierarchical_ucla_states.png?raw=true" />
     Visualization
     of
-    states with Hierarchical clustering with UCLA Data</p>
-  <p><img width="49%" src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization_3d.png?raw=true" />
-    <img width="49%" src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization.png?raw=true" /><br />
-    Visualization of clusters with Hierarchical clustering in 2-d and 3-d with UCLA Data</p>
-  <hr />
+    states with Hierarchical clustering with UCLA Data</figure>
+  <figure><img style="width: 49%"
+      src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization_3d.png?raw=true" />
+    <img style="width: 49%" src="results/hierarchical_ucla_betas/hierarchical_ucla_visualization.png?raw=true" /><br />
+    Visualization of clusters with Hierarchical clustering in 2-d and 3-d with UCLA Data</figure>
   <hr />
 
   <h2 id="gaussian-simulated-dataset-1">Appendix D: Gaussian Simulated Dataset Results</h2>
@@ -1320,7 +1319,7 @@
     upon.
     These baseline results are displayed below.
   </p>
-  <p><img src="images/gauss_pre_clus_accuracy.png?raw=true" width="75%" /></p>
+  <figure><img src="images/gauss_pre_clus_accuracy.png?raw=true" width="75%" /></figure>
   <p>
     The key result from this experiment was that without any clustering, no supervised learning algorithm could
     consistently
@@ -1496,8 +1495,8 @@
       </tr>
     </tbody>
   </table>
-  <p><img width="86%" src="results/gauss_betas_accuracy.png?raw=True" /> <img style="width: 30%"
-      src="results/accuracy_legend.png?raw=true" /></p>
+  <figure><img width="86%" src="results/gauss_betas_accuracy.png?raw=True" /> <img style="width: 30%"
+      src="results/accuracy_legend.png?raw=true" /></figure>
   <p>
     The clustering combined with the beta feature generation dramatically improved the AUC scores on the simulated
     Gaussian datasets. All clustering algorithms produced AUC scores above 0.90 with standard deviations below 0.05
@@ -1515,8 +1514,8 @@
     of
     states
     with KMeans clustering with Gaussian Simulated Data</figure>
-  <figure><img width="49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization_3d.png?raw=true" /> <img
-      width="29%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/kmeans_gauss_betas/kmeans_gauss_visualization.png?raw=true" /><br />
     Visualization of clusters with KMeans clustering in 2-d and 3-d with Gaussian Simulated Data</figure>
   <hr />
   <h3>GMM Clustering</h3>
@@ -1525,8 +1524,8 @@
     with
     GMM
     clustering with Gaussian Simulated Data</figure>
-  <figure><img width="49%" src="results/gmm_gauss_betas/gmm_gauss_visualization_3d.png?raw=true" /> <img width="29%"
-      src="results/gmm_gauss_betas/gmm_gauss_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%" src="results/gmm_gauss_betas/gmm_gauss_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/gmm_gauss_betas/gmm_gauss_visualization.png?raw=true" /><br />
     Visualization of clusters with GMM clustering in 2-d and 3-d with Gaussian Simulated Data</figure>
   <hr />
   <h3>Bayesian GMM Clustering</h3>
@@ -1534,8 +1533,8 @@
     states
     with
     BGMM clustering with Gaussian Simulated Data</figure>
-  <figure><img width="49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization_3d.png?raw=true" /> <img width="29%"
-      src="results/bgmm_gauss_betas/bgmm_gauss_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/bgmm_gauss_betas/bgmm_gauss_visualization.png?raw=true" /><br />
     Visualization of clusters with BGMM clustering in 2-d and 3-d with Gaussian Simulated Data</figure>
   <hr />
   <h3>DBSCAN Clustering</h3>
@@ -1543,16 +1542,18 @@
     of
     states
     with DBSCAN clustering with Gaussian Simulated Data</figure>
-  <figure><img width="49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization_3d.png?raw=true" /> <img
-      width="29%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization_3d.png?raw=true" /> <img
+      style="width: 49%" src="results/dbscan_gauss_betas/dbscan_gauss_visualization.png?raw=true" /><br />
     Visualization of clusters with DBSCAN clustering in 2-d and 3-d with Gaussian Simulated Data</figure>
   <hr />
   <h3>Agglomerative Hierarchical Clustering</h3>
   <figure><img width="98%" src="results/hierarchical_gauss_betas/hierarchical_gauss_states.png?raw=true" />
     Visualization
     of states with Hierarchical clustering with Gaussian Simulated Data</figure>
-  <figure><img width="49%" src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization_3d.png?raw=true" />
-    <img width="49%" src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization.png?raw=true" /><br />
+  <figure><img style="width: 49%"
+      src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization_3d.png?raw=true" />
+    <img style="width: 49%"
+      src="results/hierarchical_gauss_betas/hierarchical_gauss_visualization.png?raw=true" /><br />
     Visualization of clusters with Hierarchical clustering in 2-d and 3-d with Gaussian Simulated Data
   </figure>
 
